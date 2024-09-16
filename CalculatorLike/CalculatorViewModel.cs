@@ -1,4 +1,6 @@
-﻿namespace CalculatorLike;
+﻿using Timer = System.Windows.Forms.Timer;
+
+namespace CalculatorLike;
 
 class CalculatorViewModel
 {
@@ -6,29 +8,35 @@ class CalculatorViewModel
     private bool shouldSetNewNumber;
 
     public int CurrentInput { get; private set; }
-    public event Action<int> OnNumberUpdated;
+    public event Action<int>? OnNumberUpdated;
 
     private const int COINS_PER_ROUND = 16;
     private const int MAX_ROUND_COUNT = 20;
     private const int DEFAULT_STARTING_USE_COUNT = 2;
+    private const int TIME_TO_SOLVE_IN_SECONDS = 60;
+    private const int SECONDS_REMOVED_PER_ROUND = 4;
 
     // Game
     private bool isInRoguelikeMode;
     private CalculatorOperation? currentOperation;
     private Random random = new();
+    private readonly Timer solutionTimer = new();
+    private int secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
 
     public int NumberToGet { get; private set; }
     public int Round { get; private set; }
     public int Coins { get; private set; }
 
-    public event Action OnNewRound;
+    public event Action? OnNewRound;
 
     public Dictionary<int, int> NumberUses { get; private set; } = [];
-    public Action<int> OnNumberUseUpdated;
+    public event Action<int>? OnNumberUseUpdated;
     public Dictionary<CalculatorOperation, int> OperationUses { get; private set; } = [];
-    public Action<CalculatorOperation> OnOperationUseUpdated;
+    public event Action<CalculatorOperation>? OnOperationUseUpdated;
 
-    public Action<bool> OnGameFinished;
+    public event Action<bool>? OnGameFinished;
+
+    public event Action<bool>? OnIsOlinsImpatient;
 
     public void AppendNumber(int number)
     {
@@ -111,17 +119,20 @@ class CalculatorViewModel
         for (int i = 0; i < 10; i++)
         {
             NumberUses.Add(i, DEFAULT_STARTING_USE_COUNT);
-            OnNumberUseUpdated(i);
+            OnNumberUseUpdated?.Invoke(i);
         }
 
         OperationUses.Clear();
         foreach (CalculatorOperation operation in Enum.GetValues(typeof(CalculatorOperation)))
         {
             OperationUses.Add(operation, DEFAULT_STARTING_USE_COUNT);
-            OnOperationUseUpdated(operation);
+            OnOperationUseUpdated?.Invoke(operation);
         }
 
         OnNewRound?.Invoke();
+        solutionTimer.Interval = 5000;
+        solutionTimer.Tick += SolutionTimer_Tick; 
+        solutionTimer.Start();
     }
 
     public void ClearNumber()
@@ -142,6 +153,8 @@ class CalculatorViewModel
         }
 
         OnNewRound?.Invoke();
+        OnIsOlinsImpatient?.Invoke(false);
+        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - (Round * SECONDS_REMOVED_PER_ROUND);
     }
 
     private void GameWon()
@@ -173,6 +186,24 @@ class CalculatorViewModel
         var generatedNumber = random.Next(1, 100);
         return generatedNumber;
     }
+
+    private void SolutionTimer_Tick(object? sender, EventArgs e)
+    {
+        Console.WriteLine($"{secondsLeftForSolution}");
+
+        secondsLeftForSolution -= 5;
+
+        if (secondsLeftForSolution <= 30)
+        {
+            OnIsOlinsImpatient?.Invoke(true);
+        }
+             
+        if (secondsLeftForSolution < 0)
+        {
+            OnGameFinished?.Invoke(false);
+            solutionTimer.Stop();
+        }
+    }
 }
 
 /*
@@ -180,5 +211,8 @@ class CalculatorViewModel
  * Show random shop to buy keys from
  * Add reroll to shop
  * Higher you go, the more difficult the number is
+ * Make the use count number be red if 0 or green if positive
+ * Add the loss condition with timer counting down for each number you try to get
+ * Refactor code to have Calculator class and the Game be separate from the ViewModel
  * [Maybe] Custom powerup buttons
  */

@@ -92,9 +92,12 @@
             label2 = new Label();
             panel1 = new Panel();
             label3 = new Label();
+            pictureGameLost = new PictureBox();
+            labelOlinsIsImpatient = new Label();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureGameLost).BeginInit();
             SuspendLayout();
             // 
             // btn1
@@ -855,11 +858,38 @@
             label3.TabIndex = 0;
             label3.Text = "Nothing :(";
             // 
+            // pictureGameLost
+            // 
+            pictureGameLost.Enabled = false;
+            pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
+            pictureGameLost.Location = new Point(-134, -6);
+            pictureGameLost.Name = "pictureGameLost";
+            pictureGameLost.Size = new Size(1317, 305);
+            pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureGameLost.TabIndex = 55;
+            pictureGameLost.TabStop = false;
+            pictureGameLost.Visible = false;
+            // 
+            // labelOlinsIsImpatient
+            // 
+            labelOlinsIsImpatient.AutoSize = true;
+            labelOlinsIsImpatient.Font = new Font("Fira Sans", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelOlinsIsImpatient.ForeColor = Color.Red;
+            labelOlinsIsImpatient.Location = new Point(12, 265);
+            labelOlinsIsImpatient.Name = "labelOlinsIsImpatient";
+            labelOlinsIsImpatient.Size = new Size(168, 18);
+            labelOlinsIsImpatient.TabIndex = 56;
+            labelOlinsIsImpatient.Text = "Oliņš grows impatient...";
+            labelOlinsIsImpatient.Visible = false;
+            labelOlinsIsImpatient.Click += labelOlinsMessage_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1040, 287);
+            ClientSize = new Size(249, 286);
+            Controls.Add(pictureGameLost);
+            Controls.Add(labelOlinsIsImpatient);
             Controls.Add(label2);
             Controls.Add(button1);
             Controls.Add(label1);
@@ -914,6 +944,7 @@
             panelShop.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureGameLost).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -983,5 +1014,7 @@
         private Label label2;
         private Panel panel1;
         private Label label3;
+        private PictureBox pictureGameLost;
+        private Label labelOlinsIsImpatient;
     }
 }

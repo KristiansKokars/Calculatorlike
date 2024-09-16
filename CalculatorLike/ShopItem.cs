@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculatorLike
+namespace CalculatorLike;
+
+abstract class ShopItem
 {
-    internal class ShopItem
-    {
-    }
 }
