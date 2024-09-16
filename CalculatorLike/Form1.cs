@@ -47,6 +47,7 @@ public partial class Form1 : Form
                 element.Visible = false;
             }
             pictureGameLost.Visible = true;
+            BackColor = Color.Black;
         }
     }
 
@@ -64,8 +65,18 @@ public partial class Form1 : Form
 
     private void OnNumberUseUpdated(int number)
     {
-        var uses = viewModel.NumberUses[number].ToString();
-        allLabelNumberUses[number].Text = uses;
+        var uses = viewModel.NumberUses[number];
+        allLabelNumberUses[number].Text = uses.ToString();
+
+        // TODO: custom colors
+        if (uses > 0)
+        {
+            allLabelNumberUses[number].ForeColor = Color.Green;
+        }
+        else
+        {
+            allLabelNumberUses[number].ForeColor = Color.DarkRed;
+        }
     }
 
     private void OnOperationUseUpdated(CalculatorOperation operation)
@@ -194,10 +205,5 @@ public partial class Form1 : Form
         {
             label.Visible = true;
         }
-    }
-
-    private void labelOlinsMessage_Click(object sender, EventArgs e)
-    {
-
     }
 }

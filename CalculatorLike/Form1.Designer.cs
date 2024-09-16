@@ -862,7 +862,7 @@
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-134, -6);
+            pictureGameLost.Location = new Point(-119, 318);
             pictureGameLost.Name = "pictureGameLost";
             pictureGameLost.Size = new Size(1317, 305);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -881,13 +881,12 @@
             labelOlinsIsImpatient.TabIndex = 56;
             labelOlinsIsImpatient.Text = "Oliņš grows impatient...";
             labelOlinsIsImpatient.Visible = false;
-            labelOlinsIsImpatient.Click += labelOlinsMessage_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(249, 286);
+            ClientSize = new Size(1012, 567);
             Controls.Add(pictureGameLost);
             Controls.Add(labelOlinsIsImpatient);
             Controls.Add(label2);
