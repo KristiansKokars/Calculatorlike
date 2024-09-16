@@ -26,79 +26,10 @@ public partial class Form1 : Form
         allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, buttonContinueRound, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
     }
 
-    private void OnIsOlinsImpatient(bool isImpatient)
-    {
-        labelOlinsIsImpatient.Visible = isImpatient;
-    }
-
-    private void OnGameFinished(bool isWon)
-    {
-        if (isWon)
-        {
-            labelYouWon.Visible = true;
-            btnRoguelike.Visible = true;
-            foreach (var element in allGameElements)
-            {
-                element.Visible = false;
-            }
-        }
-        else
-        {
-            foreach (var element in allGameElements)
-            {
-                element.Visible = false;
-            }
-            pictureGameLost.Visible = true;
-            BackColor = Color.Black;
-        }
-    }
-
-    private void OnNewRound()
-    {
-        labelNumberToGet.Text = viewModel.RoguelikeCalculator.NumberToGet.ToString();
-        labelRoundCount.Text = viewModel.RoguelikeCalculator.Round.ToString();
-        labelCoinCount.Text = viewModel.RoguelikeCalculator.Coins.ToString();
-    }
-
+    #region Calculator
     private void OnNumberUpdated(int number)
     {
         tbNumbers.Text = number.ToString();
-    }
-
-    private void OnNumberUseUpdated(int number)
-    {
-        var uses = viewModel.RoguelikeCalculator.NumberUses[number];
-        allLabelNumberUses[number].Text = uses.ToString();
-
-        // TODO: custom colors
-        if (uses > 0)
-        {
-            allLabelNumberUses[number].ForeColor = Color.Green;
-        }
-        else
-        {
-            allLabelNumberUses[number].ForeColor = Color.DarkRed;
-        }
-    }
-
-    private void OnOperationUseUpdated(CalculatorOperation operation)
-    {
-        var uses = viewModel.RoguelikeCalculator.OperationUses[operation].ToString();
-        switch (operation)
-        {
-            case CalculatorOperation.Add:
-                labelUsesAdd.Text = uses;
-                return;
-            case CalculatorOperation.Subtract:
-                labelUsesSubtract.Text = uses;
-                return;
-            case CalculatorOperation.Multiply:
-                labelUsesMultiply.Text = uses;
-                return;
-            case CalculatorOperation.Divide:
-                labelUsesDivide.Text = uses;
-                return;
-        }
     }
 
     private void btn1_Click(object sender, EventArgs e)
@@ -185,7 +116,9 @@ public partial class Form1 : Form
     {
         viewModel.SetOperation(operation);
     }
+    #endregion
 
+    #region Game
     private void btnRoguelike_Click(object sender, EventArgs e)
     {
         viewModel.StartGame();
@@ -208,4 +141,73 @@ public partial class Form1 : Form
             label.Visible = true;
         }
     }
+
+    private void OnIsOlinsImpatient(bool isImpatient)
+    {
+        labelOlinsIsImpatient.Visible = isImpatient;
+    }
+
+    private void OnGameFinished(bool isWon)
+    {
+        if (isWon)
+        {
+            labelYouWon.Visible = true;
+            btnRoguelike.Visible = true;
+            foreach (var element in allGameElements)
+            {
+                element.Visible = false;
+            }
+        }
+        else
+        {
+            foreach (var element in allGameElements)
+            {
+                element.Visible = false;
+            }
+            pictureGameLost.Visible = true;
+            BackColor = Color.Black;
+        }
+    }
+
+    private void OnNewRound()
+    {
+        labelNumberToGet.Text = viewModel.RoguelikeCalculator.NumberToGet.ToString();
+        labelRoundCount.Text = viewModel.RoguelikeCalculator.Round.ToString();
+        labelCoinCount.Text = viewModel.RoguelikeCalculator.Coins.ToString();
+    }
+    private void OnNumberUseUpdated(int number)
+    {
+        var uses = viewModel.RoguelikeCalculator.NumberUses[number];
+        allLabelNumberUses[number].Text = uses.ToString();
+
+        // TODO: custom colors
+        if (uses > 0)
+        {
+            allLabelNumberUses[number].ForeColor = Color.Green;
+        }
+        else
+        {
+            allLabelNumberUses[number].ForeColor = Color.DarkRed;
+        }
+    }
+    private void OnOperationUseUpdated(CalculatorOperation operation)
+    {
+        var uses = viewModel.RoguelikeCalculator.OperationUses[operation].ToString();
+        switch (operation)
+        {
+            case CalculatorOperation.Add:
+                labelUsesAdd.Text = uses;
+                return;
+            case CalculatorOperation.Subtract:
+                labelUsesSubtract.Text = uses;
+                return;
+            case CalculatorOperation.Multiply:
+                labelUsesMultiply.Text = uses;
+                return;
+            case CalculatorOperation.Divide:
+                labelUsesDivide.Text = uses;
+                return;
+        }
+    }
+    #endregion
 }
