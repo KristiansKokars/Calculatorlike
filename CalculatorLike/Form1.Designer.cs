@@ -94,6 +94,14 @@
             label3 = new Label();
             pictureGameLost = new PictureBox();
             labelOlinsIsImpatient = new Label();
+            btnSpecialModulus = new Button();
+            btnSpecialSqrt = new Button();
+            btnSpecialSquare = new Button();
+            btnSpecialCashToNumber = new Button();
+            labelSpecialModulus = new Label();
+            labelSpecialSquareRoot = new Label();
+            labelSpecialSquare = new Label();
+            labelSpecialCashToMoney = new Label();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
@@ -875,12 +883,122 @@
             labelOlinsIsImpatient.AutoSize = true;
             labelOlinsIsImpatient.Font = new Font("Fira Sans", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelOlinsIsImpatient.ForeColor = Color.Red;
-            labelOlinsIsImpatient.Location = new Point(12, 265);
+            labelOlinsIsImpatient.Location = new Point(12, 40);
             labelOlinsIsImpatient.Name = "labelOlinsIsImpatient";
             labelOlinsIsImpatient.Size = new Size(168, 18);
             labelOlinsIsImpatient.TabIndex = 56;
             labelOlinsIsImpatient.Text = "Oliņš grows impatient...";
             labelOlinsIsImpatient.Visible = false;
+            // 
+            // btnSpecialModulus
+            // 
+            btnSpecialModulus.BackColor = Color.CornflowerBlue;
+            btnSpecialModulus.FlatStyle = FlatStyle.Flat;
+            btnSpecialModulus.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnSpecialModulus.ForeColor = SystemColors.ControlText;
+            btnSpecialModulus.Location = new Point(12, 256);
+            btnSpecialModulus.Name = "btnSpecialModulus";
+            btnSpecialModulus.Size = new Size(40, 41);
+            btnSpecialModulus.TabIndex = 57;
+            btnSpecialModulus.Text = "%";
+            btnSpecialModulus.UseVisualStyleBackColor = false;
+            btnSpecialModulus.Visible = false;
+            btnSpecialModulus.Click += btnSpecialModulus_Click;
+            // 
+            // btnSpecialSqrt
+            // 
+            btnSpecialSqrt.BackColor = Color.CornflowerBlue;
+            btnSpecialSqrt.FlatStyle = FlatStyle.Flat;
+            btnSpecialSqrt.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnSpecialSqrt.ForeColor = SystemColors.ControlText;
+            btnSpecialSqrt.Location = new Point(58, 256);
+            btnSpecialSqrt.Name = "btnSpecialSqrt";
+            btnSpecialSqrt.Size = new Size(40, 41);
+            btnSpecialSqrt.TabIndex = 58;
+            btnSpecialSqrt.Text = "√x";
+            btnSpecialSqrt.UseVisualStyleBackColor = false;
+            btnSpecialSqrt.Visible = false;
+            btnSpecialSqrt.Click += btnSpecialSqrt_Click;
+            // 
+            // btnSpecialSquare
+            // 
+            btnSpecialSquare.BackColor = Color.CornflowerBlue;
+            btnSpecialSquare.FlatStyle = FlatStyle.Flat;
+            btnSpecialSquare.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnSpecialSquare.ForeColor = SystemColors.ControlText;
+            btnSpecialSquare.Location = new Point(104, 256);
+            btnSpecialSquare.Name = "btnSpecialSquare";
+            btnSpecialSquare.Size = new Size(40, 41);
+            btnSpecialSquare.TabIndex = 59;
+            btnSpecialSquare.Text = "x²";
+            btnSpecialSquare.UseVisualStyleBackColor = false;
+            btnSpecialSquare.Visible = false;
+            btnSpecialSquare.Click += btnSpecialSquare_Click;
+            // 
+            // btnSpecialCashToNumber
+            // 
+            btnSpecialCashToNumber.BackColor = Color.CornflowerBlue;
+            btnSpecialCashToNumber.FlatStyle = FlatStyle.Flat;
+            btnSpecialCashToNumber.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnSpecialCashToNumber.ForeColor = SystemColors.ControlText;
+            btnSpecialCashToNumber.Location = new Point(150, 256);
+            btnSpecialCashToNumber.Name = "btnSpecialCashToNumber";
+            btnSpecialCashToNumber.Size = new Size(40, 41);
+            btnSpecialCashToNumber.TabIndex = 60;
+            btnSpecialCashToNumber.Text = "$";
+            btnSpecialCashToNumber.UseVisualStyleBackColor = false;
+            btnSpecialCashToNumber.Visible = false;
+            btnSpecialCashToNumber.Click += btnSpecialCashToNumber_Click;
+            // 
+            // labelSpecialModulus
+            // 
+            labelSpecialModulus.AutoSize = true;
+            labelSpecialModulus.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelSpecialModulus.ForeColor = Color.DarkRed;
+            labelSpecialModulus.Location = new Point(40, 256);
+            labelSpecialModulus.Name = "labelSpecialModulus";
+            labelSpecialModulus.Size = new Size(13, 13);
+            labelSpecialModulus.TabIndex = 61;
+            labelSpecialModulus.Text = "0";
+            labelSpecialModulus.Visible = false;
+            // 
+            // labelSpecialSquareRoot
+            // 
+            labelSpecialSquareRoot.AutoSize = true;
+            labelSpecialSquareRoot.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelSpecialSquareRoot.ForeColor = Color.DarkRed;
+            labelSpecialSquareRoot.Location = new Point(86, 256);
+            labelSpecialSquareRoot.Name = "labelSpecialSquareRoot";
+            labelSpecialSquareRoot.Size = new Size(13, 13);
+            labelSpecialSquareRoot.TabIndex = 62;
+            labelSpecialSquareRoot.Text = "0";
+            labelSpecialSquareRoot.Visible = false;
+            // 
+            // labelSpecialSquare
+            // 
+            labelSpecialSquare.AutoSize = true;
+            labelSpecialSquare.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelSpecialSquare.ForeColor = Color.DarkRed;
+            labelSpecialSquare.Location = new Point(132, 256);
+            labelSpecialSquare.Name = "labelSpecialSquare";
+            labelSpecialSquare.Size = new Size(13, 13);
+            labelSpecialSquare.TabIndex = 63;
+            labelSpecialSquare.Text = "0";
+            labelSpecialSquare.Visible = false;
+            labelSpecialSquare.Click += label6_Click;
+            // 
+            // labelSpecialCashToMoney
+            // 
+            labelSpecialCashToMoney.AutoSize = true;
+            labelSpecialCashToMoney.BackColor = Color.Transparent;
+            labelSpecialCashToMoney.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelSpecialCashToMoney.ForeColor = Color.DarkRed;
+            labelSpecialCashToMoney.Location = new Point(178, 256);
+            labelSpecialCashToMoney.Name = "labelSpecialCashToMoney";
+            labelSpecialCashToMoney.Size = new Size(13, 13);
+            labelSpecialCashToMoney.TabIndex = 64;
+            labelSpecialCashToMoney.Text = "0";
+            labelSpecialCashToMoney.Visible = false;
             // 
             // Form1
             // 
@@ -888,6 +1006,14 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1012, 567);
             Controls.Add(pictureGameLost);
+            Controls.Add(labelSpecialModulus);
+            Controls.Add(labelSpecialCashToMoney);
+            Controls.Add(labelSpecialSquare);
+            Controls.Add(labelSpecialSquareRoot);
+            Controls.Add(btnSpecialCashToNumber);
+            Controls.Add(btnSpecialSquare);
+            Controls.Add(btnSpecialSqrt);
+            Controls.Add(btnSpecialModulus);
             Controls.Add(labelOlinsIsImpatient);
             Controls.Add(label2);
             Controls.Add(button1);
@@ -1015,5 +1141,13 @@
         private Label label3;
         private PictureBox pictureGameLost;
         private Label labelOlinsIsImpatient;
+        private Button btnSpecialModulus;
+        private Button btnSpecialSqrt;
+        private Button btnSpecialSquare;
+        private Button btnSpecialCashToNumber;
+        private Label labelSpecialModulus;
+        private Label labelSpecialSquareRoot;
+        private Label labelSpecialSquare;
+        private Label labelSpecialCashToMoney;
     }
 }

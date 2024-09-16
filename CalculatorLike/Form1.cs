@@ -1,4 +1,5 @@
 using CalculatorLike.Base;
+using CalculatorLike.Game;
 
 namespace CalculatorLike;
 
@@ -17,6 +18,7 @@ public partial class Form1 : Form
         viewModel.BasicCalculator.OnNumberUpdated += OnNumberUpdated;
         viewModel.RoguelikeCalculator.OnNumberUseUpdated += OnNumberUseUpdated;
         viewModel.RoguelikeCalculator.OnOperationUseUpdated += OnOperationUseUpdated;
+        viewModel.RoguelikeCalculator.OnSpecialActionUseUpdated += OnSpecialActionUseUpdated;
         viewModel.RoguelikeCalculator.OnNewRound += OnNewRound;
         viewModel.RoguelikeCalculator.OnIsOlinsImpatient += OnIsOlinsImpatient;
         viewModel.OnGameFinished += OnGameFinished;
@@ -209,5 +211,71 @@ public partial class Form1 : Form
                 return;
         }
     }
+
+    private void OnSpecialActionUseUpdated(SpecialAction specialAction)
+    {
+        var uses = viewModel.RoguelikeCalculator.SpecialActionUses[specialAction];
+        var usesText = uses.ToString();
+        switch (specialAction)
+        {
+            case SpecialAction.Square:
+                if (uses >= 1)
+                {
+                    labelSpecialSquare.Visible = true;
+                    btnSpecialSquare.Visible = true;
+                }
+                labelSpecialSquare.Text = usesText;
+                return;
+            case SpecialAction.SquareRoot:
+                if (uses >= 1)
+                {
+                    labelSpecialSquareRoot.Visible = true;
+                    btnSpecialSqrt.Visible = true;
+                }
+                labelSpecialSquareRoot.Text = usesText;
+                return;
+            case SpecialAction.CashToNumber:
+                if (uses >= 1)
+                {
+                    labelSpecialCashToMoney.Visible = true;
+                    btnSpecialCashToNumber.Visible = true;
+                }
+                labelSpecialCashToMoney.Text = usesText;
+                return;
+            case SpecialAction.Modulus:
+                if (uses >= 1)
+                {
+                    labelSpecialModulus.Visible = true;
+                    btnSpecialModulus.Visible = true;
+                }
+                labelSpecialModulus.Text = usesText;
+                return;
+        }
+    }
+
+    private void btnSpecialSqrt_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.SquareRoot);
+    }
+
+    private void btnSpecialSquare_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Square);
+    }
+
+    private void btnSpecialCashToNumber_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.CashToNumber);
+    }
+
+    private void btnSpecialModulus_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Modulus);
+    }
     #endregion
+
+    private void label6_Click(object sender, EventArgs e)
+    {
+
+    }
 }

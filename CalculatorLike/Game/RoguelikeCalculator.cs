@@ -31,11 +31,13 @@ class RoguelikeCalculator
     public int Coins { get; private set; }
     public Dictionary<int, int> NumberUses { get; private set; } = [];
     public Dictionary<CalculatorOperation, int> OperationUses { get; private set; } = [];
+    public Dictionary<SpecialAction, int> SpecialActionUses { get; private set; } = [];
     public Dictionary<int, ShopItem> AvailableShopItems { get; private set; } = [];
 
     public event Action? OnNewRound;
     public event Action<int>? OnNumberUseUpdated;
     public event Action<CalculatorOperation>? OnOperationUseUpdated;
+    public event Action<SpecialAction>? OnSpecialActionUseUpdated;
     public event Action<bool>? OnGameFinished;
     public event Action<bool>? OnIsOlinsImpatient;
 
@@ -60,6 +62,28 @@ class RoguelikeCalculator
         OnOperationUsed(operation);
     }
 
+    public void PerformSpecialAction(SpecialAction specialAction)
+    {
+        if (SpecialActionUses[specialAction] == 0) return;
+
+        switch (specialAction)
+        {
+            case SpecialAction.Square:
+                calculator.SetCalculatorNumber(calculator.CurrentInput * calculator.CurrentInput);
+                break;
+            case SpecialAction.SquareRoot:
+                calculator.SetCalculatorNumber((int)Math.Floor(Math.Sqrt(calculator.CurrentInput)));
+                break;
+            case SpecialAction.CashToNumber:
+                calculator.SetCalculatorNumber(calculator.CurrentInput + Coins);
+                break;
+            case SpecialAction.Modulus:
+                calculator.SetOperation(CalculatorOperation.Modulus);
+                break;
+        }
+        OnSpecialActionUsed(specialAction);
+    }
+
     public void ClearNumber()
     {
         calculator.ClearNumber();
@@ -74,8 +98,6 @@ class RoguelikeCalculator
         {
             AdvanceRound();
         }
-
-        calculator.SetCalculatorNumber(result);
     }
 
     public void StartGame()
@@ -103,6 +125,13 @@ class RoguelikeCalculator
         {
             OperationUses.Add(operation, DEFAULT_STARTING_USE_COUNT);
             OnOperationUseUpdated?.Invoke(operation);
+        }
+
+        SpecialActionUses.Clear();
+        foreach (SpecialAction specialAction in Enum.GetValues(typeof(SpecialAction)))
+        {
+            SpecialActionUses.Add(specialAction, 0);
+            OnSpecialActionUseUpdated?.Invoke(specialAction);
         }
 
         OnNewRound?.Invoke();
@@ -154,6 +183,12 @@ class RoguelikeCalculator
     {
         OperationUses[operation] = OperationUses[operation] - 1;
         OnOperationUseUpdated?.Invoke(operation);
+    }
+
+    private void OnSpecialActionUsed(SpecialAction specialAction)
+    {
+        SpecialActionUses[specialAction] = SpecialActionUses[specialAction] - 1;
+        OnSpecialActionUseUpdated?.Invoke(specialAction);
     }
 
     private int GenerateRandomNumberToGet()

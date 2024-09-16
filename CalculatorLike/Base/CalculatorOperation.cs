@@ -6,4 +6,5 @@ enum CalculatorOperation
     Subtract,
     Multiply,
     Divide,
+    Modulus
 }

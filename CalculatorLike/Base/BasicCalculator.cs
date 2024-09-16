@@ -31,6 +31,7 @@ class BasicCalculator
             CalculatorOperation.Subtract => previousNumber - CurrentInput,
             CalculatorOperation.Multiply => previousNumber * CurrentInput,
             CalculatorOperation.Divide => previousNumber / CurrentInput,
+            CalculatorOperation.Modulus => previousNumber % CurrentInput,
             _ => 0,
         };
         currentOperation = null;
