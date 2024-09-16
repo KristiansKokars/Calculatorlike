@@ -1,3 +1,5 @@
+using CalculatorLike.Base;
+
 namespace CalculatorLike;
 
 public partial class Form1 : Form
@@ -11,13 +13,13 @@ public partial class Form1 : Form
     {
         InitializeComponent();
         viewModel = new();
-        // TODO: unsub on close event
-        viewModel.OnNewRound += OnNewRound;
-        viewModel.OnNumberUpdated += OnNumberUpdated;
-        viewModel.OnNumberUseUpdated += OnNumberUseUpdated;
-        viewModel.OnOperationUseUpdated += OnOperationUseUpdated;
+
+        viewModel.BasicCalculator.OnNumberUpdated += OnNumberUpdated;
+        viewModel.RoguelikeCalculator.OnNumberUseUpdated += OnNumberUseUpdated;
+        viewModel.RoguelikeCalculator.OnOperationUseUpdated += OnOperationUseUpdated;
+        viewModel.RoguelikeCalculator.OnNewRound += OnNewRound;
+        viewModel.RoguelikeCalculator.OnIsOlinsImpatient += OnIsOlinsImpatient;
         viewModel.OnGameFinished += OnGameFinished;
-        viewModel.OnIsOlinsImpatient += OnIsOlinsImpatient;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
         allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
@@ -53,9 +55,9 @@ public partial class Form1 : Form
 
     private void OnNewRound()
     {
-        labelNumberToGet.Text = viewModel.NumberToGet.ToString();
-        labelRoundCount.Text = viewModel.Round.ToString();
-        labelCoinCount.Text = viewModel.Coins.ToString();
+        labelNumberToGet.Text = viewModel.RoguelikeCalculator.NumberToGet.ToString();
+        labelRoundCount.Text = viewModel.RoguelikeCalculator.Round.ToString();
+        labelCoinCount.Text = viewModel.RoguelikeCalculator.Coins.ToString();
     }
 
     private void OnNumberUpdated(int number)
@@ -65,7 +67,7 @@ public partial class Form1 : Form
 
     private void OnNumberUseUpdated(int number)
     {
-        var uses = viewModel.NumberUses[number];
+        var uses = viewModel.RoguelikeCalculator.NumberUses[number];
         allLabelNumberUses[number].Text = uses.ToString();
 
         // TODO: custom colors
@@ -81,7 +83,7 @@ public partial class Form1 : Form
 
     private void OnOperationUseUpdated(CalculatorOperation operation)
     {
-        var uses = viewModel.OperationUses[operation].ToString();
+        var uses = viewModel.RoguelikeCalculator.OperationUses[operation].ToString();
         switch (operation)
         {
             case CalculatorOperation.Add:
@@ -195,7 +197,7 @@ public partial class Form1 : Form
 
         labelYouWon.Visible = false;
         btnRoguelike.Visible = false;
-        tbNumbers.Text = viewModel.CurrentInput.ToString();
+        tbNumbers.Text = viewModel.BasicCalculator.CurrentInput.ToString();
 
         foreach (var label in allLabelNumberUses)
         {
