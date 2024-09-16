@@ -102,6 +102,8 @@
             labelSpecialSquareRoot = new Label();
             labelSpecialSquare = new Label();
             labelSpecialCashToMoney = new Label();
+            btnSpecialReroll = new Button();
+            labelSpecialReroll = new Label();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
@@ -784,7 +786,7 @@
             // 
             // buttonReroll
             // 
-            buttonReroll.Location = new Point(510, 229);
+            buttonReroll.Location = new Point(574, 229);
             buttonReroll.Name = "buttonReroll";
             buttonReroll.Size = new Size(75, 23);
             buttonReroll.TabIndex = 40;
@@ -794,7 +796,7 @@
             // 
             // buttonContinueRound
             // 
-            buttonContinueRound.Location = new Point(635, 229);
+            buttonContinueRound.Location = new Point(709, 265);
             buttonContinueRound.Name = "buttonContinueRound";
             buttonContinueRound.Size = new Size(75, 23);
             buttonContinueRound.TabIndex = 41;
@@ -807,7 +809,7 @@
             labelRerollCost.AutoSize = true;
             labelRerollCost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelRerollCost.ForeColor = Color.Goldenrod;
-            labelRerollCost.Location = new Point(591, 234);
+            labelRerollCost.Location = new Point(655, 234);
             labelRerollCost.Name = "labelRerollCost";
             labelRerollCost.Size = new Size(18, 14);
             labelRerollCost.TabIndex = 51;
@@ -870,7 +872,7 @@
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-119, 318);
+            pictureGameLost.Location = new Point(-118, 312);
             pictureGameLost.Name = "pictureGameLost";
             pictureGameLost.Size = new Size(1317, 305);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1000,11 +1002,42 @@
             labelSpecialCashToMoney.Text = "0";
             labelSpecialCashToMoney.Visible = false;
             // 
+            // btnSpecialReroll
+            // 
+            btnSpecialReroll.BackColor = Color.Crimson;
+            btnSpecialReroll.FlatStyle = FlatStyle.Flat;
+            btnSpecialReroll.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnSpecialReroll.ForeColor = SystemColors.ControlText;
+            btnSpecialReroll.Image = (Image)resources.GetObject("btnSpecialReroll.Image");
+            btnSpecialReroll.Location = new Point(196, 256);
+            btnSpecialReroll.Name = "btnSpecialReroll";
+            btnSpecialReroll.RightToLeft = RightToLeft.No;
+            btnSpecialReroll.Size = new Size(40, 41);
+            btnSpecialReroll.TabIndex = 65;
+            btnSpecialReroll.UseVisualStyleBackColor = false;
+            btnSpecialReroll.Visible = false;
+            btnSpecialReroll.Click += btnSpecialReroll_Click;
+            // 
+            // labelSpecialReroll
+            // 
+            labelSpecialReroll.AutoSize = true;
+            labelSpecialReroll.BackColor = Color.Transparent;
+            labelSpecialReroll.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelSpecialReroll.ForeColor = Color.DarkRed;
+            labelSpecialReroll.Location = new Point(223, 256);
+            labelSpecialReroll.Name = "labelSpecialReroll";
+            labelSpecialReroll.Size = new Size(13, 13);
+            labelSpecialReroll.TabIndex = 66;
+            labelSpecialReroll.Text = "0";
+            labelSpecialReroll.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1012, 567);
+            Controls.Add(labelSpecialReroll);
+            Controls.Add(btnSpecialReroll);
             Controls.Add(pictureGameLost);
             Controls.Add(labelSpecialModulus);
             Controls.Add(labelSpecialCashToMoney);
@@ -1149,5 +1182,7 @@
         private Label labelSpecialSquareRoot;
         private Label labelSpecialSquare;
         private Label labelSpecialCashToMoney;
+        private Button btnSpecialReroll;
+        private Label labelSpecialReroll;
     }
 }

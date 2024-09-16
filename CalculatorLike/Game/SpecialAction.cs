@@ -5,5 +5,6 @@ enum SpecialAction
     Square,
     SquareRoot,
     CashToNumber,
-    Modulus
+    Modulus,
+    Reroll
 }

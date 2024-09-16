@@ -21,6 +21,7 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnSpecialActionUseUpdated += OnSpecialActionUseUpdated;
         viewModel.RoguelikeCalculator.OnNewRound += OnNewRound;
         viewModel.RoguelikeCalculator.OnIsOlinsImpatient += OnIsOlinsImpatient;
+        viewModel.RoguelikeCalculator.OnNumberToGetUpdated += OnNumberToGetUpdated;
         viewModel.OnGameFinished += OnGameFinished;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
@@ -149,6 +150,11 @@ public partial class Form1 : Form
         labelOlinsIsImpatient.Visible = isImpatient;
     }
 
+    private void OnNumberToGetUpdated(int numberToGet)
+    {
+        labelNumberToGet.Text = numberToGet.ToString();
+    }
+
     private void OnGameFinished(bool isWon)
     {
         if (isWon)
@@ -250,6 +256,14 @@ public partial class Form1 : Form
                 }
                 labelSpecialModulus.Text = usesText;
                 return;
+            case SpecialAction.Reroll:
+                if (uses >= 1)
+                {
+                    labelSpecialReroll.Visible = true;
+                    btnSpecialReroll.Visible = true;
+                }
+                labelSpecialReroll.Text = usesText;
+                return;
         }
     }
 
@@ -271,6 +285,11 @@ public partial class Form1 : Form
     private void btnSpecialModulus_Click(object sender, EventArgs e)
     {
         viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Modulus);
+    }
+
+    private void btnSpecialReroll_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Reroll);
     }
     #endregion
 

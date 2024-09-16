@@ -17,4 +17,10 @@ abstract class ShopItem
         public override int Cost { get; set; }
         public CalculatorOperation Operation { get; set; }
     }
+
+    class SpecialActionItem : ShopItem
+    {
+        public override int Cost { get; set; }
+        public SpecialAction SpecialAction { get; set; }
+    }
 }

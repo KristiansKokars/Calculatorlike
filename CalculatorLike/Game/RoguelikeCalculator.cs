@@ -36,6 +36,7 @@ class RoguelikeCalculator
 
     public event Action? OnNewRound;
     public event Action<int>? OnNumberUseUpdated;
+    public event Action<int>? OnNumberToGetUpdated;
     public event Action<CalculatorOperation>? OnOperationUseUpdated;
     public event Action<SpecialAction>? OnSpecialActionUseUpdated;
     public event Action<bool>? OnGameFinished;
@@ -80,6 +81,9 @@ class RoguelikeCalculator
             case SpecialAction.Modulus:
                 calculator.SetOperation(CalculatorOperation.Modulus);
                 break;
+            case SpecialAction.Reroll:
+                UpdateRandomNumberToGet();
+                break;
         }
         OnSpecialActionUsed(specialAction);
     }
@@ -102,7 +106,7 @@ class RoguelikeCalculator
 
     public void StartGame()
     {
-        NumberToGet = GenerateRandomNumberToGet();
+        UpdateRandomNumberToGet();
         Round = 0;
         Coins = 0;
 
@@ -130,7 +134,7 @@ class RoguelikeCalculator
         SpecialActionUses.Clear();
         foreach (SpecialAction specialAction in Enum.GetValues(typeof(SpecialAction)))
         {
-            SpecialActionUses.Add(specialAction, 0);
+            SpecialActionUses.Add(specialAction, 2);
             OnSpecialActionUseUpdated?.Invoke(specialAction);
         }
 
@@ -189,6 +193,12 @@ class RoguelikeCalculator
     {
         SpecialActionUses[specialAction] = SpecialActionUses[specialAction] - 1;
         OnSpecialActionUseUpdated?.Invoke(specialAction);
+    }
+
+    private void UpdateRandomNumberToGet()
+    {
+       NumberToGet = GenerateRandomNumberToGet();
+       OnNumberToGetUpdated?.Invoke(NumberToGet);
     }
 
     private int GenerateRandomNumberToGet()
