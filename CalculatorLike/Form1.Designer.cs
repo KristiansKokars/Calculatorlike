@@ -46,17 +46,55 @@
             btnDivide = new Button();
             tbNumbers = new TextBox();
             btnClear = new Button();
-            label3Uses = new Label();
+            labelUses3 = new Label();
             btnRoguelike = new Button();
             labelYouNeed = new Label();
             labelRound = new Label();
             labelCoins = new Label();
             groupGame = new GroupBox();
+            labelCoinCount = new Label();
             labelRoundCount = new Label();
             labelNumberToGet = new Label();
             btnRoguelikeCalculate = new Button();
-            labelCoinCount = new Label();
+            labelUses2 = new Label();
+            labelUses1 = new Label();
+            labelUses4 = new Label();
+            labelUses5 = new Label();
+            labelUses6 = new Label();
+            labelUses9 = new Label();
+            labelUses8 = new Label();
+            labelUses7 = new Label();
+            labelUses0 = new Label();
+            labelUsesAdd = new Label();
+            labelUsesSubtract = new Label();
+            labelUsesMultiply = new Label();
+            labelUsesDivide = new Label();
+            labelYouWon = new Label();
+            labelShopTitle = new Label();
+            panelShop = new Panel();
+            labelShopItem6Cost = new Label();
+            buttonShopItem6 = new Button();
+            labelShopItem5Cost = new Label();
+            buttonShopItem5 = new Button();
+            labelShopItem4Cost = new Label();
+            buttonShopItem4 = new Button();
+            labelShopItem3Cost = new Label();
+            buttonShopItem3 = new Button();
+            labelShopItem2Cost = new Label();
+            buttonShopItem2 = new Button();
+            labelShopItem1Cost = new Label();
+            buttonShopItem1 = new Button();
+            buttonReroll = new Button();
+            buttonContinueRound = new Button();
+            labelRerollCost = new Label();
+            label1 = new Label();
+            button1 = new Button();
+            label2 = new Label();
+            panel1 = new Panel();
+            label3 = new Label();
             groupGame.SuspendLayout();
+            panelShop.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btn1
@@ -254,7 +292,6 @@
             tbNumbers.ReadOnly = true;
             tbNumbers.Size = new Size(178, 23);
             tbNumbers.TabIndex = 15;
-            tbNumbers.TextChanged += tbNumbers_TextChanged;
             // 
             // btnClear
             // 
@@ -270,18 +307,17 @@
             btnClear.UseVisualStyleBackColor = false;
             btnClear.Click += btnClear_Click;
             // 
-            // label3Uses
+            // labelUses3
             // 
-            label3Uses.AutoSize = true;
-            label3Uses.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3Uses.ForeColor = Color.Green;
-            label3Uses.Location = new Point(132, 65);
-            label3Uses.Name = "label3Uses";
-            label3Uses.Size = new Size(12, 13);
-            label3Uses.TabIndex = 17;
-            label3Uses.Text = "2";
-            label3Uses.Visible = false;
-            label3Uses.Click += label1_Click;
+            labelUses3.AutoSize = true;
+            labelUses3.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses3.ForeColor = Color.Green;
+            labelUses3.Location = new Point(132, 65);
+            labelUses3.Name = "labelUses3";
+            labelUses3.Size = new Size(12, 13);
+            labelUses3.TabIndex = 17;
+            labelUses3.Text = "2";
+            labelUses3.Visible = false;
             // 
             // btnRoguelike
             // 
@@ -301,7 +337,7 @@
             // 
             labelYouNeed.AutoSize = true;
             labelYouNeed.Font = new Font("Fira Sans", 9.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelYouNeed.Location = new Point(9, 14);
+            labelYouNeed.Location = new Point(6, 14);
             labelYouNeed.Name = "labelYouNeed";
             labelYouNeed.Size = new Size(68, 15);
             labelYouNeed.TabIndex = 19;
@@ -312,23 +348,22 @@
             // 
             labelRound.AutoSize = true;
             labelRound.Font = new Font("Fira Sans", 9.749999F);
-            labelRound.Location = new Point(9, 33);
+            labelRound.Location = new Point(6, 33);
             labelRound.Name = "labelRound";
             labelRound.Size = new Size(53, 15);
             labelRound.TabIndex = 20;
             labelRound.Text = "Round: ";
             labelRound.Visible = false;
-            labelRound.Click += labelRound_Click;
             // 
             // labelCoins
             // 
             labelCoins.AutoSize = true;
             labelCoins.Font = new Font("Fira Sans", 9.749999F);
-            labelCoins.Location = new Point(9, 50);
+            labelCoins.Location = new Point(6, 51);
             labelCoins.Name = "labelCoins";
-            labelCoins.Size = new Size(46, 15);
+            labelCoins.Size = new Size(142, 15);
             labelCoins.TabIndex = 21;
-            labelCoins.Text = "Coins: ";
+            labelCoins.Text = "Coins (Shop on Right): ";
             labelCoins.Visible = false;
             // 
             // groupGame
@@ -345,6 +380,18 @@
             groupGame.TabIndex = 22;
             groupGame.TabStop = false;
             groupGame.Visible = false;
+            // 
+            // labelCoinCount
+            // 
+            labelCoinCount.AutoSize = true;
+            labelCoinCount.Font = new Font("Fira Sans", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelCoinCount.ForeColor = Color.Goldenrod;
+            labelCoinCount.Location = new Point(147, 47);
+            labelCoinCount.Name = "labelCoinCount";
+            labelCoinCount.Size = new Size(18, 19);
+            labelCoinCount.TabIndex = 24;
+            labelCoinCount.Text = "0";
+            labelCoinCount.Visible = false;
             // 
             // labelRoundCount
             // 
@@ -384,25 +431,459 @@
             btnRoguelikeCalculate.UseVisualStyleBackColor = false;
             btnRoguelikeCalculate.Visible = false;
             // 
-            // labelCoinCount
+            // labelUses2
             // 
-            labelCoinCount.AutoSize = true;
-            labelCoinCount.Font = new Font("Fira Sans", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelCoinCount.ForeColor = Color.Black;
-            labelCoinCount.Location = new Point(147, 47);
-            labelCoinCount.Name = "labelCoinCount";
-            labelCoinCount.Size = new Size(18, 19);
-            labelCoinCount.TabIndex = 24;
-            labelCoinCount.Text = "0";
-            labelCoinCount.Visible = false;
+            labelUses2.AutoSize = true;
+            labelUses2.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses2.ForeColor = Color.Green;
+            labelUses2.Location = new Point(86, 65);
+            labelUses2.Name = "labelUses2";
+            labelUses2.Size = new Size(12, 13);
+            labelUses2.TabIndex = 24;
+            labelUses2.Text = "2";
+            labelUses2.Visible = false;
+            // 
+            // labelUses1
+            // 
+            labelUses1.AutoSize = true;
+            labelUses1.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses1.ForeColor = Color.Green;
+            labelUses1.Location = new Point(40, 65);
+            labelUses1.Name = "labelUses1";
+            labelUses1.Size = new Size(12, 13);
+            labelUses1.TabIndex = 25;
+            labelUses1.Text = "2";
+            labelUses1.Visible = false;
+            // 
+            // labelUses4
+            // 
+            labelUses4.AutoSize = true;
+            labelUses4.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses4.ForeColor = Color.Green;
+            labelUses4.Location = new Point(40, 115);
+            labelUses4.Name = "labelUses4";
+            labelUses4.Size = new Size(12, 13);
+            labelUses4.TabIndex = 26;
+            labelUses4.Text = "2";
+            labelUses4.Visible = false;
+            // 
+            // labelUses5
+            // 
+            labelUses5.AutoSize = true;
+            labelUses5.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses5.ForeColor = Color.Green;
+            labelUses5.Location = new Point(86, 115);
+            labelUses5.Name = "labelUses5";
+            labelUses5.Size = new Size(12, 13);
+            labelUses5.TabIndex = 27;
+            labelUses5.Text = "2";
+            labelUses5.Visible = false;
+            // 
+            // labelUses6
+            // 
+            labelUses6.AutoSize = true;
+            labelUses6.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses6.ForeColor = Color.Green;
+            labelUses6.Location = new Point(132, 115);
+            labelUses6.Name = "labelUses6";
+            labelUses6.Size = new Size(12, 13);
+            labelUses6.TabIndex = 28;
+            labelUses6.Text = "2";
+            labelUses6.Visible = false;
+            // 
+            // labelUses9
+            // 
+            labelUses9.AutoSize = true;
+            labelUses9.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses9.ForeColor = Color.Green;
+            labelUses9.Location = new Point(132, 162);
+            labelUses9.Name = "labelUses9";
+            labelUses9.Size = new Size(12, 13);
+            labelUses9.TabIndex = 29;
+            labelUses9.Text = "2";
+            labelUses9.Visible = false;
+            // 
+            // labelUses8
+            // 
+            labelUses8.AutoSize = true;
+            labelUses8.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses8.ForeColor = Color.Green;
+            labelUses8.Location = new Point(86, 162);
+            labelUses8.Name = "labelUses8";
+            labelUses8.Size = new Size(12, 13);
+            labelUses8.TabIndex = 30;
+            labelUses8.Text = "2";
+            labelUses8.Visible = false;
+            // 
+            // labelUses7
+            // 
+            labelUses7.AutoSize = true;
+            labelUses7.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses7.ForeColor = Color.Green;
+            labelUses7.Location = new Point(40, 162);
+            labelUses7.Name = "labelUses7";
+            labelUses7.Size = new Size(12, 13);
+            labelUses7.TabIndex = 31;
+            labelUses7.Text = "2";
+            labelUses7.Visible = false;
+            // 
+            // labelUses0
+            // 
+            labelUses0.AutoSize = true;
+            labelUses0.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUses0.ForeColor = Color.Green;
+            labelUses0.Location = new Point(86, 209);
+            labelUses0.Name = "labelUses0";
+            labelUses0.Size = new Size(12, 13);
+            labelUses0.TabIndex = 32;
+            labelUses0.Text = "2";
+            labelUses0.Visible = false;
+            // 
+            // labelUsesAdd
+            // 
+            labelUsesAdd.AutoSize = true;
+            labelUsesAdd.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesAdd.ForeColor = Color.Green;
+            labelUsesAdd.Location = new Point(178, 65);
+            labelUsesAdd.Name = "labelUsesAdd";
+            labelUsesAdd.Size = new Size(12, 13);
+            labelUsesAdd.TabIndex = 33;
+            labelUsesAdd.Text = "2";
+            labelUsesAdd.Visible = false;
+            // 
+            // labelUsesSubtract
+            // 
+            labelUsesSubtract.AutoSize = true;
+            labelUsesSubtract.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesSubtract.ForeColor = Color.Green;
+            labelUsesSubtract.Location = new Point(178, 115);
+            labelUsesSubtract.Name = "labelUsesSubtract";
+            labelUsesSubtract.Size = new Size(12, 13);
+            labelUsesSubtract.TabIndex = 34;
+            labelUsesSubtract.Text = "2";
+            labelUsesSubtract.Visible = false;
+            // 
+            // labelUsesMultiply
+            // 
+            labelUsesMultiply.AutoSize = true;
+            labelUsesMultiply.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesMultiply.ForeColor = Color.Green;
+            labelUsesMultiply.Location = new Point(178, 162);
+            labelUsesMultiply.Name = "labelUsesMultiply";
+            labelUsesMultiply.Size = new Size(12, 13);
+            labelUsesMultiply.TabIndex = 35;
+            labelUsesMultiply.Text = "2";
+            labelUsesMultiply.Visible = false;
+            // 
+            // labelUsesDivide
+            // 
+            labelUsesDivide.AutoSize = true;
+            labelUsesDivide.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesDivide.ForeColor = Color.Green;
+            labelUsesDivide.Location = new Point(178, 209);
+            labelUsesDivide.Name = "labelUsesDivide";
+            labelUsesDivide.Size = new Size(12, 13);
+            labelUsesDivide.TabIndex = 36;
+            labelUsesDivide.Text = "2";
+            labelUsesDivide.Visible = false;
+            // 
+            // labelYouWon
+            // 
+            labelYouWon.AutoSize = true;
+            labelYouWon.Font = new Font("Fira Sans", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelYouWon.ForeColor = Color.Green;
+            labelYouWon.Location = new Point(321, 265);
+            labelYouWon.Name = "labelYouWon";
+            labelYouWon.Size = new Size(92, 23);
+            labelYouWon.TabIndex = 37;
+            labelYouWon.Text = "YOU WON";
+            labelYouWon.Visible = false;
+            // 
+            // labelShopTitle
+            // 
+            labelShopTitle.AutoSize = true;
+            labelShopTitle.Location = new Point(536, 21);
+            labelShopTitle.Name = "labelShopTitle";
+            labelShopTitle.Size = new Size(147, 15);
+            labelShopTitle.TabIndex = 38;
+            labelShopTitle.Text = "Oliņš offers many wares";
+            labelShopTitle.Visible = false;
+            // 
+            // panelShop
+            // 
+            panelShop.BorderStyle = BorderStyle.FixedSingle;
+            panelShop.Controls.Add(labelShopItem6Cost);
+            panelShop.Controls.Add(buttonShopItem6);
+            panelShop.Controls.Add(labelShopItem5Cost);
+            panelShop.Controls.Add(buttonShopItem5);
+            panelShop.Controls.Add(labelShopItem4Cost);
+            panelShop.Controls.Add(buttonShopItem4);
+            panelShop.Controls.Add(labelShopItem3Cost);
+            panelShop.Controls.Add(buttonShopItem3);
+            panelShop.Controls.Add(labelShopItem2Cost);
+            panelShop.Controls.Add(buttonShopItem2);
+            panelShop.Controls.Add(labelShopItem1Cost);
+            panelShop.Controls.Add(buttonShopItem1);
+            panelShop.Location = new Point(510, 39);
+            panelShop.Name = "panelShop";
+            panelShop.Size = new Size(200, 183);
+            panelShop.TabIndex = 39;
+            panelShop.Visible = false;
+            // 
+            // labelShopItem6Cost
+            // 
+            labelShopItem6Cost.AutoSize = true;
+            labelShopItem6Cost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelShopItem6Cost.ForeColor = Color.Goldenrod;
+            labelShopItem6Cost.Location = new Point(143, 142);
+            labelShopItem6Cost.Name = "labelShopItem6Cost";
+            labelShopItem6Cost.Size = new Size(18, 14);
+            labelShopItem6Cost.TabIndex = 52;
+            labelShopItem6Cost.Text = "$7";
+            labelShopItem6Cost.Visible = false;
+            // 
+            // buttonShopItem6
+            // 
+            buttonShopItem6.BackColor = SystemColors.ActiveCaption;
+            buttonShopItem6.FlatStyle = FlatStyle.Flat;
+            buttonShopItem6.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            buttonShopItem6.Location = new Point(133, 95);
+            buttonShopItem6.Name = "buttonShopItem6";
+            buttonShopItem6.Size = new Size(40, 41);
+            buttonShopItem6.TabIndex = 51;
+            buttonShopItem6.Text = "/";
+            buttonShopItem6.UseVisualStyleBackColor = false;
+            // 
+            // labelShopItem5Cost
+            // 
+            labelShopItem5Cost.AutoSize = true;
+            labelShopItem5Cost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelShopItem5Cost.ForeColor = Color.Goldenrod;
+            labelShopItem5Cost.Location = new Point(85, 142);
+            labelShopItem5Cost.Name = "labelShopItem5Cost";
+            labelShopItem5Cost.Size = new Size(18, 14);
+            labelShopItem5Cost.TabIndex = 49;
+            labelShopItem5Cost.Text = "$7";
+            labelShopItem5Cost.Visible = false;
+            // 
+            // buttonShopItem5
+            // 
+            buttonShopItem5.BackColor = SystemColors.ActiveCaption;
+            buttonShopItem5.FlatStyle = FlatStyle.Flat;
+            buttonShopItem5.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            buttonShopItem5.Location = new Point(75, 95);
+            buttonShopItem5.Name = "buttonShopItem5";
+            buttonShopItem5.Size = new Size(40, 41);
+            buttonShopItem5.TabIndex = 50;
+            buttonShopItem5.Text = "/";
+            buttonShopItem5.UseVisualStyleBackColor = false;
+            // 
+            // labelShopItem4Cost
+            // 
+            labelShopItem4Cost.AutoSize = true;
+            labelShopItem4Cost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelShopItem4Cost.ForeColor = Color.Goldenrod;
+            labelShopItem4Cost.Location = new Point(26, 142);
+            labelShopItem4Cost.Name = "labelShopItem4Cost";
+            labelShopItem4Cost.Size = new Size(18, 14);
+            labelShopItem4Cost.TabIndex = 47;
+            labelShopItem4Cost.Text = "$7";
+            labelShopItem4Cost.Visible = false;
+            // 
+            // buttonShopItem4
+            // 
+            buttonShopItem4.BackColor = SystemColors.ActiveCaption;
+            buttonShopItem4.FlatStyle = FlatStyle.Flat;
+            buttonShopItem4.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            buttonShopItem4.Location = new Point(16, 95);
+            buttonShopItem4.Name = "buttonShopItem4";
+            buttonShopItem4.Size = new Size(40, 41);
+            buttonShopItem4.TabIndex = 48;
+            buttonShopItem4.Text = "+";
+            buttonShopItem4.UseVisualStyleBackColor = false;
+            // 
+            // labelShopItem3Cost
+            // 
+            labelShopItem3Cost.AutoSize = true;
+            labelShopItem3Cost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelShopItem3Cost.ForeColor = Color.Goldenrod;
+            labelShopItem3Cost.Location = new Point(143, 58);
+            labelShopItem3Cost.Name = "labelShopItem3Cost";
+            labelShopItem3Cost.Size = new Size(19, 14);
+            labelShopItem3Cost.TabIndex = 45;
+            labelShopItem3Cost.Text = "$5";
+            labelShopItem3Cost.Visible = false;
+            // 
+            // buttonShopItem3
+            // 
+            buttonShopItem3.FlatStyle = FlatStyle.Flat;
+            buttonShopItem3.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            buttonShopItem3.Location = new Point(133, 11);
+            buttonShopItem3.Name = "buttonShopItem3";
+            buttonShopItem3.Size = new Size(40, 41);
+            buttonShopItem3.TabIndex = 46;
+            buttonShopItem3.Text = "0";
+            buttonShopItem3.UseVisualStyleBackColor = true;
+            // 
+            // labelShopItem2Cost
+            // 
+            labelShopItem2Cost.AutoSize = true;
+            labelShopItem2Cost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelShopItem2Cost.ForeColor = Color.Goldenrod;
+            labelShopItem2Cost.Location = new Point(85, 58);
+            labelShopItem2Cost.Name = "labelShopItem2Cost";
+            labelShopItem2Cost.Size = new Size(19, 14);
+            labelShopItem2Cost.TabIndex = 43;
+            labelShopItem2Cost.Text = "$3";
+            labelShopItem2Cost.Visible = false;
+            // 
+            // buttonShopItem2
+            // 
+            buttonShopItem2.FlatStyle = FlatStyle.Flat;
+            buttonShopItem2.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            buttonShopItem2.Location = new Point(75, 11);
+            buttonShopItem2.Name = "buttonShopItem2";
+            buttonShopItem2.Size = new Size(40, 41);
+            buttonShopItem2.TabIndex = 44;
+            buttonShopItem2.Text = "5";
+            buttonShopItem2.UseVisualStyleBackColor = true;
+            // 
+            // labelShopItem1Cost
+            // 
+            labelShopItem1Cost.AutoSize = true;
+            labelShopItem1Cost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelShopItem1Cost.ForeColor = Color.Goldenrod;
+            labelShopItem1Cost.Location = new Point(26, 58);
+            labelShopItem1Cost.Name = "labelShopItem1Cost";
+            labelShopItem1Cost.Size = new Size(19, 14);
+            labelShopItem1Cost.TabIndex = 25;
+            labelShopItem1Cost.Text = "$2";
+            labelShopItem1Cost.Visible = false;
+            // 
+            // buttonShopItem1
+            // 
+            buttonShopItem1.FlatStyle = FlatStyle.Flat;
+            buttonShopItem1.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            buttonShopItem1.Location = new Point(16, 11);
+            buttonShopItem1.Name = "buttonShopItem1";
+            buttonShopItem1.Size = new Size(40, 41);
+            buttonShopItem1.TabIndex = 42;
+            buttonShopItem1.Text = "2";
+            buttonShopItem1.UseVisualStyleBackColor = true;
+            // 
+            // buttonReroll
+            // 
+            buttonReroll.Location = new Point(510, 229);
+            buttonReroll.Name = "buttonReroll";
+            buttonReroll.Size = new Size(75, 23);
+            buttonReroll.TabIndex = 40;
+            buttonReroll.Text = "Reroll";
+            buttonReroll.UseVisualStyleBackColor = true;
+            buttonReroll.Visible = false;
+            // 
+            // buttonContinueRound
+            // 
+            buttonContinueRound.Location = new Point(635, 229);
+            buttonContinueRound.Name = "buttonContinueRound";
+            buttonContinueRound.Size = new Size(75, 23);
+            buttonContinueRound.TabIndex = 41;
+            buttonContinueRound.Text = "Continue";
+            buttonContinueRound.UseVisualStyleBackColor = true;
+            buttonContinueRound.Visible = false;
+            // 
+            // labelRerollCost
+            // 
+            labelRerollCost.AutoSize = true;
+            labelRerollCost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelRerollCost.ForeColor = Color.Goldenrod;
+            labelRerollCost.Location = new Point(591, 234);
+            labelRerollCost.Name = "labelRerollCost";
+            labelRerollCost.Size = new Size(18, 14);
+            labelRerollCost.TabIndex = 51;
+            labelRerollCost.Text = "$7";
+            labelRerollCost.Visible = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(777, 21);
+            label1.Name = "label1";
+            label1.Size = new Size(205, 15);
+            label1.TabIndex = 52;
+            label1.Text = "The Entropy of Many Possibilities";
+            label1.Visible = false;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(839, 229);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 53;
+            button1.Text = "Gamble";
+            button1.UseVisualStyleBackColor = true;
+            button1.Visible = false;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.Goldenrod;
+            label2.Location = new Point(920, 234);
+            label2.Name = "label2";
+            label2.Size = new Size(19, 14);
+            label2.TabIndex = 54;
+            label2.Text = "$3";
+            label2.Visible = false;
+            // 
+            // panel1
+            // 
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label3);
+            panel1.Location = new Point(782, 40);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(200, 183);
+            panel1.TabIndex = 53;
+            panel1.Visible = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.Red;
+            label3.Location = new Point(65, 87);
+            label3.Name = "label3";
+            label3.Size = new Size(66, 15);
+            label3.TabIndex = 0;
+            label3.Text = "Nothing :(";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(455, 274);
+            ClientSize = new Size(1040, 287);
+            Controls.Add(label2);
+            Controls.Add(button1);
+            Controls.Add(label1);
+            Controls.Add(labelRerollCost);
+            Controls.Add(buttonContinueRound);
+            Controls.Add(buttonReroll);
+            Controls.Add(panelShop);
+            Controls.Add(labelShopTitle);
+            Controls.Add(labelYouWon);
+            Controls.Add(labelUsesDivide);
+            Controls.Add(labelUsesMultiply);
+            Controls.Add(labelUsesSubtract);
+            Controls.Add(labelUsesAdd);
+            Controls.Add(labelUses0);
+            Controls.Add(labelUses7);
+            Controls.Add(labelUses8);
+            Controls.Add(labelUses9);
+            Controls.Add(labelUses6);
+            Controls.Add(labelUses5);
+            Controls.Add(labelUses4);
+            Controls.Add(labelUses1);
+            Controls.Add(labelUses2);
             Controls.Add(btnRoguelike);
-            Controls.Add(label3Uses);
+            Controls.Add(labelUses3);
             Controls.Add(btnClear);
             Controls.Add(tbNumbers);
             Controls.Add(btnDivide);
@@ -422,13 +903,17 @@
             Controls.Add(btn1);
             Controls.Add(groupGame);
             Controls.Add(btnRoguelikeCalculate);
+            Controls.Add(panel1);
             Font = new Font("Fira Sans", 9.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Calculator";
-            Load += Form1_Load;
             groupGame.ResumeLayout(false);
             groupGame.PerformLayout();
+            panelShop.ResumeLayout(false);
+            panelShop.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -452,7 +937,7 @@
         private Button btnDivide;
         private TextBox tbNumbers;
         private Button btnClear;
-        private Label label3Uses;
+        private Label labelUses3;
         private Button btnRoguelike;
         private Label labelYouNeed;
         private Label labelRound;
@@ -462,5 +947,41 @@
         private Label labelNumberToGet;
         private Label labelRoundCount;
         private Label labelCoinCount;
+        private Label labelUses2;
+        private Label labelUses1;
+        private Label labelUses4;
+        private Label labelUses5;
+        private Label labelUses6;
+        private Label labelUses9;
+        private Label labelUses8;
+        private Label labelUses7;
+        private Label labelUses0;
+        private Label labelUsesAdd;
+        private Label labelUsesSubtract;
+        private Label labelUsesMultiply;
+        private Label labelUsesDivide;
+        private Label labelYouWon;
+        private Label labelShopTitle;
+        private Panel panelShop;
+        private Button buttonReroll;
+        private Button buttonContinueRound;
+        private Label labelShopItem1Cost;
+        private Button buttonShopItem1;
+        private Label labelShopItem3Cost;
+        private Button buttonShopItem3;
+        private Label labelShopItem2Cost;
+        private Button buttonShopItem2;
+        private Label labelShopItem5Cost;
+        private Button buttonShopItem5;
+        private Label labelShopItem4Cost;
+        private Button buttonShopItem4;
+        private Label labelRerollCost;
+        private Button buttonShopItem6;
+        private Label labelShopItem6Cost;
+        private Label label1;
+        private Button button1;
+        private Label label2;
+        private Panel panel1;
+        private Label label3;
     }
 }

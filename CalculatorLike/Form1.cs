@@ -1,63 +1,131 @@
+using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace CalculatorLike
 {
     public partial class Form1 : Form
     {
         private readonly CalculatorViewModel viewModel;
+        private readonly List<Label> allLabelNumberUses;
+        private readonly List<Label> allLabelOperationUses;
+        private readonly List<Control> allGameElements;
 
         public Form1()
         {
             InitializeComponent();
             viewModel = new();
+            // TODO: unsub on close event
+            viewModel.OnNewRound += OnNewRound;
+            viewModel.OnNumberUpdated += OnNumberUpdated;
+            viewModel.OnNumberUseUpdated += OnNumberUseUpdated;
+            viewModel.OnOperationUseUpdated += OnOperationUseUpdated;
+            viewModel.OnGameFinished += OnGameFinished;
+
+            allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
+            allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
+            allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, buttonContinueRound, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
+        }
+
+        private void OnGameFinished(bool isWon)
+        {
+            if (isWon)
+            {
+                labelYouWon.Visible = true;
+                btnRoguelike.Visible = true;
+                foreach (var element in allGameElements)
+                {
+                    element.Visible = false;
+                }
+
+            }
+        }
+
+        private void OnNewRound()
+        {
+            labelNumberToGet.Text = viewModel.NumberToGet.ToString();
+            labelRoundCount.Text = viewModel.Round.ToString();
+            labelCoinCount.Text = viewModel.Coins.ToString();
+        }
+
+        private void OnNumberUpdated(int number)
+        {
+            tbNumbers.Text = number.ToString();
+        }
+
+        private void OnNumberUseUpdated(int number)
+        {
+            var uses = viewModel.NumberUses[number].ToString();
+            allLabelNumberUses[number].Text = uses;
+        }
+
+        private void OnOperationUseUpdated(CalculatorOperation operation)
+        {
+            var uses = viewModel.OperationUses[operation].ToString();
+            switch (operation)
+            {
+                case CalculatorOperation.Add:
+                    labelUsesAdd.Text = uses;
+                    return;
+                case CalculatorOperation.Subtract:
+                    labelUsesSubtract.Text = uses;
+                    return;
+                case CalculatorOperation.Multiply:
+                    labelUsesMultiply.Text = uses;
+                    return;
+                case CalculatorOperation.Divide:
+                    labelUsesDivide.Text = uses;
+                    return;
+            }
         }
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "1";
+            viewModel.AppendNumber(1);
         }
 
         private void btn2_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "2";
+            viewModel.AppendNumber(2);
         }
 
         private void btn3_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "3";
+            viewModel.AppendNumber(3);
         }
 
         private void btn4_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "4";
+            viewModel.AppendNumber(4);
         }
 
         private void btn5_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "5";
+            viewModel.AppendNumber(5);
         }
 
         private void btn6_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "6";
+            viewModel.AppendNumber(6);
         }
 
         private void btn7_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "7";
+            viewModel.AppendNumber(7);
         }
 
         private void btn8_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "8";
+            viewModel.AppendNumber(8);
         }
 
         private void btn9_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "9";
+            viewModel.AppendNumber(9);
         }
 
         private void btn0_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text += "0";
+            viewModel.AppendNumber(0);
         }
 
         private void btnplus_Click(object sender, EventArgs e)
@@ -82,74 +150,41 @@ namespace CalculatorLike
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            bool isParsed = int.TryParse(tbNumbers.Text, out int input);
-            if (!isParsed)
-            {
-                return;
-            }
-
-            viewModel.SetCurrentNumber(input);
-            var result = viewModel.Calculate();
-            tbNumbers.Text = result.ToString();
+            viewModel.Calculate();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            tbNumbers.Text = "";
+            viewModel.ClearNumber();
         }
 
         private void setOperation(CalculatorOperation operation)
         {
-            bool isParsed = int.TryParse(tbNumbers.Text, out int input);
-            if (!isParsed)
-            {
-                return;
-            }
-
-            viewModel.SetCurrentNumber(input);
             viewModel.SetOperation(operation);
-            // TODO: sync this up nicer
-            tbNumbers.Text = "";
-        }
-
-        private void tbNumbers_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnRoguelike_Click(object sender, EventArgs e)
         {
             // TODO: check if in Roguelike, in which case do nothing
             viewModel.StartGame();
-            groupGame.Visible = true;
-            labelYouNeed.Visible = true;
-            labelRound.Visible = true;
-            labelCoins.Visible = true;
-            label3Uses.Visible = true;
 
-            btnRoguelikeCalculate.Visible = true;
+            foreach (var element in allGameElements)
+            {
+                element.Visible = true;
+            }
+
+            labelYouWon.Visible = false;
             btnRoguelike.Visible = false;
+            tbNumbers.Text = viewModel.CurrentInput.ToString();
 
-            labelNumberToGet.Text = viewModel.GenerateRandomNumberToGet().ToString();
-            labelNumberToGet.Visible = true;
-
-            labelRoundCount.Visible = true;
-            labelCoinCount.Visible = true;
-        }
-
-        private void labelRound_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
+            foreach (var label in allLabelNumberUses)
+            {
+                label.Visible = true;
+            }
+            foreach (var label in allLabelOperationUses)
+            {
+                label.Visible = true;
+            }
         }
     }
 }
