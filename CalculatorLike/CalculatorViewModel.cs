@@ -15,6 +15,8 @@ class CalculatorViewModel
     private const int DEFAULT_STARTING_USE_COUNT = 2;
     private const int TIME_TO_SOLVE_IN_SECONDS = 60;
     private const int SECONDS_REMOVED_PER_ROUND = 4;
+    private const int TIMER_SECONDS_PER_TICK = 5;
+    private const int OLINS_WARNING_AT_SECONDS = 30;
 
     // Game
     private bool isInRoguelikeMode;
@@ -130,7 +132,7 @@ class CalculatorViewModel
         }
 
         OnNewRound?.Invoke();
-        solutionTimer.Interval = 5000;
+        solutionTimer.Interval = TIMER_SECONDS_PER_TICK * 1000;
         solutionTimer.Tick += SolutionTimer_Tick; 
         solutionTimer.Start();
     }
@@ -154,7 +156,7 @@ class CalculatorViewModel
 
         OnNewRound?.Invoke();
         OnIsOlinsImpatient?.Invoke(false);
-        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - (Round * SECONDS_REMOVED_PER_ROUND);
+        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - (Round * 4);
     }
 
     private void GameWon()
@@ -191,9 +193,9 @@ class CalculatorViewModel
     {
         Console.WriteLine($"{secondsLeftForSolution}");
 
-        secondsLeftForSolution -= 5;
+        secondsLeftForSolution -= TIMER_SECONDS_PER_TICK;
 
-        if (secondsLeftForSolution <= 30)
+        if (secondsLeftForSolution <= OLINS_WARNING_AT_SECONDS)
         {
             OnIsOlinsImpatient?.Invoke(true);
         }
@@ -211,8 +213,5 @@ class CalculatorViewModel
  * Show random shop to buy keys from
  * Add reroll to shop
  * Higher you go, the more difficult the number is
- * Make the use count number be red if 0 or green if positive
- * Add the loss condition with timer counting down for each number you try to get
  * Refactor code to have Calculator class and the Game be separate from the ViewModel
- * [Maybe] Custom powerup buttons
  */
