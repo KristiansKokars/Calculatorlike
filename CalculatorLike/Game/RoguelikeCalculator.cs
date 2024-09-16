@@ -134,7 +134,7 @@ class RoguelikeCalculator
         SpecialActionUses.Clear();
         foreach (SpecialAction specialAction in Enum.GetValues(typeof(SpecialAction)))
         {
-            SpecialActionUses.Add(specialAction, 2);
+            SpecialActionUses.Add(specialAction, 0);
             OnSpecialActionUseUpdated?.Invoke(specialAction);
         }
 
