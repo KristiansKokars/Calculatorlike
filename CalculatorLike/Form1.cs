@@ -251,6 +251,8 @@ public partial class Form1 : Form
 
     private void OnIsOlinsImpatient(bool isImpatient)
     {
+        labelOlinsMessage.Text = "Oliņš grows impatient...";
+        labelOlinsMessage.ForeColor = Color.DarkRed;
         labelOlinsMessage.Visible = isImpatient;
     }
 

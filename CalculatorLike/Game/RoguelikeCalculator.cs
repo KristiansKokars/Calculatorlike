@@ -5,18 +5,14 @@ namespace CalculatorLike.Game;
 
 /*
  * TODO list for game:
- * Make the last 4 rounds extra hard, last one needs 4 numbers
  * Add division by zero game over screen and error in normal mode
- * Every 5th round is boss
-
- * Higher you go, the more difficult the number is
- * Make shop give more items on the final rounds
  */
 class RoguelikeCalculator
 {
     private const int COINS_PER_ROUND = 16;
     private const int MAX_ROUND_COUNT = 20;
-    private const int DEFAULT_STARTING_USE_COUNT = 3;
+    private const int DEFAULT_STARTING_NUMBER_USE_COUNT = 2;
+    private const int DEFAULT_STARTING_OPERATION_USE_COUNT = 3;
     private const int TIME_TO_SOLVE_IN_SECONDS = 60;
     private const int SECONDS_REMOVED_PER_ROUND = 4;
     private const int TIMER_SECONDS_PER_TICK = 5;
@@ -130,27 +126,27 @@ class RoguelikeCalculator
     public void StartGame()
     {
         UpdateRandomNumberToGet();
-        Round = 0;
+        Round = 1;
         Coins = 0;
 
-        var randomStartingNumber = GenerateRandomNumberToGet();
+        var randomStartingNumber = random.Next(1, 100);
         while (randomStartingNumber == NumberToGet)
         {
-            randomStartingNumber = GenerateRandomNumberToGet();
+            randomStartingNumber = random.Next(1, 100);
         }
         calculator.SetCalculatorNumber(randomStartingNumber);
 
         NumberUses.Clear();
         for (int i = 0; i < 10; i++)
         {
-            NumberUses.Add(i, DEFAULT_STARTING_USE_COUNT);
+            NumberUses.Add(i, DEFAULT_STARTING_NUMBER_USE_COUNT);
             OnNumberUseUpdated?.Invoke(i);
         }
 
         OperationUses.Clear();
         foreach (CalculatorOperation operation in Enum.GetValues(typeof(CalculatorOperation)))
         {
-            OperationUses.Add(operation, DEFAULT_STARTING_USE_COUNT);
+            OperationUses.Add(operation, DEFAULT_STARTING_OPERATION_USE_COUNT);
             OnOperationUseUpdated?.Invoke(operation);
         }
 
@@ -221,12 +217,12 @@ class RoguelikeCalculator
     private void FinishCurrentRound()
     {
         Coins += COINS_PER_ROUND;
-        NumberToGet = random.Next(1, 100);
         Round += 1;
+        NumberToGet = GenerateRandomNumberToGet();
         OnIsOlinsImpatient?.Invoke(false);
         secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
 
-        if (Round == MAX_ROUND_COUNT)
+        if (Round == MAX_ROUND_COUNT + 1)
         {
             GameWon();
             return;
@@ -297,6 +293,7 @@ class RoguelikeCalculator
 
     private void GameWon()
     {
+        solutionTimer.Stop();
         OnGameFinished?.Invoke(true);
     }
 
@@ -326,7 +323,30 @@ class RoguelikeCalculator
 
     private int GenerateRandomNumberToGet()
     {
-        var generatedNumber = random.Next(1, 100);
+        int generatedNumber = NumberToGet;
+        // TODO: could be moved up somewhere
+        List<int> lastRounds = [16, 17, 18, 19];
+
+        while (generatedNumber == NumberToGet)
+        {
+            if (Round == 20)
+            {
+                generatedNumber = random.Next(1000, 9999);
+            }
+            else if (lastRounds.Contains(Round))
+            {
+                generatedNumber = random.Next(1, 999);
+            }
+            else if (Round >= 5 && Round % 5 == 0)
+            {
+                generatedNumber = random.Next(100, 999);
+            }
+            else 
+            {
+                generatedNumber = random.Next(1, 100);
+            }
+        }
+
         return generatedNumber;
     }
 

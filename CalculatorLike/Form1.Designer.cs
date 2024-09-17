@@ -406,7 +406,7 @@
             labelCoinCount.AutoSize = true;
             labelCoinCount.Font = new Font("Fira Sans", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelCoinCount.ForeColor = Color.Goldenrod;
-            labelCoinCount.Location = new Point(137, 47);
+            labelCoinCount.Location = new Point(128, 47);
             labelCoinCount.Name = "labelCoinCount";
             labelCoinCount.Size = new Size(26, 19);
             labelCoinCount.TabIndex = 24;
@@ -418,7 +418,7 @@
             labelRoundCount.AutoSize = true;
             labelRoundCount.Font = new Font("Fira Sans", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelRoundCount.ForeColor = Color.Black;
-            labelRoundCount.Location = new Point(147, 30);
+            labelRoundCount.Location = new Point(128, 29);
             labelRoundCount.Name = "labelRoundCount";
             labelRoundCount.Size = new Size(16, 19);
             labelRoundCount.TabIndex = 23;
@@ -430,11 +430,12 @@
             labelNumberToGet.AutoSize = true;
             labelNumberToGet.Font = new Font("Fira Sans", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelNumberToGet.ForeColor = Color.Red;
-            labelNumberToGet.Location = new Point(139, 11);
+            labelNumberToGet.Location = new Point(128, 11);
             labelNumberToGet.Name = "labelNumberToGet";
             labelNumberToGet.Size = new Size(24, 19);
             labelNumberToGet.TabIndex = 22;
             labelNumberToGet.Text = "12";
+            labelNumberToGet.TextAlign = ContentAlignment.MiddleRight;
             labelNumberToGet.Visible = false;
             // 
             // btnRoguelikeCalculate
