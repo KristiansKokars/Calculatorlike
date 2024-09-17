@@ -105,11 +105,16 @@
             btnSpecialReroll = new Button();
             labelSpecialReroll = new Label();
             panelShopContainer = new Panel();
+            panelTermsAndConditions = new Panel();
+            buttonAcceptTOS = new Button();
+            richTextBox1 = new RichTextBox();
+            label4 = new Label();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).BeginInit();
             panelShopContainer.SuspendLayout();
+            panelTermsAndConditions.SuspendLayout();
             SuspendLayout();
             // 
             // btn1
@@ -805,7 +810,7 @@
             // 
             // buttonContinueRound
             // 
-            buttonContinueRound.Location = new Point(709, 265);
+            buttonContinueRound.Location = new Point(220, 242);
             buttonContinueRound.Name = "buttonContinueRound";
             buttonContinueRound.Size = new Size(75, 23);
             buttonContinueRound.TabIndex = 41;
@@ -829,44 +834,40 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(777, 21);
+            label1.Location = new Point(266, 9);
             label1.Name = "label1";
             label1.Size = new Size(205, 15);
             label1.TabIndex = 52;
             label1.Text = "The Entropy of Many Possibilities";
-            label1.Visible = false;
             // 
             // button1
             // 
-            button1.Location = new Point(839, 229);
+            button1.Location = new Point(328, 217);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 53;
             button1.Text = "Gamble";
             button1.UseVisualStyleBackColor = true;
-            button1.Visible = false;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.Goldenrod;
-            label2.Location = new Point(920, 234);
+            label2.Location = new Point(409, 222);
             label2.Name = "label2";
             label2.Size = new Size(19, 14);
             label2.TabIndex = 54;
             label2.Text = "$3";
-            label2.Visible = false;
             // 
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(label3);
-            panel1.Location = new Point(782, 40);
+            panel1.Location = new Point(271, 28);
             panel1.Name = "panel1";
             panel1.Size = new Size(200, 183);
             panel1.TabIndex = 53;
-            panel1.Visible = false;
             // 
             // label3
             // 
@@ -1043,21 +1044,65 @@
             // 
             // panelShopContainer
             // 
+            panelShopContainer.Controls.Add(panelTermsAndConditions);
             panelShopContainer.Controls.Add(labelShopTitle);
             panelShopContainer.Controls.Add(panelShop);
             panelShopContainer.Controls.Add(buttonReroll);
             panelShopContainer.Controls.Add(labelRerollCost);
+            panelShopContainer.Controls.Add(buttonContinueRound);
+            panelShopContainer.Controls.Add(label1);
+            panelShopContainer.Controls.Add(panel1);
+            panelShopContainer.Controls.Add(button1);
+            panelShopContainer.Controls.Add(label2);
             panelShopContainer.Location = new Point(475, 14);
             panelShopContainer.Name = "panelShopContainer";
-            panelShopContainer.Size = new Size(270, 248);
+            panelShopContainer.Size = new Size(509, 274);
             panelShopContainer.TabIndex = 67;
             panelShopContainer.Visible = false;
+            // 
+            // panelTermsAndConditions
+            // 
+            panelTermsAndConditions.Controls.Add(buttonAcceptTOS);
+            panelTermsAndConditions.Controls.Add(richTextBox1);
+            panelTermsAndConditions.Controls.Add(label4);
+            panelTermsAndConditions.Location = new Point(266, 3);
+            panelTermsAndConditions.Name = "panelTermsAndConditions";
+            panelTermsAndConditions.Size = new Size(225, 237);
+            panelTermsAndConditions.TabIndex = 68;
+            // 
+            // buttonAcceptTOS
+            // 
+            buttonAcceptTOS.Location = new Point(71, 211);
+            buttonAcceptTOS.Name = "buttonAcceptTOS";
+            buttonAcceptTOS.Size = new Size(75, 23);
+            buttonAcceptTOS.TabIndex = 69;
+            buttonAcceptTOS.Text = "Accept";
+            buttonAcceptTOS.UseVisualStyleBackColor = true;
+            buttonAcceptTOS.Click += buttonAcceptTOS_Click;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Font = new Font("Fira Sans", 2.95F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            richTextBox1.Location = new Point(6, 33);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(216, 175);
+            richTextBox1.TabIndex = 69;
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(9, 15);
+            label4.Name = "label4";
+            label4.Size = new Size(197, 15);
+            label4.TabIndex = 0;
+            label4.Text = "Gambling Terms and Conditions";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1135, 595);
+            ClientSize = new Size(1264, 595);
             Controls.Add(panelShopContainer);
             Controls.Add(pictureGameLost);
             Controls.Add(labelSpecialReroll);
@@ -1071,10 +1116,6 @@
             Controls.Add(btnSpecialSqrt);
             Controls.Add(btnSpecialModulus);
             Controls.Add(labelOlinsMessage);
-            Controls.Add(label2);
-            Controls.Add(button1);
-            Controls.Add(label1);
-            Controls.Add(buttonContinueRound);
             Controls.Add(labelYouWon);
             Controls.Add(labelUsesDivide);
             Controls.Add(labelUsesMultiply);
@@ -1110,7 +1151,6 @@
             Controls.Add(btn1);
             Controls.Add(groupGame);
             Controls.Add(btnRoguelikeCalculate);
-            Controls.Add(panel1);
             Font = new Font("Fira Sans", 9.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
@@ -1124,6 +1164,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).EndInit();
             panelShopContainer.ResumeLayout(false);
             panelShopContainer.PerformLayout();
+            panelTermsAndConditions.ResumeLayout(false);
+            panelTermsAndConditions.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1206,5 +1248,9 @@
         private Button btnSpecialReroll;
         private Label labelSpecialReroll;
         private Panel panelShopContainer;
+        private Panel panelTermsAndConditions;
+        private Label label4;
+        private RichTextBox richTextBox1;
+        private Button buttonAcceptTOS;
     }
 }

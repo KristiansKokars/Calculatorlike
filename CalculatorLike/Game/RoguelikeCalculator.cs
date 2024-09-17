@@ -5,17 +5,18 @@ namespace CalculatorLike.Game;
 
 /*
  * TODO list for game:
- * Add gambling mechanic
- * Higher you go, the more difficult the number is
  * Make the last 4 rounds extra hard, last one needs 4 numbers
- * Make shop give more items on the final rounds
  * Add division by zero game over screen and error in normal mode
+ * Every 5th round is boss
+
+ * Higher you go, the more difficult the number is
+ * Make shop give more items on the final rounds
  */
 class RoguelikeCalculator
 {
     private const int COINS_PER_ROUND = 16;
     private const int MAX_ROUND_COUNT = 20;
-    private const int DEFAULT_STARTING_USE_COUNT = 2;
+    private const int DEFAULT_STARTING_USE_COUNT = 3;
     private const int TIME_TO_SOLVE_IN_SECONDS = 60;
     private const int SECONDS_REMOVED_PER_ROUND = 4;
     private const int TIMER_SECONDS_PER_TICK = 5;
@@ -24,6 +25,7 @@ class RoguelikeCalculator
 
     private Random random = new();
     private BasicCalculator calculator;
+    private GamblingMachine gamblingMachine = new();
     private CalculatorOperation? currentOperation;
     private readonly Timer solutionTimer = new();
     private int secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
@@ -49,6 +51,12 @@ class RoguelikeCalculator
     public event Action? OnAvailableShopItemsUpdated;
     public event Action? OnCoinsUpdated;
     public event Action<int>? OnRerollCostUpdated;
+
+    public event Action<bool>? HasConsentedToGamblingTOSUpdated
+    {
+        add { gamblingMachine.HasConsentedToGamblingTOSUpdated += value; }
+        remove { gamblingMachine.HasConsentedToGamblingTOSUpdated -= value; }
+    }
 
     public RoguelikeCalculator(BasicCalculator calculator)
     {
@@ -203,6 +211,11 @@ class RoguelikeCalculator
         SetCoins(Coins - RerollCost);
 
         GenerateNewShopItems(RerollCost);
+    }
+
+    public void AcceptGamblingTOS()
+    {
+        gamblingMachine.ConsentToGamblingTOS();
     }
 
     private void FinishCurrentRound()

@@ -28,6 +28,7 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnIsShoppingUpdated += IsShoppingUpdated;
         viewModel.RoguelikeCalculator.OnCoinsUpdated += OnCoinsUpdated;
         viewModel.RoguelikeCalculator.OnRerollCostUpdated += OnRerollCostUpdated;
+        viewModel.RoguelikeCalculator.HasConsentedToGamblingTOSUpdated += HasConsentedToGamblingTOSUpdated;
         viewModel.OnGameFinished += OnGameFinished;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
@@ -35,6 +36,11 @@ public partial class Form1 : Form
         allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
+    }
+
+    private void HasConsentedToGamblingTOSUpdated(bool hasConsented)
+    {
+        panelTermsAndConditions.Visible = !hasConsented;
     }
 
     private void OnRerollCostUpdated(int rerollCost)
@@ -441,5 +447,10 @@ public partial class Form1 : Form
     private void buttonReroll_Click(object sender, EventArgs e)
     {
         viewModel.RoguelikeCalculator.RerollShopItems();
+    }
+
+    private void buttonAcceptTOS_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.AcceptGamblingTOS();
     }
 }
