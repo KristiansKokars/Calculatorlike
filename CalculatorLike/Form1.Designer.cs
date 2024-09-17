@@ -93,7 +93,7 @@
             panel1 = new Panel();
             label3 = new Label();
             pictureGameLost = new PictureBox();
-            labelOlinsIsImpatient = new Label();
+            labelOlinsMessage = new Label();
             btnSpecialModulus = new Button();
             btnSpecialSqrt = new Button();
             btnSpecialSquare = new Button();
@@ -104,10 +104,12 @@
             labelSpecialCashToMoney = new Label();
             btnSpecialReroll = new Button();
             labelSpecialReroll = new Label();
+            panelShopContainer = new Panel();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).BeginInit();
+            panelShopContainer.SuspendLayout();
             SuspendLayout();
             // 
             // btn1
@@ -374,9 +376,9 @@
             labelCoins.Font = new Font("Fira Sans", 9.749999F);
             labelCoins.Location = new Point(6, 51);
             labelCoins.Name = "labelCoins";
-            labelCoins.Size = new Size(142, 15);
+            labelCoins.Size = new Size(46, 15);
             labelCoins.TabIndex = 21;
-            labelCoins.Text = "Coins (Shop on Right): ";
+            labelCoins.Text = "Coins: ";
             labelCoins.Visible = false;
             // 
             // groupGame
@@ -399,11 +401,11 @@
             labelCoinCount.AutoSize = true;
             labelCoinCount.Font = new Font("Fira Sans", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelCoinCount.ForeColor = Color.Goldenrod;
-            labelCoinCount.Location = new Point(147, 47);
+            labelCoinCount.Location = new Point(137, 47);
             labelCoinCount.Name = "labelCoinCount";
-            labelCoinCount.Size = new Size(18, 19);
+            labelCoinCount.Size = new Size(26, 19);
             labelCoinCount.TabIndex = 24;
-            labelCoinCount.Text = "0";
+            labelCoinCount.Text = "$0";
             labelCoinCount.Visible = false;
             // 
             // labelRoundCount
@@ -615,7 +617,7 @@
             // labelShopTitle
             // 
             labelShopTitle.AutoSize = true;
-            labelShopTitle.Location = new Point(536, 21);
+            labelShopTitle.Location = new Point(58, 9);
             labelShopTitle.Name = "labelShopTitle";
             labelShopTitle.Size = new Size(147, 15);
             labelShopTitle.TabIndex = 38;
@@ -637,7 +639,7 @@
             panelShop.Controls.Add(buttonShopItem2);
             panelShop.Controls.Add(labelShopItem1Cost);
             panelShop.Controls.Add(buttonShopItem1);
-            panelShop.Location = new Point(510, 39);
+            panelShop.Location = new Point(32, 27);
             panelShop.Name = "panelShop";
             panelShop.Size = new Size(200, 183);
             panelShop.TabIndex = 39;
@@ -666,6 +668,7 @@
             buttonShopItem6.TabIndex = 51;
             buttonShopItem6.Text = "/";
             buttonShopItem6.UseVisualStyleBackColor = false;
+            buttonShopItem6.Click += buttonShopItem6_Click;
             // 
             // labelShopItem5Cost
             // 
@@ -690,6 +693,7 @@
             buttonShopItem5.TabIndex = 50;
             buttonShopItem5.Text = "/";
             buttonShopItem5.UseVisualStyleBackColor = false;
+            buttonShopItem5.Click += buttonShopItem5_Click;
             // 
             // labelShopItem4Cost
             // 
@@ -714,6 +718,7 @@
             buttonShopItem4.TabIndex = 48;
             buttonShopItem4.Text = "+";
             buttonShopItem4.UseVisualStyleBackColor = false;
+            buttonShopItem4.Click += buttonShopItem4_Click;
             // 
             // labelShopItem3Cost
             // 
@@ -737,6 +742,7 @@
             buttonShopItem3.TabIndex = 46;
             buttonShopItem3.Text = "0";
             buttonShopItem3.UseVisualStyleBackColor = true;
+            buttonShopItem3.Click += buttonShopItem3_Click;
             // 
             // labelShopItem2Cost
             // 
@@ -760,6 +766,7 @@
             buttonShopItem2.TabIndex = 44;
             buttonShopItem2.Text = "5";
             buttonShopItem2.UseVisualStyleBackColor = true;
+            buttonShopItem2.Click += buttonShopItem2_Click;
             // 
             // labelShopItem1Cost
             // 
@@ -783,16 +790,18 @@
             buttonShopItem1.TabIndex = 42;
             buttonShopItem1.Text = "2";
             buttonShopItem1.UseVisualStyleBackColor = true;
+            buttonShopItem1.Click += buttonShopItem1_Click;
             // 
             // buttonReroll
             // 
-            buttonReroll.Location = new Point(574, 229);
+            buttonReroll.Location = new Point(96, 217);
             buttonReroll.Name = "buttonReroll";
             buttonReroll.Size = new Size(75, 23);
             buttonReroll.TabIndex = 40;
             buttonReroll.Text = "Reroll";
             buttonReroll.UseVisualStyleBackColor = true;
             buttonReroll.Visible = false;
+            buttonReroll.Click += buttonReroll_Click;
             // 
             // buttonContinueRound
             // 
@@ -803,13 +812,14 @@
             buttonContinueRound.Text = "Continue";
             buttonContinueRound.UseVisualStyleBackColor = true;
             buttonContinueRound.Visible = false;
+            buttonContinueRound.Click += buttonContinueRound_Click;
             // 
             // labelRerollCost
             // 
             labelRerollCost.AutoSize = true;
             labelRerollCost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelRerollCost.ForeColor = Color.Goldenrod;
-            labelRerollCost.Location = new Point(655, 234);
+            labelRerollCost.Location = new Point(177, 222);
             labelRerollCost.Name = "labelRerollCost";
             labelRerollCost.Size = new Size(18, 14);
             labelRerollCost.TabIndex = 51;
@@ -880,17 +890,17 @@
             pictureGameLost.TabStop = false;
             pictureGameLost.Visible = false;
             // 
-            // labelOlinsIsImpatient
+            // labelOlinsMessage
             // 
-            labelOlinsIsImpatient.AutoSize = true;
-            labelOlinsIsImpatient.Font = new Font("Fira Sans", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelOlinsIsImpatient.ForeColor = Color.Red;
-            labelOlinsIsImpatient.Location = new Point(12, 40);
-            labelOlinsIsImpatient.Name = "labelOlinsIsImpatient";
-            labelOlinsIsImpatient.Size = new Size(168, 18);
-            labelOlinsIsImpatient.TabIndex = 56;
-            labelOlinsIsImpatient.Text = "Oliņš grows impatient...";
-            labelOlinsIsImpatient.Visible = false;
+            labelOlinsMessage.AutoSize = true;
+            labelOlinsMessage.Font = new Font("Fira Sans", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelOlinsMessage.ForeColor = Color.Red;
+            labelOlinsMessage.Location = new Point(12, 40);
+            labelOlinsMessage.Name = "labelOlinsMessage";
+            labelOlinsMessage.Size = new Size(168, 18);
+            labelOlinsMessage.TabIndex = 56;
+            labelOlinsMessage.Text = "Oliņš grows impatient...";
+            labelOlinsMessage.Visible = false;
             // 
             // btnSpecialModulus
             // 
@@ -1031,11 +1041,24 @@
             labelSpecialReroll.Text = "0";
             labelSpecialReroll.Visible = false;
             // 
+            // panelShopContainer
+            // 
+            panelShopContainer.Controls.Add(labelShopTitle);
+            panelShopContainer.Controls.Add(panelShop);
+            panelShopContainer.Controls.Add(buttonReroll);
+            panelShopContainer.Controls.Add(labelRerollCost);
+            panelShopContainer.Location = new Point(475, 14);
+            panelShopContainer.Name = "panelShopContainer";
+            panelShopContainer.Size = new Size(270, 248);
+            panelShopContainer.TabIndex = 67;
+            panelShopContainer.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1135, 595);
+            Controls.Add(panelShopContainer);
             Controls.Add(pictureGameLost);
             Controls.Add(labelSpecialReroll);
             Controls.Add(btnSpecialReroll);
@@ -1047,15 +1070,11 @@
             Controls.Add(btnSpecialSquare);
             Controls.Add(btnSpecialSqrt);
             Controls.Add(btnSpecialModulus);
-            Controls.Add(labelOlinsIsImpatient);
+            Controls.Add(labelOlinsMessage);
             Controls.Add(label2);
             Controls.Add(button1);
             Controls.Add(label1);
-            Controls.Add(labelRerollCost);
             Controls.Add(buttonContinueRound);
-            Controls.Add(buttonReroll);
-            Controls.Add(panelShop);
-            Controls.Add(labelShopTitle);
             Controls.Add(labelYouWon);
             Controls.Add(labelUsesDivide);
             Controls.Add(labelUsesMultiply);
@@ -1103,6 +1122,8 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).EndInit();
+            panelShopContainer.ResumeLayout(false);
+            panelShopContainer.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1173,7 +1194,7 @@
         private Panel panel1;
         private Label label3;
         private PictureBox pictureGameLost;
-        private Label labelOlinsIsImpatient;
+        private Label labelOlinsMessage;
         private Button btnSpecialModulus;
         private Button btnSpecialSqrt;
         private Button btnSpecialSquare;
@@ -1184,5 +1205,6 @@
         private Label labelSpecialCashToMoney;
         private Button btnSpecialReroll;
         private Label labelSpecialReroll;
+        private Panel panelShopContainer;
     }
 }

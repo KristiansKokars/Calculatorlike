@@ -5,7 +5,6 @@ namespace CalculatorLike.Game;
 
 /*
  * TODO list for game:
- * Show random shop to buy keys from
  * Add reroll to shop
  * Add gambling mechanic
  * Higher you go, the more difficult the number is
@@ -48,6 +47,7 @@ class RoguelikeCalculator
     public event Action<bool>? OnIsOlinsImpatient;
     public event Action<bool>? OnIsShoppingUpdated;
     public event Action? OnAvailableShopItemsUpdated;
+    public event Action? OnCoinsUpdated;
 
     public RoguelikeCalculator(BasicCalculator calculator)
     {
@@ -158,6 +158,43 @@ class RoguelikeCalculator
         solutionTimer.Start();
     }
 
+    public void StartNextRound()
+    {
+        if (!isShopping) return;
+
+        SetIsShopping(false);
+        OnNewRound?.Invoke();
+        OnIsOlinsImpatient?.Invoke(false);
+        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - Round * 4;
+    }
+
+    public void BuyShopItem(int itemIndex)
+    {
+        var itemToBuy = AvailableShopItems[itemIndex];
+        if (itemToBuy.Cost > Coins) return;
+
+        SetCoins(Coins - itemToBuy.Cost);
+
+        if (itemToBuy is ShopItem.NumberItem numberItem)
+        {
+            NumberUses[numberItem.Number] = NumberUses[numberItem.Number] + 1;
+            OnNumberUseUpdated?.Invoke(numberItem.Number);
+        }
+        if (itemToBuy is ShopItem.OperationItem operationItem)
+        {
+            OperationUses[operationItem.Operation] = OperationUses[operationItem.Operation] + 1;
+            OnOperationUseUpdated?.Invoke(operationItem.Operation);
+        }
+        if (itemToBuy is ShopItem.SpecialActionItem specialActionItem)
+        {
+            SpecialActionUses[specialActionItem.SpecialAction] = SpecialActionUses[specialActionItem.SpecialAction] + 1;
+            OnSpecialActionUseUpdated?.Invoke(specialActionItem.SpecialAction);
+        }
+
+        AvailableShopItems.Remove(itemIndex);
+        OnAvailableShopItemsUpdated?.Invoke();
+    }
+
     private void FinishCurrentRound()
     {
         Coins += COINS_PER_ROUND;
@@ -174,16 +211,6 @@ class RoguelikeCalculator
 
         GenerateNewShopItems();
         SetIsShopping(true);
-    }
-
-    private void StartNextRound()
-    {
-        if (!isShopping) return;
-
-        SetIsShopping(false);
-        OnNewRound?.Invoke();
-        OnIsOlinsImpatient?.Invoke(false);
-        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - Round * 4;
     }
 
     private void GenerateNewShopItems()
@@ -275,6 +302,12 @@ class RoguelikeCalculator
     {
         this.isShopping = isShopping;
         OnIsShoppingUpdated?.Invoke(isShopping);
+    }
+
+    private void SetCoins(int coins)
+    {
+        Coins = coins;
+        OnCoinsUpdated?.Invoke();
     }
 
     private void SolutionTimer_Tick(object? sender, EventArgs e)

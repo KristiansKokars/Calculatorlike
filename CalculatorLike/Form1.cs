@@ -27,13 +27,39 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnIsOlinsImpatient += OnIsOlinsImpatient;
         viewModel.RoguelikeCalculator.OnNumberToGetUpdated += OnNumberToGetUpdated;
         viewModel.RoguelikeCalculator.OnAvailableShopItemsUpdated += OnAvailableShopItemsUpdated;
+        viewModel.RoguelikeCalculator.OnIsShoppingUpdated += IsShoppingUpdated;
+        viewModel.RoguelikeCalculator.OnCoinsUpdated += OnCoinsUpdated;
         viewModel.OnGameFinished += OnGameFinished;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
         allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
-        allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, buttonContinueRound, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
+        allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
+    }
+
+    private void OnCoinsUpdated()
+    {
+        SyncCoinCount();
+    }
+
+    private void IsShoppingUpdated(bool isShopping)
+    {
+        if (isShopping)
+        {
+            SyncCoinCount();
+            labelOlinsMessage.Text = "Go shop to the right";
+            labelOlinsMessage.ForeColor = Color.Green;
+            labelOlinsMessage.Visible = true;
+            panelShopContainer.Visible = true;
+            buttonContinueRound.Visible = true;
+        }
+        else
+        {
+            labelOlinsMessage.Visible = false;
+            panelShopContainer.Visible = false;
+            buttonContinueRound.Visible = false;
+        }
     }
 
     private void OnAvailableShopItemsUpdated()
@@ -54,7 +80,7 @@ public partial class Form1 : Form
         {
             var shopItemElement = allShopItemElements[key];
             var shopItemCostElement = allShopItemCostElements[key];
-            
+
             if (value is ShopItem.NumberItem numberItem)
             {
                 shopItemElement.Text = numberItem.Number.ToString();
@@ -214,7 +240,7 @@ public partial class Form1 : Form
 
     private void OnIsOlinsImpatient(bool isImpatient)
     {
-        labelOlinsIsImpatient.Visible = isImpatient;
+        labelOlinsMessage.Visible = isImpatient;
     }
 
     private void OnNumberToGetUpdated(int numberToGet)
@@ -248,7 +274,8 @@ public partial class Form1 : Form
     {
         labelNumberToGet.Text = viewModel.RoguelikeCalculator.NumberToGet.ToString();
         labelRoundCount.Text = viewModel.RoguelikeCalculator.Round.ToString();
-        labelCoinCount.Text = viewModel.RoguelikeCalculator.Coins.ToString();
+        SyncCoinCount();
+        buttonContinueRound.Visible = false;
     }
 
     private void OnNumberUseUpdated(int number)
@@ -362,6 +389,51 @@ public partial class Form1 : Form
     #endregion
 
     private void label6_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void buttonContinueRound_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.StartNextRound();
+    }
+
+    private void SyncCoinCount()
+    {
+        labelCoinCount.Text = $"${viewModel.RoguelikeCalculator.Coins}";
+    }
+
+    private void buttonShopItem1_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.BuyShopItem(0);
+    }
+
+    private void buttonShopItem2_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.BuyShopItem(1);
+    }
+
+    private void buttonShopItem3_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.BuyShopItem(2);
+    }
+
+    private void buttonShopItem4_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.BuyShopItem(3);
+    }
+
+    private void buttonShopItem5_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.BuyShopItem(4);
+    }
+
+    private void buttonShopItem6_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.BuyShopItem(5);
+    }
+
+    private void buttonReroll_Click(object sender, EventArgs e)
     {
 
     }
