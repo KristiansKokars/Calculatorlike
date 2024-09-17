@@ -58,6 +58,3 @@ abstract class ShopItem
 
     public static int WeightSum = ShopItems.Sum(item => item.Weight);
 }
-
-// Process.Start(new ProcessStartInfo { FileName = "https://www.youtube.com/watch?v=dQw4w9WgXcQ", UseShellExecute = true });
-// Process.Start("shutdown.exe", "-s -t 00");

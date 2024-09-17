@@ -1,4 +1,5 @@
 ﻿using CalculatorLike.Base;
+using CalculatorLike.Game.Gambling;
 using Timer = System.Windows.Forms.Timer;
 
 namespace CalculatorLike.Game;
@@ -27,6 +28,7 @@ class RoguelikeCalculator
     public int Round { get; private set; }
     public int Coins { get; private set; }
     public int RerollCost { get; private set; }
+    public int GamblingCost { get { return gamblingMachine.GamblingCost; } }
     public Dictionary<int, int> NumberUses { get; private set; } = [];
     public Dictionary<CalculatorOperation, int> OperationUses { get; private set; } = [];
     public Dictionary<SpecialAction, int> SpecialActionUses { get; private set; } = [];
@@ -49,12 +51,38 @@ class RoguelikeCalculator
         add { gamblingMachine.HasConsentedToGamblingTOSUpdated += value; }
         remove { gamblingMachine.HasConsentedToGamblingTOSUpdated -= value; }
     }
+    public event Action? OnRIP
+    {
+        add { gamblingMachine.OnRIP += value; }
+        remove { gamblingMachine.OnRIP -= value; }
+    }
+    public event Action<bool>? OnShouldShowSpecialOlinsPic
+    {
+        add { gamblingMachine.OnShouldShowSpecialOlinsPic += value; }
+        remove { gamblingMachine.OnShouldShowSpecialOlinsPic -= value; }
+    }
+    public event Action<string?>? OnEventMessage
+    {
+        add { gamblingMachine.OnEventMessage += value; }
+        remove { gamblingMachine.OnEventMessage -= value; }
+    }
 
     public RoguelikeCalculator(BasicCalculator calculator)
     {
         this.calculator = calculator;
+        gamblingMachine.OnMoneyEarned += Gamble_OnMoneyChanged;
+        gamblingMachine.OnVID += Gamble_OnVID;
     }
 
+    public void Gamble()
+    {
+        if (!gamblingMachine.HasConsentedToGamblingTOS) return;
+        if (Coins < gamblingMachine.GamblingCost) return;
+
+        SetCoins(Coins - gamblingMachine.GamblingCost);
+
+        gamblingMachine.Gamble();
+    }
     public void AppendNumber(int number)
     {
         if (NumberUses[number] == 0) return;
@@ -383,5 +411,15 @@ class RoguelikeCalculator
             OnGameFinished?.Invoke(false);
             solutionTimer.Stop();
         }
+    }
+
+    private void Gamble_OnMoneyChanged(int money)
+    {
+        SetCoins(Coins + money);
+    }
+
+    private void Gamble_OnVID()
+    {
+        SetCoins(0);
     }
 }

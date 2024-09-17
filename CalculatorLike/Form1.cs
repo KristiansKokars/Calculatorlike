@@ -30,8 +30,13 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnCoinsUpdated += OnCoinsUpdated;
         viewModel.RoguelikeCalculator.OnRerollCostUpdated += OnRerollCostUpdated;
         viewModel.RoguelikeCalculator.HasConsentedToGamblingTOSUpdated += HasConsentedToGamblingTOSUpdated;
+        viewModel.RoguelikeCalculator.OnRIP += OnRIP;
+        viewModel.RoguelikeCalculator.OnShouldShowSpecialOlinsPic += OnShouldShowSpecialOlinsPic;
+        viewModel.RoguelikeCalculator.OnEventMessage += OnEventMessage;
         viewModel.OnDivideByZeroInGame += OnDivideByZeroInGame;
         viewModel.OnGameFinished += OnGameFinished;
+
+        labelGamblingCost.Text = $"${viewModel.RoguelikeCalculator.GamblingCost}";
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
         allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
@@ -40,9 +45,38 @@ public partial class Form1 : Form
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
     }
 
+    private void OnEventMessage(string? message)
+    {
+        if (message == null)
+        {
+            labelGambleMessage.Visible = false;
+            labelGambleMessage.Text = "";
+        }
+        else
+        {
+            labelGambleMessage.Visible = true;
+            labelGambleMessage.Text = message;
+        }
+    }
+
+    private void OnShouldShowSpecialOlinsPic(bool shouldShow)
+    {
+        pictureSpecialOlins.Visible = shouldShow;
+    }
+
     private void OnDivideByZero()
     {
         MessageBox.Show("Tried to divide by zero, undoing that action", "Divide by Zero");
+    }
+
+    private void OnRIP()
+    {
+        foreach (var element in allGameElements)
+        {
+            element.Visible = false;
+        }
+        pictureRIP.Visible = true;
+        BackColor = Color.Black;
     }
 
     private void OnDivideByZeroInGame()
@@ -471,5 +505,10 @@ public partial class Form1 : Form
     private void buttonAcceptTOS_Click(object sender, EventArgs e)
     {
         viewModel.RoguelikeCalculator.AcceptGamblingTOS();
+    }
+
+    private void buttonGamble_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.Gamble();
     }
 }

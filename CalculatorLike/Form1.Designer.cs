@@ -88,10 +88,11 @@
             buttonContinueRound = new Button();
             labelRerollCost = new Label();
             label1 = new Label();
-            button1 = new Button();
-            label2 = new Label();
+            buttonGamble = new Button();
+            labelGamblingCost = new Label();
             panel1 = new Panel();
-            label3 = new Label();
+            pictureSpecialOlins = new PictureBox();
+            labelGambleMessage = new Label();
             pictureGameLost = new PictureBox();
             labelOlinsMessage = new Label();
             btnSpecialModulus = new Button();
@@ -109,14 +110,18 @@
             buttonAcceptTOS = new Button();
             richTextBox1 = new RichTextBox();
             label4 = new Label();
+            label5 = new Label();
             pictureDivisionBy0 = new PictureBox();
+            pictureRIP = new PictureBox();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureSpecialOlins).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).BeginInit();
             panelShopContainer.SuspendLayout();
             panelTermsAndConditions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureDivisionBy0).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureRIP).BeginInit();
             SuspendLayout();
             // 
             // btn1
@@ -837,56 +842,68 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(266, 9);
+            label1.Location = new Point(271, 9);
             label1.Name = "label1";
             label1.Size = new Size(205, 15);
             label1.TabIndex = 52;
             label1.Text = "The Entropy of Many Possibilities";
             // 
-            // button1
+            // buttonGamble
             // 
-            button1.Location = new Point(328, 217);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 53;
-            button1.Text = "Gamble";
-            button1.UseVisualStyleBackColor = true;
+            buttonGamble.Location = new Point(328, 217);
+            buttonGamble.Name = "buttonGamble";
+            buttonGamble.Size = new Size(75, 23);
+            buttonGamble.TabIndex = 53;
+            buttonGamble.Text = "Gamble";
+            buttonGamble.UseVisualStyleBackColor = true;
+            buttonGamble.Click += buttonGamble_Click;
             // 
-            // label2
+            // labelGamblingCost
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.Goldenrod;
-            label2.Location = new Point(409, 222);
-            label2.Name = "label2";
-            label2.Size = new Size(19, 14);
-            label2.TabIndex = 54;
-            label2.Text = "$3";
+            labelGamblingCost.AutoSize = true;
+            labelGamblingCost.Font = new Font("Fira Sans", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelGamblingCost.ForeColor = Color.Goldenrod;
+            labelGamblingCost.Location = new Point(409, 222);
+            labelGamblingCost.Name = "labelGamblingCost";
+            labelGamblingCost.Size = new Size(19, 14);
+            labelGamblingCost.TabIndex = 54;
+            labelGamblingCost.Text = "$3";
             // 
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(label3);
-            panel1.Location = new Point(271, 28);
+            panel1.Controls.Add(pictureSpecialOlins);
+            panel1.Controls.Add(labelGambleMessage);
+            panel1.Location = new Point(271, 43);
             panel1.Name = "panel1";
-            panel1.Size = new Size(200, 183);
+            panel1.Size = new Size(200, 168);
             panel1.TabIndex = 53;
             // 
-            // label3
+            // pictureSpecialOlins
             // 
-            label3.AutoSize = true;
-            label3.ForeColor = Color.Red;
-            label3.Location = new Point(65, 87);
-            label3.Name = "label3";
-            label3.Size = new Size(66, 15);
-            label3.TabIndex = 0;
-            label3.Text = "Nothing :(";
+            pictureSpecialOlins.Image = (Image)resources.GetObject("pictureSpecialOlins.Image");
+            pictureSpecialOlins.Location = new Point(-1, 104);
+            pictureSpecialOlins.Name = "pictureSpecialOlins";
+            pictureSpecialOlins.Size = new Size(200, 118);
+            pictureSpecialOlins.TabIndex = 70;
+            pictureSpecialOlins.TabStop = false;
+            pictureSpecialOlins.Visible = false;
+            // 
+            // labelGambleMessage
+            // 
+            labelGambleMessage.ForeColor = Color.MediumSlateBlue;
+            labelGambleMessage.Location = new Point(-1, -1);
+            labelGambleMessage.Name = "labelGambleMessage";
+            labelGambleMessage.Size = new Size(200, 167);
+            labelGambleMessage.TabIndex = 0;
+            labelGambleMessage.Text = "Start Rolling!";
+            labelGambleMessage.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pictureGameLost
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-113, 450);
+            pictureGameLost.Location = new Point(-153, -8);
             pictureGameLost.Name = "pictureGameLost";
             pictureGameLost.Size = new Size(1317, 305);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1048,6 +1065,7 @@
             // panelShopContainer
             // 
             panelShopContainer.Controls.Add(panelTermsAndConditions);
+            panelShopContainer.Controls.Add(label5);
             panelShopContainer.Controls.Add(labelShopTitle);
             panelShopContainer.Controls.Add(panelShop);
             panelShopContainer.Controls.Add(buttonReroll);
@@ -1055,8 +1073,8 @@
             panelShopContainer.Controls.Add(buttonContinueRound);
             panelShopContainer.Controls.Add(label1);
             panelShopContainer.Controls.Add(panel1);
-            panelShopContainer.Controls.Add(button1);
-            panelShopContainer.Controls.Add(label2);
+            panelShopContainer.Controls.Add(buttonGamble);
+            panelShopContainer.Controls.Add(labelGamblingCost);
             panelShopContainer.Location = new Point(475, 14);
             panelShopContainer.Name = "panelShopContainer";
             panelShopContainer.Size = new Size(509, 274);
@@ -1068,7 +1086,7 @@
             panelTermsAndConditions.Controls.Add(buttonAcceptTOS);
             panelTermsAndConditions.Controls.Add(richTextBox1);
             panelTermsAndConditions.Controls.Add(label4);
-            panelTermsAndConditions.Location = new Point(266, 3);
+            panelTermsAndConditions.Location = new Point(271, 3);
             panelTermsAndConditions.Name = "panelTermsAndConditions";
             panelTermsAndConditions.Size = new Size(225, 237);
             panelTermsAndConditions.TabIndex = 68;
@@ -1101,11 +1119,22 @@
             label4.TabIndex = 0;
             label4.Text = "Gambling Terms and Conditions";
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.SeaGreen;
+            label5.Location = new Point(321, 26);
+            label5.Name = "label5";
+            label5.Size = new Size(107, 13);
+            label5.TabIndex = 55;
+            label5.Text = "Funded by VentaBet";
+            // 
             // pictureDivisionBy0
             // 
             pictureDivisionBy0.Enabled = false;
             pictureDivisionBy0.Image = (Image)resources.GetObject("pictureDivisionBy0.Image");
-            pictureDivisionBy0.Location = new Point(-160, 6);
+            pictureDivisionBy0.Location = new Point(-153, -8);
             pictureDivisionBy0.Name = "pictureDivisionBy0";
             pictureDivisionBy0.Size = new Size(1317, 305);
             pictureDivisionBy0.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1113,14 +1142,27 @@
             pictureDivisionBy0.TabStop = false;
             pictureDivisionBy0.Visible = false;
             // 
+            // pictureRIP
+            // 
+            pictureRIP.Enabled = false;
+            pictureRIP.Image = (Image)resources.GetObject("pictureRIP.Image");
+            pictureRIP.Location = new Point(-153, -8);
+            pictureRIP.Name = "pictureRIP";
+            pictureRIP.Size = new Size(1317, 305);
+            pictureRIP.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureRIP.TabIndex = 69;
+            pictureRIP.TabStop = false;
+            pictureRIP.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 717);
-            Controls.Add(pictureDivisionBy0);
-            Controls.Add(panelShopContainer);
+            ClientSize = new Size(211, 283);
             Controls.Add(pictureGameLost);
+            Controls.Add(pictureDivisionBy0);
+            Controls.Add(pictureRIP);
+            Controls.Add(panelShopContainer);
             Controls.Add(labelSpecialReroll);
             Controls.Add(btnSpecialReroll);
             Controls.Add(labelSpecialModulus);
@@ -1176,13 +1218,14 @@
             panelShop.ResumeLayout(false);
             panelShop.PerformLayout();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureSpecialOlins).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).EndInit();
             panelShopContainer.ResumeLayout(false);
             panelShopContainer.PerformLayout();
             panelTermsAndConditions.ResumeLayout(false);
             panelTermsAndConditions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureDivisionBy0).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureRIP).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1248,10 +1291,10 @@
         private Button buttonShopItem6;
         private Label labelShopItem6Cost;
         private Label label1;
-        private Button button1;
-        private Label label2;
+        private Button buttonGamble;
+        private Label labelGamblingCost;
         private Panel panel1;
-        private Label label3;
+        private Label labelGambleMessage;
         private PictureBox pictureGameLost;
         private Label labelOlinsMessage;
         private Button btnSpecialModulus;
@@ -1270,5 +1313,8 @@
         private RichTextBox richTextBox1;
         private Button buttonAcceptTOS;
         private PictureBox pictureDivisionBy0;
+        private Label label5;
+        private PictureBox pictureRIP;
+        private PictureBox pictureSpecialOlins;
     }
 }
