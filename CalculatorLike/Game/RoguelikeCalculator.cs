@@ -7,7 +7,11 @@ namespace CalculatorLike.Game;
  * TODO list for game:
  * Show random shop to buy keys from
  * Add reroll to shop
+ * Add gambling mechanic
  * Higher you go, the more difficult the number is
+ * Make the last 4 rounds extra hard, last one needs 4 numbers
+ * Make shop give more items on the final rounds
+ * Add division by zero game over screen and error in normal mode
  */
 class RoguelikeCalculator
 {
@@ -25,6 +29,7 @@ class RoguelikeCalculator
     private CalculatorOperation? currentOperation;
     private readonly Timer solutionTimer = new();
     private int secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
+    private bool isShopping;
 
     public int NumberToGet { get; private set; }
     public int Round { get; private set; }
@@ -41,6 +46,8 @@ class RoguelikeCalculator
     public event Action<SpecialAction>? OnSpecialActionUseUpdated;
     public event Action<bool>? OnGameFinished;
     public event Action<bool>? OnIsOlinsImpatient;
+    public event Action<bool>? OnIsShoppingUpdated;
+    public event Action? OnAvailableShopItemsUpdated;
 
     public RoguelikeCalculator(BasicCalculator calculator)
     {
@@ -50,6 +57,7 @@ class RoguelikeCalculator
     public void AppendNumber(int number)
     {
         if (NumberUses[number] == 0) return;
+        if (isShopping) return;
 
         calculator.AppendNumber(number);
         OnNumberUsed(number);
@@ -58,6 +66,7 @@ class RoguelikeCalculator
     public void SetOperation(CalculatorOperation operation)
     {
         if (OperationUses[operation] == 0) return;
+        if (isShopping) return;
 
         calculator.SetOperation(operation);
         OnOperationUsed(operation);
@@ -66,6 +75,7 @@ class RoguelikeCalculator
     public void PerformSpecialAction(SpecialAction specialAction)
     {
         if (SpecialActionUses[specialAction] == 0) return;
+        if (isShopping) return;
 
         switch (specialAction)
         {
@@ -90,17 +100,21 @@ class RoguelikeCalculator
 
     public void ClearNumber()
     {
+        if (isShopping) return;
+
         calculator.ClearNumber();
     }
 
     public void Calculate()
     {
+        if (isShopping) return;
+
         calculator.Calculate();
         var result = calculator.CurrentInput;
 
         if (result == NumberToGet)
         {
-            AdvanceRound();
+            FinishCurrentRound();
         }
     }
 
@@ -144,17 +158,29 @@ class RoguelikeCalculator
         solutionTimer.Start();
     }
 
-    private void AdvanceRound()
+    private void FinishCurrentRound()
     {
         Coins += COINS_PER_ROUND;
         NumberToGet = random.Next(1, 100);
         Round += 1;
+        OnIsOlinsImpatient?.Invoke(false);
+        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
 
         if (Round == MAX_ROUND_COUNT)
         {
             GameWon();
+            return;
         }
 
+        GenerateNewShopItems();
+        SetIsShopping(true);
+    }
+
+    private void StartNextRound()
+    {
+        if (!isShopping) return;
+
+        SetIsShopping(false);
         OnNewRound?.Invoke();
         OnIsOlinsImpatient?.Invoke(false);
         secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - Round * 4;
@@ -162,14 +188,52 @@ class RoguelikeCalculator
 
     private void GenerateNewShopItems()
     {
+        AvailableShopItems.Clear();
         // TODO: make it generate more based on rounds too
-        int shopItemCount = random.Next(1, SHOP_ITEM_COUNT + 1);
+        int shopItemCount = random.Next(3, SHOP_ITEM_COUNT + 1);
 
         for (int i = 0; i < shopItemCount; i++)
         {
             // create a random shop item and put it in that position
             // generate a random cost for that item based on the rounds
+            var randomWeight = random.Next(0, ShopItem.WeightSum);
+            var currentWeightSum = 0;
+
+            ShopItem? shopItem = null;
+            foreach (var item in ShopItem.ShopItems)
+            {
+                currentWeightSum += item.Weight;
+                if (randomWeight < currentWeightSum)
+                {
+                    shopItem = item.Value;
+                    break;
+                }
+            }
+
+            if (shopItem == null)
+            {
+                i--;
+                continue;
+            }
+
+            // TODO: make it generate more cost based on the round possibly
+            if (shopItem is ShopItem.NumberItem numberShopItem)
+            {
+                numberShopItem.Cost = random.Next(3, 10);
+            }
+            if (shopItem is ShopItem.OperationItem operationShopItem)
+            {
+                operationShopItem.Cost = random.Next(1, 8);
+            }
+            if (shopItem is ShopItem.SpecialActionItem specialActionItem)
+            {
+                specialActionItem.Cost = random.Next(1, 12);
+            }
+
+            AvailableShopItems.Add(i, shopItem);
         }
+
+        OnAvailableShopItemsUpdated?.Invoke();
     }
 
     private void GameWon()
@@ -205,6 +269,12 @@ class RoguelikeCalculator
     {
         var generatedNumber = random.Next(1, 100);
         return generatedNumber;
+    }
+
+    private void SetIsShopping(bool isShopping)
+    {
+        this.isShopping = isShopping;
+        OnIsShoppingUpdated?.Invoke(isShopping);
     }
 
     private void SolutionTimer_Tick(object? sender, EventArgs e)

@@ -1,5 +1,7 @@
-using CalculatorLike.Base;
+﻿using CalculatorLike.Base;
 using CalculatorLike.Game;
+using System.Diagnostics;
+using System.Security.Policy;
 
 namespace CalculatorLike;
 
@@ -9,6 +11,8 @@ public partial class Form1 : Form
     private readonly List<Label> allLabelNumberUses;
     private readonly List<Label> allLabelOperationUses;
     private readonly List<Control> allGameElements;
+    private readonly List<Control> allShopItemElements;
+    private readonly List<Control> allShopItemCostElements;
 
     public Form1()
     {
@@ -22,11 +26,74 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnNewRound += OnNewRound;
         viewModel.RoguelikeCalculator.OnIsOlinsImpatient += OnIsOlinsImpatient;
         viewModel.RoguelikeCalculator.OnNumberToGetUpdated += OnNumberToGetUpdated;
+        viewModel.RoguelikeCalculator.OnAvailableShopItemsUpdated += OnAvailableShopItemsUpdated;
         viewModel.OnGameFinished += OnGameFinished;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
         allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
         allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, buttonContinueRound, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
+        allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
+        allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
+    }
+
+    private void OnAvailableShopItemsUpdated()
+    {
+        foreach (var element in allShopItemElements)
+        {
+            element.Visible = false;
+        }
+        foreach (var element in allShopItemCostElements)
+        {
+            element.Visible = false;
+        }
+
+        var availableShopItems = viewModel.RoguelikeCalculator.AvailableShopItems;
+        if (availableShopItems == null) return;
+
+        foreach (var (key, value) in availableShopItems)
+        {
+            var shopItemElement = allShopItemElements[key];
+            var shopItemCostElement = allShopItemCostElements[key];
+            
+            if (value is ShopItem.NumberItem numberItem)
+            {
+                shopItemElement.Text = numberItem.Number.ToString();
+                shopItemElement.BackColor = SystemColors.Control;
+            }
+            if (value is ShopItem.OperationItem operationItem)
+            {
+                var text = operationItem.Operation switch
+                {
+                    CalculatorOperation.Add => "+",
+                    CalculatorOperation.Subtract => "-",
+                    CalculatorOperation.Multiply => "*",
+                    CalculatorOperation.Divide => "/",
+                    CalculatorOperation.Modulus => "%",
+                    _ => throw new NotImplementedException(),
+                };
+                shopItemElement.Text = text;
+                shopItemElement.BackColor = SystemColors.ActiveCaption;
+            }
+            if (value is ShopItem.SpecialActionItem specialActionItem)
+            {
+                var text = specialActionItem.SpecialAction switch
+                {
+                    SpecialAction.Square => "x²",
+                    SpecialAction.SquareRoot => "√x",
+                    SpecialAction.Modulus => "%",
+                    SpecialAction.Reroll => "-",
+                    SpecialAction.CashToNumber => "$",
+                    _ => throw new NotImplementedException(),
+                };
+                shopItemElement.Text = text;
+                shopItemElement.BackColor = Color.CornflowerBlue;
+            }
+
+            shopItemCostElement.Text = $"${value.Cost}";
+
+            shopItemElement.Visible = true;
+            shopItemCostElement.Visible = true;
+        }
     }
 
     #region Calculator
@@ -183,6 +250,7 @@ public partial class Form1 : Form
         labelRoundCount.Text = viewModel.RoguelikeCalculator.Round.ToString();
         labelCoinCount.Text = viewModel.RoguelikeCalculator.Coins.ToString();
     }
+
     private void OnNumberUseUpdated(int number)
     {
         var uses = viewModel.RoguelikeCalculator.NumberUses[number];

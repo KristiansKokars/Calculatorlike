@@ -872,7 +872,7 @@
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-118, 312);
+            pictureGameLost.Location = new Point(-122, 356);
             pictureGameLost.Name = "pictureGameLost";
             pictureGameLost.Size = new Size(1317, 305);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1035,10 +1035,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1012, 567);
+            ClientSize = new Size(1135, 595);
+            Controls.Add(pictureGameLost);
             Controls.Add(labelSpecialReroll);
             Controls.Add(btnSpecialReroll);
-            Controls.Add(pictureGameLost);
             Controls.Add(labelSpecialModulus);
             Controls.Add(labelSpecialCashToMoney);
             Controls.Add(labelSpecialSquare);
