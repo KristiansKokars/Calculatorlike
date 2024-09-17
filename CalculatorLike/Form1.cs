@@ -45,145 +45,6 @@ public partial class Form1 : Form
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
     }
 
-    private void OnEventMessage(string? message)
-    {
-        if (message == null)
-        {
-            labelGambleMessage.Visible = false;
-            labelGambleMessage.Text = "";
-        }
-        else
-        {
-            labelGambleMessage.Visible = true;
-            labelGambleMessage.Text = message;
-        }
-    }
-
-    private void OnShouldShowSpecialOlinsPic(bool shouldShow)
-    {
-        pictureSpecialOlins.Visible = shouldShow;
-    }
-
-    private void OnDivideByZero()
-    {
-        MessageBox.Show("Tried to divide by zero, undoing that action", "Divide by Zero");
-    }
-
-    private void OnRIP()
-    {
-        foreach (var element in allGameElements)
-        {
-            element.Visible = false;
-        }
-        pictureRIP.Visible = true;
-        BackColor = Color.Black;
-    }
-
-    private void OnDivideByZeroInGame()
-    {
-        foreach (var element in allGameElements)
-        {
-            element.Visible = false;
-        }
-        pictureDivisionBy0.Visible = true;
-        BackColor = Color.Black;
-    }
-
-    private void HasConsentedToGamblingTOSUpdated(bool hasConsented)
-    {
-        panelTermsAndConditions.Visible = !hasConsented;
-    }
-
-    private void OnRerollCostUpdated(int rerollCost)
-    {
-        labelRerollCost.Text = $"${rerollCost}";
-    }
-
-    private void OnCoinsUpdated()
-    {
-        SyncCoinCount();
-    }
-
-    private void IsShoppingUpdated(bool isShopping)
-    {
-        if (isShopping)
-        {
-            SyncCoinCount();
-            labelOlinsMessage.Text = "Go shop to the right";
-            labelOlinsMessage.ForeColor = Color.Green;
-            labelOlinsMessage.Visible = true;
-            panelShopContainer.Visible = true;
-            buttonContinueRound.Visible = true;
-            labelRerollCost.Visible = true;
-        }
-        else
-        {
-            labelOlinsMessage.Visible = false;
-            panelShopContainer.Visible = false;
-            buttonContinueRound.Visible = false;
-        }
-    }
-
-    private void OnAvailableShopItemsUpdated()
-    {
-        foreach (var element in allShopItemElements)
-        {
-            element.Visible = false;
-        }
-        foreach (var element in allShopItemCostElements)
-        {
-            element.Visible = false;
-        }
-
-        var availableShopItems = viewModel.RoguelikeCalculator.AvailableShopItems;
-        if (availableShopItems == null) return;
-
-        foreach (var (key, value) in availableShopItems)
-        {
-            var shopItemElement = allShopItemElements[key];
-            var shopItemCostElement = allShopItemCostElements[key];
-
-            if (value is ShopItem.NumberItem numberItem)
-            {
-                shopItemElement.Text = numberItem.Number.ToString();
-                shopItemElement.BackColor = SystemColors.Control;
-            }
-            if (value is ShopItem.OperationItem operationItem)
-            {
-                var text = operationItem.Operation switch
-                {
-                    CalculatorOperation.Add => "+",
-                    CalculatorOperation.Subtract => "-",
-                    CalculatorOperation.Multiply => "*",
-                    CalculatorOperation.Divide => "/",
-                    CalculatorOperation.Modulus => "%",
-                    _ => throw new NotImplementedException(),
-                };
-                shopItemElement.Text = text;
-                shopItemElement.BackColor = SystemColors.ActiveCaption;
-            }
-            if (value is ShopItem.SpecialActionItem specialActionItem)
-            {
-                var text = specialActionItem.SpecialAction switch
-                {
-                    SpecialAction.Square => "x²",
-                    SpecialAction.SquareRoot => "√x",
-                    SpecialAction.Modulus => "%",
-                    SpecialAction.Reroll => "-",
-                    SpecialAction.CashToNumber => "$",
-                    _ => throw new NotImplementedException(),
-                };
-                shopItemElement.Text = text;
-                shopItemElement.BackColor = Color.CornflowerBlue;
-            }
-
-            shopItemCostElement.Text = $"${value.Cost}";
-
-            shopItemElement.Visible = true;
-            shopItemCostElement.Visible = true;
-        }
-    }
-
     #region Calculator
     private void OnNumberUpdated(int number)
     {
@@ -273,6 +134,11 @@ public partial class Form1 : Form
     private void setOperation(CalculatorOperation operation)
     {
         viewModel.SetOperation(operation);
+    }
+
+    private void OnDivideByZero()
+    {
+        MessageBox.Show("Tried to divide by zero, undoing that action", "Divide by Zero");
     }
     #endregion
 
@@ -450,12 +316,6 @@ public partial class Form1 : Form
     {
         viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Reroll);
     }
-    #endregion
-
-    private void label6_Click(object sender, EventArgs e)
-    {
-
-    }
 
     private void buttonContinueRound_Click(object sender, EventArgs e)
     {
@@ -511,4 +371,140 @@ public partial class Form1 : Form
     {
         viewModel.RoguelikeCalculator.Gamble();
     }
+
+    private void OnDivideByZeroInGame()
+    {
+        foreach (var element in allGameElements)
+        {
+            element.Visible = false;
+        }
+        pictureDivisionBy0.Visible = true;
+        BackColor = Color.Black;
+    }
+
+    private void HasConsentedToGamblingTOSUpdated(bool hasConsented)
+    {
+        panelTermsAndConditions.Visible = !hasConsented;
+    }
+
+    private void OnRerollCostUpdated(int rerollCost)
+    {
+        labelRerollCost.Text = $"${rerollCost}";
+    }
+
+    private void OnCoinsUpdated()
+    {
+        SyncCoinCount();
+    }
+
+    private void IsShoppingUpdated(bool isShopping)
+    {
+        if (isShopping)
+        {
+            SyncCoinCount();
+            labelOlinsMessage.Text = "Go shop to the right";
+            labelOlinsMessage.ForeColor = Color.Green;
+            labelOlinsMessage.Visible = true;
+            panelShopContainer.Visible = true;
+            buttonContinueRound.Visible = true;
+            labelRerollCost.Visible = true;
+        }
+        else
+        {
+            labelOlinsMessage.Visible = false;
+            panelShopContainer.Visible = false;
+            buttonContinueRound.Visible = false;
+        }
+    }
+
+    private void OnAvailableShopItemsUpdated()
+    {
+        foreach (var element in allShopItemElements)
+        {
+            element.Visible = false;
+        }
+        foreach (var element in allShopItemCostElements)
+        {
+            element.Visible = false;
+        }
+
+        var availableShopItems = viewModel.RoguelikeCalculator.AvailableShopItems;
+        if (availableShopItems == null) return;
+
+        foreach (var (key, value) in availableShopItems)
+        {
+            var shopItemElement = allShopItemElements[key];
+            var shopItemCostElement = allShopItemCostElements[key];
+
+            if (value is ShopItem.NumberItem numberItem)
+            {
+                shopItemElement.Text = numberItem.Number.ToString();
+                shopItemElement.BackColor = SystemColors.Control;
+            }
+            if (value is ShopItem.OperationItem operationItem)
+            {
+                var text = operationItem.Operation switch
+                {
+                    CalculatorOperation.Add => "+",
+                    CalculatorOperation.Subtract => "-",
+                    CalculatorOperation.Multiply => "*",
+                    CalculatorOperation.Divide => "/",
+                    CalculatorOperation.Modulus => "%",
+                    _ => throw new NotImplementedException(),
+                };
+                shopItemElement.Text = text;
+                shopItemElement.BackColor = SystemColors.ActiveCaption;
+            }
+            if (value is ShopItem.SpecialActionItem specialActionItem)
+            {
+                var text = specialActionItem.SpecialAction switch
+                {
+                    SpecialAction.Square => "x²",
+                    SpecialAction.SquareRoot => "√x",
+                    SpecialAction.Modulus => "%",
+                    SpecialAction.Reroll => "-",
+                    SpecialAction.CashToNumber => "$",
+                    _ => throw new NotImplementedException(),
+                };
+                shopItemElement.Text = text;
+                shopItemElement.BackColor = Color.CornflowerBlue;
+            }
+
+            shopItemCostElement.Text = $"${value.Cost}";
+
+            shopItemElement.Visible = true;
+            shopItemCostElement.Visible = true;
+        }
+    }
+
+    private void OnRIP()
+    {
+        foreach (var element in allGameElements)
+        {
+            element.Visible = false;
+        }
+        pictureRIP.Visible = true;
+        BackColor = Color.Black;
+    }
+
+    private void OnEventMessage(string? message)
+    {
+        if (message == null)
+        {
+            labelGambleMessage.Visible = false;
+            labelGambleMessage.Text = "";
+        }
+        else
+        {
+            labelGambleMessage.Visible = true;
+            labelGambleMessage.Text = message;
+        }
+    }
+
+    private void OnShouldShowSpecialOlinsPic(bool shouldShow)
+    {
+        pictureSpecialOlins.Visible = shouldShow;
+    }
+
+    #endregion
 }

@@ -882,7 +882,7 @@
             // pictureSpecialOlins
             // 
             pictureSpecialOlins.Image = (Image)resources.GetObject("pictureSpecialOlins.Image");
-            pictureSpecialOlins.Location = new Point(-1, 104);
+            pictureSpecialOlins.Location = new Point(-1, 22);
             pictureSpecialOlins.Name = "pictureSpecialOlins";
             pictureSpecialOlins.Size = new Size(200, 118);
             pictureSpecialOlins.TabIndex = 70;
@@ -903,7 +903,7 @@
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-153, -8);
+            pictureGameLost.Location = new Point(-128, -8);
             pictureGameLost.Name = "pictureGameLost";
             pictureGameLost.Size = new Size(1317, 305);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1018,7 +1018,6 @@
             labelSpecialSquare.TabIndex = 63;
             labelSpecialSquare.Text = "0";
             labelSpecialSquare.Visible = false;
-            labelSpecialSquare.Click += label6_Click;
             // 
             // labelSpecialCashToMoney
             // 
@@ -1086,7 +1085,7 @@
             panelTermsAndConditions.Controls.Add(buttonAcceptTOS);
             panelTermsAndConditions.Controls.Add(richTextBox1);
             panelTermsAndConditions.Controls.Add(label4);
-            panelTermsAndConditions.Location = new Point(271, 3);
+            panelTermsAndConditions.Location = new Point(251, 3);
             panelTermsAndConditions.Name = "panelTermsAndConditions";
             panelTermsAndConditions.Size = new Size(225, 237);
             panelTermsAndConditions.TabIndex = 68;
@@ -1134,7 +1133,7 @@
             // 
             pictureDivisionBy0.Enabled = false;
             pictureDivisionBy0.Image = (Image)resources.GetObject("pictureDivisionBy0.Image");
-            pictureDivisionBy0.Location = new Point(-153, -8);
+            pictureDivisionBy0.Location = new Point(-128, -8);
             pictureDivisionBy0.Name = "pictureDivisionBy0";
             pictureDivisionBy0.Size = new Size(1317, 305);
             pictureDivisionBy0.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1146,7 +1145,7 @@
             // 
             pictureRIP.Enabled = false;
             pictureRIP.Image = (Image)resources.GetObject("pictureRIP.Image");
-            pictureRIP.Location = new Point(-153, -8);
+            pictureRIP.Location = new Point(-128, -8);
             pictureRIP.Name = "pictureRIP";
             pictureRIP.Size = new Size(1317, 305);
             pictureRIP.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1158,7 +1157,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(211, 283);
+            ClientSize = new Size(204, 275);
             Controls.Add(pictureGameLost);
             Controls.Add(pictureDivisionBy0);
             Controls.Add(pictureRIP);

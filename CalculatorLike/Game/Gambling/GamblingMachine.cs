@@ -92,7 +92,7 @@ class GamblingMachine
                 break;
             case GamblingEvent.JekabsWentAllIn:
                 OnMoneyEarned?.Invoke(-20);
-                OnEventMessage?.Invoke($"Jēkabs went all in!!\nLose $10.");
+                OnEventMessage?.Invoke($"Jēkabs went all in!!\nLose $20.");
                 break;
             case GamblingEvent.PicOfOlins:
                 OnShouldShowSpecialOlinsPic?.Invoke(true);
@@ -100,7 +100,7 @@ class GamblingMachine
                 break;
             case GamblingEvent.OlinsWantsSnacks:
                 var snackCost = random.Next(1, 5);
-                OnMoneyEarned?.Invoke(snackCost);
+                OnMoneyEarned?.Invoke(-snackCost);
                 OnEventMessage?.Invoke($"Oliņš wanted some snacks.\nSpent ${snackCost} on snacks.");
                 break;
         }
