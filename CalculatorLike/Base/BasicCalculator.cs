@@ -40,10 +40,7 @@ class BasicCalculator
     {
         if (currentOperation == operation && CurrentInput == 0) return;
 
-        if (currentOperation == operation)
-        {
-            Calculate();
-        }
+        Calculate();
 
         currentOperation = operation;
         previousInput = CurrentInput;
