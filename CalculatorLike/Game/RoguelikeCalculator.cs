@@ -5,7 +5,6 @@ namespace CalculatorLike.Game;
 
 /*
  * TODO list for game:
- * Add reroll to shop
  * Add gambling mechanic
  * Higher you go, the more difficult the number is
  * Make the last 4 rounds extra hard, last one needs 4 numbers
@@ -33,6 +32,7 @@ class RoguelikeCalculator
     public int NumberToGet { get; private set; }
     public int Round { get; private set; }
     public int Coins { get; private set; }
+    public int RerollCost { get; private set; }
     public Dictionary<int, int> NumberUses { get; private set; } = [];
     public Dictionary<CalculatorOperation, int> OperationUses { get; private set; } = [];
     public Dictionary<SpecialAction, int> SpecialActionUses { get; private set; } = [];
@@ -48,6 +48,7 @@ class RoguelikeCalculator
     public event Action<bool>? OnIsShoppingUpdated;
     public event Action? OnAvailableShopItemsUpdated;
     public event Action? OnCoinsUpdated;
+    public event Action<int>? OnRerollCostUpdated;
 
     public RoguelikeCalculator(BasicCalculator calculator)
     {
@@ -195,6 +196,15 @@ class RoguelikeCalculator
         OnAvailableShopItemsUpdated?.Invoke();
     }
 
+    public void RerollShopItems()
+    {
+        if (RerollCost > Coins) return;
+
+        SetCoins(Coins - RerollCost);
+
+        GenerateNewShopItems(RerollCost);
+    }
+
     private void FinishCurrentRound()
     {
         Coins += COINS_PER_ROUND;
@@ -213,11 +223,20 @@ class RoguelikeCalculator
         SetIsShopping(true);
     }
 
-    private void GenerateNewShopItems()
+    private void GenerateNewShopItems(int currentRerollCostSum = 0)
     {
         AvailableShopItems.Clear();
         // TODO: make it generate more based on rounds too
         int shopItemCount = random.Next(3, SHOP_ITEM_COUNT + 1);
+        if (currentRerollCostSum == 0)
+        {
+            RerollCost = random.Next(3, 12);
+        }
+        else
+        {
+            RerollCost = currentRerollCostSum + random.Next(2, 12);
+        }
+        OnRerollCostUpdated?.Invoke(RerollCost);
 
         for (int i = 0; i < shopItemCount; i++)
         {

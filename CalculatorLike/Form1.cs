@@ -1,7 +1,5 @@
 ﻿using CalculatorLike.Base;
 using CalculatorLike.Game;
-using System.Diagnostics;
-using System.Security.Policy;
 
 namespace CalculatorLike;
 
@@ -29,6 +27,7 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnAvailableShopItemsUpdated += OnAvailableShopItemsUpdated;
         viewModel.RoguelikeCalculator.OnIsShoppingUpdated += IsShoppingUpdated;
         viewModel.RoguelikeCalculator.OnCoinsUpdated += OnCoinsUpdated;
+        viewModel.RoguelikeCalculator.OnRerollCostUpdated += OnRerollCostUpdated;
         viewModel.OnGameFinished += OnGameFinished;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
@@ -36,6 +35,11 @@ public partial class Form1 : Form
         allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
+    }
+
+    private void OnRerollCostUpdated(int rerollCost)
+    {
+        labelRerollCost.Text = $"${rerollCost}";
     }
 
     private void OnCoinsUpdated()
@@ -53,6 +57,7 @@ public partial class Form1 : Form
             labelOlinsMessage.Visible = true;
             panelShopContainer.Visible = true;
             buttonContinueRound.Visible = true;
+            labelRerollCost.Visible = true;
         }
         else
         {
@@ -435,6 +440,6 @@ public partial class Form1 : Form
 
     private void buttonReroll_Click(object sender, EventArgs e)
     {
-
+        viewModel.RoguelikeCalculator.RerollShopItems();
     }
 }
