@@ -18,6 +18,7 @@ public partial class Form1 : Form
         viewModel = new();
 
         viewModel.BasicCalculator.OnNumberUpdated += OnNumberUpdated;
+        viewModel.OnDivideByZero += OnDivideByZero;
         viewModel.RoguelikeCalculator.OnNumberUseUpdated += OnNumberUseUpdated;
         viewModel.RoguelikeCalculator.OnOperationUseUpdated += OnOperationUseUpdated;
         viewModel.RoguelikeCalculator.OnSpecialActionUseUpdated += OnSpecialActionUseUpdated;
@@ -29,6 +30,7 @@ public partial class Form1 : Form
         viewModel.RoguelikeCalculator.OnCoinsUpdated += OnCoinsUpdated;
         viewModel.RoguelikeCalculator.OnRerollCostUpdated += OnRerollCostUpdated;
         viewModel.RoguelikeCalculator.HasConsentedToGamblingTOSUpdated += HasConsentedToGamblingTOSUpdated;
+        viewModel.OnDivideByZeroInGame += OnDivideByZeroInGame;
         viewModel.OnGameFinished += OnGameFinished;
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
@@ -36,6 +38,21 @@ public partial class Form1 : Form
         allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
+    }
+
+    private void OnDivideByZero()
+    {
+        MessageBox.Show("Tried to divide by zero, undoing that action", "Divide by Zero");
+    }
+
+    private void OnDivideByZeroInGame()
+    {
+        foreach (var element in allGameElements)
+        {
+            element.Visible = false;
+        }
+        pictureDivisionBy0.Visible = true;
+        BackColor = Color.Black;
     }
 
     private void HasConsentedToGamblingTOSUpdated(bool hasConsented)

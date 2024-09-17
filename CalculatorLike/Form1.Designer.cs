@@ -109,12 +109,14 @@
             buttonAcceptTOS = new Button();
             richTextBox1 = new RichTextBox();
             label4 = new Label();
+            pictureDivisionBy0 = new PictureBox();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureGameLost).BeginInit();
             panelShopContainer.SuspendLayout();
             panelTermsAndConditions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureDivisionBy0).BeginInit();
             SuspendLayout();
             // 
             // btn1
@@ -884,7 +886,7 @@
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-122, 356);
+            pictureGameLost.Location = new Point(-113, 450);
             pictureGameLost.Name = "pictureGameLost";
             pictureGameLost.Size = new Size(1317, 305);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -1099,11 +1101,24 @@
             label4.TabIndex = 0;
             label4.Text = "Gambling Terms and Conditions";
             // 
+            // pictureDivisionBy0
+            // 
+            pictureDivisionBy0.Enabled = false;
+            pictureDivisionBy0.Image = (Image)resources.GetObject("pictureDivisionBy0.Image");
+            pictureDivisionBy0.Location = new Point(-160, 6);
+            pictureDivisionBy0.Name = "pictureDivisionBy0";
+            pictureDivisionBy0.Size = new Size(1317, 305);
+            pictureDivisionBy0.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureDivisionBy0.TabIndex = 68;
+            pictureDivisionBy0.TabStop = false;
+            pictureDivisionBy0.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 595);
+            ClientSize = new Size(1264, 717);
+            Controls.Add(pictureDivisionBy0);
             Controls.Add(panelShopContainer);
             Controls.Add(pictureGameLost);
             Controls.Add(labelSpecialReroll);
@@ -1167,6 +1182,7 @@
             panelShopContainer.PerformLayout();
             panelTermsAndConditions.ResumeLayout(false);
             panelTermsAndConditions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureDivisionBy0).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1253,5 +1269,6 @@
         private Label label4;
         private RichTextBox richTextBox1;
         private Button buttonAcceptTOS;
+        private PictureBox pictureDivisionBy0;
     }
 }

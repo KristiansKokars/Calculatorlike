@@ -3,10 +3,6 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace CalculatorLike.Game;
 
-/*
- * TODO list for game:
- * Add division by zero game over screen and error in normal mode
- */
 class RoguelikeCalculator
 {
     private const int COINS_PER_ROUND = 16;
@@ -114,7 +110,16 @@ class RoguelikeCalculator
     {
         if (isShopping) return;
 
-        calculator.Calculate();
+        try
+        {
+            calculator.Calculate();
+        }
+        catch (DivideByZeroException)
+        {
+            solutionTimer.Stop();
+            throw;
+        }
+
         var result = calculator.CurrentInput;
 
         if (result == NumberToGet)

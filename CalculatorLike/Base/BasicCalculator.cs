@@ -22,9 +22,6 @@ class BasicCalculator
         }
 
         var previousNumber = (int)previousInput;
-        previousInput = null;
-
-        // TODO: handle divide by zero
         var result = currentOperation switch
         {
             CalculatorOperation.Add => previousNumber + CurrentInput,
@@ -34,6 +31,7 @@ class BasicCalculator
             CalculatorOperation.Modulus => previousNumber % CurrentInput,
             _ => 0,
         };
+        previousInput = null;
         currentOperation = null;
         SetCalculatorNumber(result);
     }

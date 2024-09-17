@@ -12,6 +12,9 @@ class CalculatorViewModel
 
     public event Action<bool>? OnGameFinished;
 
+    public event Action? OnDivideByZeroInGame;
+    public event Action? OnDivideByZero;
+
     public CalculatorViewModel()
     {
         RoguelikeCalculator = new(BasicCalculator);
@@ -46,11 +49,25 @@ class CalculatorViewModel
     {
         if (isInRoguelikeMode)
         {
-            RoguelikeCalculator.Calculate();
+            try
+            {
+                RoguelikeCalculator.Calculate();
+            }
+            catch (DivideByZeroException)
+            {
+                OnDivideByZeroInGame?.Invoke();
+            }
         }
         else
         {
-            BasicCalculator.Calculate();
+            try
+            {
+                BasicCalculator.Calculate();
+            }
+            catch (DivideByZeroException)
+            {
+                OnDivideByZero?.Invoke();
+            }
         }
     }
 
