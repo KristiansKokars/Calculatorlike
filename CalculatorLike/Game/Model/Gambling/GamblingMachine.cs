@@ -163,21 +163,22 @@ class GamblingMachine
         }
     }
 
+    // currently a total of 200, would be good to rework for direct percentages instead of summed weights in code
     private static readonly List<WeightedItem<GamblingEvent>> EventChances =
     [
         new(GamblingEvent.RIP, 1),
-        new(GamblingEvent.SpecialSurprise, 3),
-        new(GamblingEvent.TaxEvasion, 2),
-        new(GamblingEvent.Nothing, 25),
-        new(GamblingEvent.Jackpot, 5),
-        new(GamblingEvent.SmallGift, 15),
-        new(GamblingEvent.KurtsAssists, 10),
-        new(GamblingEvent.JekabsWentAllIn, 3),
-        new(GamblingEvent.PicOfOlins, 6),
-        new(GamblingEvent.OlinsWantsSnacks, 20),
-        new(GamblingEvent.Reroll, 2),
-        new(GamblingEvent.CPUCrawlersAttack, 3),
-        new(GamblingEvent.HopOnDeadlock, 5)
+        new(GamblingEvent.SpecialSurprise, 4),
+        new(GamblingEvent.TaxEvasion, 3),
+        new(GamblingEvent.Nothing, 50),
+        new(GamblingEvent.Jackpot, 10),
+        new(GamblingEvent.SmallGift, 30),
+        new(GamblingEvent.KurtsAssists, 20),
+        new(GamblingEvent.JekabsWentAllIn, 6),
+        new(GamblingEvent.PicOfOlins, 12),
+        new(GamblingEvent.OlinsWantsSnacks, 40),
+        new(GamblingEvent.Reroll, 5),
+        new(GamblingEvent.CPUCrawlersAttack, 9),
+        new(GamblingEvent.HopOnDeadlock, 10)
     ];
 
     private static readonly int WeightSum = EventChances.Sum(item => item.Weight);
