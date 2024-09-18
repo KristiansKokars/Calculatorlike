@@ -81,8 +81,12 @@ class RoguelikeCalculator
 
         SetCoins(Coins - gamblingMachine.GamblingCost);
 
+        // we do not want Oliņš timer to go down while you are actively gambling and rush you, to encourage more gambling
+        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
+
         gamblingMachine.Gamble();
     }
+
     public void AppendNumber(int number)
     {
         if (NumberUses[number] == 0) return;
