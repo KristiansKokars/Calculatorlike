@@ -91,8 +91,9 @@ class GamblingMachine
                 OnEventMessage?.Invoke($"Kurts has been doing well in VentaBet and shares some winnings.\nGain ${kurtsWinnings}");
                 break;
             case GamblingEvent.JekabsWentAllIn:
-                OnMoneyEarned?.Invoke(-20);
-                OnEventMessage?.Invoke($"Jēkabs went all in!!\nLose $20.");
+                var moneySpentInAllIn = 15;
+                OnMoneyEarned?.Invoke(-moneySpentInAllIn);
+                OnEventMessage?.Invoke($"Jēkabs went all in!!\nLose ${moneySpentInAllIn}.");
                 break;
             case GamblingEvent.PicOfOlins:
                 OnShouldShowSpecialOlinsPic?.Invoke(true);
@@ -141,9 +142,9 @@ class GamblingMachine
     [
         new(GamblingEvent.RIP, 1),
         new(GamblingEvent.SpecialSurprise, 5),
-        new(GamblingEvent.TaxEvasion, 5),
+        new(GamblingEvent.TaxEvasion, 3),
         new(GamblingEvent.Nothing, 30),
-        new(GamblingEvent.Jackpot, 3),
+        new(GamblingEvent.Jackpot, 5),
         new(GamblingEvent.SmallGift, 15),
         new(GamblingEvent.KurtsAssists, 10),
         new(GamblingEvent.JekabsWentAllIn, 6),
