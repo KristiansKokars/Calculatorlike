@@ -12,5 +12,7 @@ enum GamblingEvent
     JekabsWentAllIn,
     PicOfOlins,
     OlinsWantsSnacks,
-    Reroll
+    Reroll,
+    HopOnDeadlock,
+    CPUCrawlersAttack
 }

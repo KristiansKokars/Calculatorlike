@@ -9,7 +9,9 @@ class GamblingMachine
 
     private readonly Random random = new();
     private readonly Timer timer = new();
+    private readonly Wallet wallet;
     private int timeRemaining = 5000;
+    private int moneyWon = 0;
 
     public bool HasConsentedToGamblingTOS { get; private set; }
     public int GamblingCost { get; private set; }
@@ -17,13 +19,12 @@ class GamblingMachine
     public event Action<bool>? HasConsentedToGamblingTOSUpdated;
     public event Action<string?>? OnEventMessage;
     public event Action? OnRIP;
-    public event Action<int>? OnMoneyEarned;
-    public event Action? OnVID;
     public event Action<bool>? OnShouldShowSpecialOlinsPic;
     public event Action<int>? OnRerollActionsGained;
 
-    public GamblingMachine()
+    public GamblingMachine(Wallet wallet)
     {
+        this.wallet = wallet;
         GamblingCost = random.Next(1, 4);
         timer.Interval = 5000;
     }
@@ -71,35 +72,34 @@ class GamblingMachine
                 timer.Start();
                 break;
             case GamblingEvent.TaxEvasion:
-                OnVID?.Invoke();
-                OnEventMessage?.Invoke("VID caught you not filing taxes on your earnings.\nLose all money.");
+                AddMoney(-moneyWon);
+                OnEventMessage?.Invoke("VID caught you not filing taxes on your earnings.\nFined all gambling profit.");
                 break;
             case GamblingEvent.Nothing:
                 OnEventMessage?.Invoke("Nothing :(");
                 break;
             case GamblingEvent.Jackpot:
                 var jackpotMoney = random.Next(20, 60);
-                OnMoneyEarned?.Invoke(jackpotMoney);
+                AddMoney(jackpotMoney);
                 OnEventMessage?.Invoke($"BIG JACKPOT\n BIG WINNING OF ${jackpotMoney}");
                 break;
             case GamblingEvent.SmallGift:
                 var smallGift = random.Next(3, 12);
-                OnMoneyEarned?.Invoke(smallGift);
+                AddMoney(smallGift);
                 OnEventMessage?.Invoke($"You won!\nGain ${smallGift}");
                 break;
             case GamblingEvent.KurtsAssists:
                 var kurtsWinnings = random.Next(5, 15);
-                OnMoneyEarned?.Invoke(kurtsWinnings);
+                AddMoney(kurtsWinnings);
                 OnEventMessage?.Invoke($"Kurts has been doing well in VentaBet and shares some winnings.\nGain ${kurtsWinnings}");
                 break;
             case GamblingEvent.JekabsWentAllIn:
-                var allInMoney = 15;
                 var jekabsRandomRoll = random.Next(1, 11);
                 var didJekabsWin = jekabsRandomRoll > 8; // 20% chance of winning
                 var wonOrLostText = didJekabsWin ? "Won" : "Lost";
 
-                OnMoneyEarned?.Invoke(didJekabsWin ? allInMoney : -allInMoney);
-                OnEventMessage?.Invoke($"Jēkabs went all in!!\n{wonOrLostText} ${allInMoney}.");
+                AddMoney(didJekabsWin ? wallet.Coins : -wallet.Coins);
+                OnEventMessage?.Invoke($"Jēkabs went all in!!\n{wonOrLostText} ${wallet.Coins}.");
                 break;
             case GamblingEvent.PicOfOlins:
                 OnShouldShowSpecialOlinsPic?.Invoke(true);
@@ -107,7 +107,7 @@ class GamblingMachine
                 break;
             case GamblingEvent.OlinsWantsSnacks:
                 var snackCost = random.Next(1, 5);
-                OnMoneyEarned?.Invoke(-snackCost);
+                AddMoney(-snackCost);
                 OnEventMessage?.Invoke($"Oliņš wanted some snacks.\nSpent ${snackCost} on snacks.");
                 break;
             case GamblingEvent.Reroll:
@@ -115,7 +115,21 @@ class GamblingMachine
                 OnRerollActionsGained?.Invoke(rerollCount);
                 OnEventMessage?.Invoke($"Cukuriņš has descended from the trees to grant you valuable supplies in this fight.\nGain {rerollCount} reroll needed number actions.");
                 break;
+            case GamblingEvent.HopOnDeadlock:
+                OnEventMessage?.Invoke("Hop on and play Deadlock");
+                break;
+            case GamblingEvent.CPUCrawlersAttack:
+                var lostMoney = 15;
+                AddMoney(-lostMoney);
+                OnEventMessage?.Invoke($"Kurts CPU crawlers have breached containment!\nLose ${lostMoney} to these invaders.");
+                break;
         }
+    }
+
+    private void AddMoney(int money)
+    {
+        moneyWon += money;
+        wallet.Add(money);
     }
 
     private void Timer_TickSpecialSurprise(object? sender, EventArgs e)
@@ -153,15 +167,17 @@ class GamblingMachine
     [
         new(GamblingEvent.RIP, 1),
         new(GamblingEvent.SpecialSurprise, 3),
-        new(GamblingEvent.TaxEvasion, 3),
-        new(GamblingEvent.Nothing, 30),
+        new(GamblingEvent.TaxEvasion, 2),
+        new(GamblingEvent.Nothing, 25),
         new(GamblingEvent.Jackpot, 5),
         new(GamblingEvent.SmallGift, 15),
         new(GamblingEvent.KurtsAssists, 10),
-        new(GamblingEvent.JekabsWentAllIn, 5),
+        new(GamblingEvent.JekabsWentAllIn, 3),
         new(GamblingEvent.PicOfOlins, 6),
         new(GamblingEvent.OlinsWantsSnacks, 20),
-        new(GamblingEvent.Reroll, 2)
+        new(GamblingEvent.Reroll, 2),
+        new(GamblingEvent.CPUCrawlersAttack, 3),
+        new(GamblingEvent.HopOnDeadlock, 5)
     ];
 
     private static readonly int WeightSum = EventChances.Sum(item => item.Weight);

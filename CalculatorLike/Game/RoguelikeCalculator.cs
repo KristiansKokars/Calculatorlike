@@ -22,7 +22,7 @@ class RoguelikeCalculator
 
     private readonly Random random = new();
     private readonly BasicCalculator calculator;
-    private readonly GamblingMachine gamblingMachine = new();
+    private readonly GamblingMachine gamblingMachine;
     private readonly Wallet wallet = new();
     private readonly Shop shop;
     private readonly Inventory inventory = new();
@@ -117,9 +117,8 @@ class RoguelikeCalculator
     public RoguelikeCalculator(BasicCalculator calculator)
     {
         this.calculator = calculator;
+        gamblingMachine = new(wallet);
         shop = new(wallet, inventory);
-        gamblingMachine.OnMoneyEarned += Gamble_OnMoneyChanged;
-        gamblingMachine.OnVID += Gamble_OnVID;
         gamblingMachine.OnRerollActionsGained += Gamble_OnRerollActionsGained;
     }
 
@@ -383,16 +382,6 @@ class RoguelikeCalculator
             OnGameFinished?.Invoke(false);
             solutionTimer.Stop();
         }
-    }
-
-    private void Gamble_OnMoneyChanged(int money)
-    {
-        wallet.Add(money);
-    }
-
-    private void Gamble_OnVID()
-    {
-        wallet.SetCoins(0);
     }
 
     private void Gamble_OnRerollActionsGained(int rerollCount)
