@@ -1157,10 +1157,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(204, 275);
+            ClientSize = new Size(204, 281);
+            Controls.Add(pictureRIP);
             Controls.Add(pictureGameLost);
             Controls.Add(pictureDivisionBy0);
-            Controls.Add(pictureRIP);
             Controls.Add(panelShopContainer);
             Controls.Add(labelSpecialReroll);
             Controls.Add(btnSpecialReroll);

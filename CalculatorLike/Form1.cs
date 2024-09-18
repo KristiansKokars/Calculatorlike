@@ -40,7 +40,7 @@ public partial class Form1 : Form
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
         allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
-        allGameElements = [labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
+        allGameElements = [panelTermsAndConditions, labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
     }
@@ -180,21 +180,19 @@ public partial class Form1 : Form
 
     private void OnGameFinished(bool isWon)
     {
+        foreach (var element in allGameElements)
+        {
+            element.Visible = false;
+        }
+        labelOlinsMessage.Visible = false;
+
         if (isWon)
         {
             labelYouWon.Visible = true;
             btnRoguelike.Visible = true;
-            foreach (var element in allGameElements)
-            {
-                element.Visible = false;
-            }
         }
         else
         {
-            foreach (var element in allGameElements)
-            {
-                element.Visible = false;
-            }
             pictureGameLost.Visible = true;
             BackColor = Color.Black;
         }
@@ -483,6 +481,8 @@ public partial class Form1 : Form
         {
             element.Visible = false;
         }
+        labelOlinsMessage.Visible = false;
+        panelShopContainer.Visible = false;
         pictureRIP.Visible = true;
         BackColor = Color.Black;
     }

@@ -5,9 +5,10 @@ namespace CalculatorLike.Game.Gambling;
 
 class GamblingMachine
 {
+    private const bool IS_RIP_ENABLED = true;
+
     private readonly Random random = new();
     private readonly Timer timer = new();
-    private const bool IS_RIP_ENABLED = true;
     private int timeRemaining = 5000;
 
     public bool HasConsentedToGamblingTOS { get; private set; }
