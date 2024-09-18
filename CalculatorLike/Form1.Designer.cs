@@ -113,6 +113,14 @@
             label5 = new Label();
             pictureDivisionBy0 = new PictureBox();
             pictureRIP = new PictureBox();
+            labelUsesRandom1To100 = new Label();
+            btnSpecialRandom1To100 = new Button();
+            labelUsesAddOrRemoveClosestOr10 = new Label();
+            btnSpecialAddOrRemoveClosestOr10 = new Button();
+            labelUsesIncrementByOne = new Label();
+            btnIncrementByOne = new Button();
+            labelUsesReverse = new Label();
+            btnReverse = new Button();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
@@ -1153,11 +1161,127 @@
             pictureRIP.TabStop = false;
             pictureRIP.Visible = false;
             // 
+            // labelUsesRandom1To100
+            // 
+            labelUsesRandom1To100.AutoSize = true;
+            labelUsesRandom1To100.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesRandom1To100.ForeColor = Color.DarkRed;
+            labelUsesRandom1To100.Location = new Point(40, 303);
+            labelUsesRandom1To100.Name = "labelUsesRandom1To100";
+            labelUsesRandom1To100.Size = new Size(13, 13);
+            labelUsesRandom1To100.TabIndex = 71;
+            labelUsesRandom1To100.Text = "0";
+            labelUsesRandom1To100.Visible = false;
+            // 
+            // btnSpecialRandom1To100
+            // 
+            btnSpecialRandom1To100.BackColor = Color.CornflowerBlue;
+            btnSpecialRandom1To100.FlatStyle = FlatStyle.Flat;
+            btnSpecialRandom1To100.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSpecialRandom1To100.ForeColor = SystemColors.ControlText;
+            btnSpecialRandom1To100.Location = new Point(12, 303);
+            btnSpecialRandom1To100.Name = "btnSpecialRandom1To100";
+            btnSpecialRandom1To100.Size = new Size(40, 41);
+            btnSpecialRandom1To100.TabIndex = 70;
+            btnSpecialRandom1To100.Text = "R";
+            btnSpecialRandom1To100.UseVisualStyleBackColor = false;
+            btnSpecialRandom1To100.Visible = false;
+            btnSpecialRandom1To100.Click += btnSpecialRandom1To100_Click;
+            // 
+            // labelUsesAddOrRemoveClosestOr10
+            // 
+            labelUsesAddOrRemoveClosestOr10.AutoSize = true;
+            labelUsesAddOrRemoveClosestOr10.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesAddOrRemoveClosestOr10.ForeColor = Color.DarkRed;
+            labelUsesAddOrRemoveClosestOr10.Location = new Point(87, 303);
+            labelUsesAddOrRemoveClosestOr10.Name = "labelUsesAddOrRemoveClosestOr10";
+            labelUsesAddOrRemoveClosestOr10.Size = new Size(13, 13);
+            labelUsesAddOrRemoveClosestOr10.TabIndex = 73;
+            labelUsesAddOrRemoveClosestOr10.Text = "0";
+            labelUsesAddOrRemoveClosestOr10.Visible = false;
+            // 
+            // btnSpecialAddOrRemoveClosestOr10
+            // 
+            btnSpecialAddOrRemoveClosestOr10.BackColor = Color.CornflowerBlue;
+            btnSpecialAddOrRemoveClosestOr10.FlatStyle = FlatStyle.Flat;
+            btnSpecialAddOrRemoveClosestOr10.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSpecialAddOrRemoveClosestOr10.ForeColor = SystemColors.ControlText;
+            btnSpecialAddOrRemoveClosestOr10.Location = new Point(59, 303);
+            btnSpecialAddOrRemoveClosestOr10.Name = "btnSpecialAddOrRemoveClosestOr10";
+            btnSpecialAddOrRemoveClosestOr10.Size = new Size(40, 41);
+            btnSpecialAddOrRemoveClosestOr10.TabIndex = 72;
+            btnSpecialAddOrRemoveClosestOr10.Text = "~10";
+            btnSpecialAddOrRemoveClosestOr10.UseVisualStyleBackColor = false;
+            btnSpecialAddOrRemoveClosestOr10.Visible = false;
+            btnSpecialAddOrRemoveClosestOr10.Click += btnSpecialAddOrRemoveClosestOr10_Click;
+            // 
+            // labelUsesIncrementByOne
+            // 
+            labelUsesIncrementByOne.AutoSize = true;
+            labelUsesIncrementByOne.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesIncrementByOne.ForeColor = Color.DarkRed;
+            labelUsesIncrementByOne.Location = new Point(134, 303);
+            labelUsesIncrementByOne.Name = "labelUsesIncrementByOne";
+            labelUsesIncrementByOne.Size = new Size(13, 13);
+            labelUsesIncrementByOne.TabIndex = 75;
+            labelUsesIncrementByOne.Text = "0";
+            labelUsesIncrementByOne.Visible = false;
+            // 
+            // btnIncrementByOne
+            // 
+            btnIncrementByOne.BackColor = Color.CornflowerBlue;
+            btnIncrementByOne.FlatStyle = FlatStyle.Flat;
+            btnIncrementByOne.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnIncrementByOne.ForeColor = SystemColors.ControlText;
+            btnIncrementByOne.Location = new Point(106, 303);
+            btnIncrementByOne.Name = "btnIncrementByOne";
+            btnIncrementByOne.Size = new Size(40, 41);
+            btnIncrementByOne.TabIndex = 74;
+            btnIncrementByOne.Text = "X++";
+            btnIncrementByOne.UseVisualStyleBackColor = false;
+            btnIncrementByOne.Visible = false;
+            btnIncrementByOne.Click += btnIncrementByOne_Click;
+            // 
+            // labelUsesReverse
+            // 
+            labelUsesReverse.AutoSize = true;
+            labelUsesReverse.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesReverse.ForeColor = Color.DarkRed;
+            labelUsesReverse.Location = new Point(181, 303);
+            labelUsesReverse.Name = "labelUsesReverse";
+            labelUsesReverse.Size = new Size(13, 13);
+            labelUsesReverse.TabIndex = 77;
+            labelUsesReverse.Text = "0";
+            labelUsesReverse.Visible = false;
+            // 
+            // btnReverse
+            // 
+            btnReverse.BackColor = Color.CornflowerBlue;
+            btnReverse.FlatStyle = FlatStyle.Flat;
+            btnReverse.Font = new Font("Fira Sans", 9.749999F, FontStyle.Bold);
+            btnReverse.ForeColor = SystemColors.ControlText;
+            btnReverse.Location = new Point(153, 303);
+            btnReverse.Name = "btnReverse";
+            btnReverse.Size = new Size(40, 41);
+            btnReverse.TabIndex = 76;
+            btnReverse.Text = "<->";
+            btnReverse.UseVisualStyleBackColor = false;
+            btnReverse.Visible = false;
+            btnReverse.Click += btnReverse_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(204, 281);
+            ClientSize = new Size(204, 279);
+            Controls.Add(labelUsesReverse);
+            Controls.Add(btnReverse);
+            Controls.Add(labelUsesIncrementByOne);
+            Controls.Add(btnIncrementByOne);
+            Controls.Add(labelUsesAddOrRemoveClosestOr10);
+            Controls.Add(btnSpecialAddOrRemoveClosestOr10);
+            Controls.Add(labelUsesRandom1To100);
+            Controls.Add(btnSpecialRandom1To100);
             Controls.Add(pictureRIP);
             Controls.Add(pictureGameLost);
             Controls.Add(pictureDivisionBy0);
@@ -1315,5 +1439,13 @@
         private Label label5;
         private PictureBox pictureRIP;
         private PictureBox pictureSpecialOlins;
+        private Label labelUsesRandom1To100;
+        private Button btnSpecialRandom1To100;
+        private Label labelUsesAddOrRemoveClosestOr10;
+        private Button btnSpecialAddOrRemoveClosestOr10;
+        private Label labelUsesIncrementByOne;
+        private Button btnIncrementByOne;
+        private Label labelUsesReverse;
+        private Button btnReverse;
     }
 }

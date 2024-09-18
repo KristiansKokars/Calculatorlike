@@ -23,10 +23,12 @@ class Wallet
         if (amount > Coins) return;
 
         Coins -= amount;
+        OnCoinsUpdated?.Invoke();
     }
 
     public void Add(int amount)
     {
         Coins += amount;
+        OnCoinsUpdated?.Invoke();
     }
 }

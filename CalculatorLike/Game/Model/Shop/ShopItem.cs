@@ -45,14 +45,18 @@ abstract class ShopItem
         .ToList();
 
     private static List<WeightedItem<ShopItem>> weightedItems = [
-        new(new OperationItem(CalculatorOperation.Add), 4),
-        new(new OperationItem(CalculatorOperation.Subtract), 4),
-        new(new OperationItem(CalculatorOperation.Multiply), 6),
-        new(new OperationItem(CalculatorOperation.Divide), 6),
-        new(new SpecialActionItem(SpecialAction.Modulus), 6),
+        new(new OperationItem(CalculatorOperation.Add), 6),
+        new(new OperationItem(CalculatorOperation.Subtract), 6),
+        new(new OperationItem(CalculatorOperation.Multiply), 8),
+        new(new OperationItem(CalculatorOperation.Divide), 8),
+        new(new SpecialActionItem(SpecialAction.Modulus), 8),
         new(new SpecialActionItem(SpecialAction.Square), 5),
         new(new SpecialActionItem(SpecialAction.SquareRoot), 5),
         new(new SpecialActionItem(SpecialAction.CashToNumber), 3),
+        new(new SpecialActionItem(SpecialAction.Random1To100), 5),
+        new(new SpecialActionItem(SpecialAction.AddOrRemoveClosestOr10), 3),
+        new(new SpecialActionItem(SpecialAction.IncrementByOne), 5),
+        new(new SpecialActionItem(SpecialAction.Reverse), 4),
     ];
 
     public static List<WeightedItem<ShopItem>> ShopItems = [.. weightedNumberItems, .. weightedItems];

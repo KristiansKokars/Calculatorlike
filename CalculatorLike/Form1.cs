@@ -288,6 +288,38 @@ public partial class Form1 : Form
                 }
                 labelSpecialReroll.Text = usesText;
                 return;
+            case SpecialAction.Random1To100:
+                if (uses >= 1)
+                {
+                    labelUsesRandom1To100.Visible = true;
+                    btnSpecialRandom1To100.Visible = true;
+                }
+                labelUsesRandom1To100.Text = usesText;
+                break;
+            case SpecialAction.AddOrRemoveClosestOr10:
+                if (uses >= 1)
+                {
+                    labelUsesAddOrRemoveClosestOr10.Visible = true;
+                    btnSpecialAddOrRemoveClosestOr10.Visible = true;
+                }
+                labelUsesAddOrRemoveClosestOr10.Text = usesText;
+                break;
+            case SpecialAction.IncrementByOne:
+                if (uses >= 1)
+                {
+                    labelUsesIncrementByOne.Visible = true;
+                    btnIncrementByOne.Visible = true;
+                }
+                labelUsesIncrementByOne.Text = usesText;
+                break;
+            case SpecialAction.Reverse:
+                if (uses >= 1)
+                {
+                    labelUsesReverse.Visible = true;
+                    btnReverse.Visible = true;
+                }
+                labelUsesReverse.Text = usesText;
+                break;
         }
     }
 
@@ -463,6 +495,10 @@ public partial class Form1 : Form
                     SpecialAction.Modulus => "%",
                     SpecialAction.Reroll => "-",
                     SpecialAction.CashToNumber => "$",
+                    SpecialAction.Random1To100 => "R",
+                    SpecialAction.AddOrRemoveClosestOr10 => "~10",
+                    SpecialAction.IncrementByOne => "X++",
+                    SpecialAction.Reverse => "<->",
                     _ => throw new NotImplementedException(),
                 };
                 shopItemElement.Text = text;
@@ -507,5 +543,24 @@ public partial class Form1 : Form
         pictureSpecialOlins.Visible = shouldShow;
     }
 
+    private void btnSpecialRandom1To100_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Random1To100);
+    }
+
+    private void btnSpecialAddOrRemoveClosestOr10_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.AddOrRemoveClosestOr10);
+    }
+
+    private void btnIncrementByOne_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.IncrementByOne);
+    }
+
+    private void btnReverse_Click(object sender, EventArgs e)
+    {
+        viewModel.RoguelikeCalculator.PerformSpecialAction(SpecialAction.Reverse);
+    }
     #endregion
 }

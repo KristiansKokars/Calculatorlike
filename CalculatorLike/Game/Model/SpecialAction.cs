@@ -6,5 +6,9 @@ enum SpecialAction
     SquareRoot,
     CashToNumber,
     Modulus,
-    Reroll
+    Reroll,
+    Random1To100,
+    AddOrRemoveClosestOr10,
+    IncrementByOne,
+    Reverse
 }

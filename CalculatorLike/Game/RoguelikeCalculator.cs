@@ -176,6 +176,24 @@ class RoguelikeCalculator
             case SpecialAction.Reroll:
                 UpdateRandomNumberToGet();
                 break;
+            case SpecialAction.Random1To100:
+                calculator.SetCalculatorNumber(random.Next(1, 101));
+                break;
+            case SpecialAction.AddOrRemoveClosestOr10:
+                var numberDifference = NumberToGet - calculator.CurrentInput;
+                if (Math.Abs(numberDifference) > 10)
+                {
+                    numberDifference = 10 * (numberDifference / Math.Abs(numberDifference));
+                }
+                calculator.SetCalculatorNumber(calculator.CurrentInput + numberDifference);
+                break;
+            case SpecialAction.IncrementByOne:
+                calculator.SetCalculatorNumber(calculator.CurrentInput + 1);
+                break;
+            case SpecialAction.Reverse:
+                var reversedNumber = long.Parse(calculator.CurrentInput.ToString().Reverse().ToString());
+                calculator.SetCalculatorNumber(reversedNumber);
+                break;
         }
         inventory.OnSpecialActionUsed(specialAction);
     }
