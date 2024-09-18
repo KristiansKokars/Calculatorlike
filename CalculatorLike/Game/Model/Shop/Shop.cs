@@ -48,15 +48,14 @@ class Shop(Wallet wallet, Inventory inventory)
     public void GenerateNewShopItems(int currentRerollCostSum = 0)
     {
         AvailableShopItems.Clear();
-        // TODO: make it generate more based on rounds too
-        int shopItemCount = random.Next(3, SHOP_ITEM_COUNT + 1);
+        int shopItemCount = random.Next(SHOP_ITEM_COUNT - 2, SHOP_ITEM_COUNT + 1);
         if (currentRerollCostSum == 0)
         {
-            RerollCost = random.Next(3, 12);
+            RerollCost = random.Next(3, 11);
         }
         else
         {
-            RerollCost = currentRerollCostSum + random.Next(2, 12);
+            RerollCost = currentRerollCostSum + random.Next(2, 9);
         }
         OnRerollCostUpdated?.Invoke(RerollCost);
 
@@ -95,7 +94,7 @@ class Shop(Wallet wallet, Inventory inventory)
             }
             if (shopItem is ShopItem.SpecialActionItem specialActionItem)
             {
-                specialActionItem.Cost = random.Next(1, 12);
+                specialActionItem.Cost = random.Next(3, 12);
             }
 
             AvailableShopItems.Add(i, shopItem);
