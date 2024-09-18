@@ -1,4 +1,6 @@
-﻿namespace CalculatorLike.Base;
+﻿using CalculatorLike.Base.Model;
+
+namespace CalculatorLike.Base;
 
 class BasicCalculator
 {

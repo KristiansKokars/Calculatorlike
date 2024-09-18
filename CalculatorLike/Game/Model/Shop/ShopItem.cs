@@ -1,6 +1,6 @@
-﻿using CalculatorLike.Base;
+﻿using CalculatorLike.Base.Model;
 
-namespace CalculatorLike.Game.Shop;
+namespace CalculatorLike.Game.Model.Shop;
 
 abstract class ShopItem
 {

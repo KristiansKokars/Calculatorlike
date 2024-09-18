@@ -1,4 +1,4 @@
-﻿namespace CalculatorLike.Base;
+﻿namespace CalculatorLike.Base.Model;
 
 enum CalculatorOperation
 {

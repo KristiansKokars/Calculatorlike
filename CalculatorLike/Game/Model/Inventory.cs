@@ -1,6 +1,6 @@
-﻿using CalculatorLike.Base;
+﻿using CalculatorLike.Base.Model;
 
-namespace CalculatorLike.Game;
+namespace CalculatorLike.Game.Model;
 
 class Inventory
 {
@@ -45,7 +45,7 @@ class Inventory
         if (SpecialActionUses.ContainsKey(specialAction))
         {
             SpecialActionUses[specialAction] = SpecialActionUses[specialAction] + count;
-        } 
+        }
         else
         {
             SpecialActionUses.Add(specialAction, count);

@@ -1,6 +1,8 @@
 ﻿using CalculatorLike.Base;
-using CalculatorLike.Game.Gambling;
-using CalculatorLike.Game.Shop;
+using CalculatorLike.Base.Model;
+using CalculatorLike.Game.Model;
+using CalculatorLike.Game.Model.Gambling;
+using CalculatorLike.Game.Model.Shop;
 using Timer = System.Windows.Forms.Timer;
 
 namespace CalculatorLike.Game;
@@ -22,7 +24,7 @@ class RoguelikeCalculator
     private readonly BasicCalculator calculator;
     private readonly GamblingMachine gamblingMachine = new();
     private readonly Wallet wallet = new();
-    private readonly Shop.Shop shop;
+    private readonly Shop shop;
     private readonly Inventory inventory = new();
     private readonly Timer solutionTimer = new();
 

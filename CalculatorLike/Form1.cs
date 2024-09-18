@@ -1,6 +1,6 @@
-﻿using CalculatorLike.Base;
-using CalculatorLike.Game;
-using CalculatorLike.Game.Shop;
+﻿using CalculatorLike.Base.Model;
+using CalculatorLike.Game.Model;
+using CalculatorLike.Game.Model.Shop;
 
 namespace CalculatorLike;
 

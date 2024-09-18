@@ -1,4 +1,4 @@
-﻿namespace CalculatorLike.Game;
+﻿namespace CalculatorLike.Game.Model;
 
 enum SpecialAction
 {

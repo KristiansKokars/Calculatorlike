@@ -1,4 +1,4 @@
-﻿namespace CalculatorLike.Game.Gambling;
+﻿namespace CalculatorLike.Game.Model.Gambling;
 
 enum GamblingEvent
 {

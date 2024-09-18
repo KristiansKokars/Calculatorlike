@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Timer = System.Windows.Forms.Timer;
 
-namespace CalculatorLike.Game.Gambling;
+namespace CalculatorLike.Game.Model.Gambling;
 
 class GamblingMachine
 {

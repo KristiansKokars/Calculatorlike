@@ -1,4 +1,5 @@
 ﻿using CalculatorLike.Base;
+using CalculatorLike.Base.Model;
 using CalculatorLike.Game;
 
 namespace CalculatorLike;

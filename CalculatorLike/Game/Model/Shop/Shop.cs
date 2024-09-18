@@ -1,4 +1,4 @@
-﻿namespace CalculatorLike.Game.Shop;
+﻿namespace CalculatorLike.Game.Model.Shop;
 
 class Shop(Wallet wallet, Inventory inventory)
 {
