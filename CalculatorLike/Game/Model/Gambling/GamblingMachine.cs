@@ -72,8 +72,8 @@ class GamblingMachine
                 timer.Start();
                 break;
             case GamblingEvent.TaxEvasion:
+                OnEventMessage?.Invoke($"VID caught you not filing taxes on your earnings.\nFined all gambling profit of ${moneyWon}.");
                 AddMoney(-moneyWon);
-                OnEventMessage?.Invoke("VID caught you not filing taxes on your earnings.\nFined all gambling profit.");
                 break;
             case GamblingEvent.Nothing:
                 OnEventMessage?.Invoke("Nothing :(");
@@ -98,8 +98,8 @@ class GamblingMachine
                 var didJekabsWin = jekabsRandomRoll > 8; // 20% chance of winning
                 var wonOrLostText = didJekabsWin ? "Won" : "Lost";
 
-                AddMoney(didJekabsWin ? wallet.Coins : -wallet.Coins);
                 OnEventMessage?.Invoke($"Jēkabs went all in!!\n{wonOrLostText} ${wallet.Coins}.");
+                AddMoney(didJekabsWin ? wallet.Coins : -wallet.Coins);
                 break;
             case GamblingEvent.PicOfOlins:
                 OnShouldShowSpecialOlinsPic?.Invoke(true);
