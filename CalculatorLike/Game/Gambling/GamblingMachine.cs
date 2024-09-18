@@ -19,6 +19,7 @@ class GamblingMachine
     public event Action<int>? OnMoneyEarned;
     public event Action? OnVID;
     public event Action<bool>? OnShouldShowSpecialOlinsPic;
+    public event Action<int>? OnRerollActionsGained;
 
     public GamblingMachine()
     {
@@ -104,6 +105,11 @@ class GamblingMachine
                 OnMoneyEarned?.Invoke(-snackCost);
                 OnEventMessage?.Invoke($"Oliņš wanted some snacks.\nSpent ${snackCost} on snacks.");
                 break;
+            case GamblingEvent.Reroll:
+                var rerollCount = 5;
+                OnRerollActionsGained?.Invoke(rerollCount);
+                OnEventMessage?.Invoke($"Cukuriņš has descended from the trees to grant you valuable supplies in this fight.\nGain {rerollCount} reroll needed number actions.");
+                break;
         }
     }
 
@@ -149,7 +155,8 @@ class GamblingMachine
         new(GamblingEvent.KurtsAssists, 10),
         new(GamblingEvent.JekabsWentAllIn, 6),
         new(GamblingEvent.PicOfOlins, 5),
-        new(GamblingEvent.OlinsWantsSnacks, 22),
+        new(GamblingEvent.OlinsWantsSnacks, 20),
+        new(GamblingEvent.Reroll, 2)
     ];
 
     private static readonly int WeightSum = EventChances.Sum(item => item.Weight);

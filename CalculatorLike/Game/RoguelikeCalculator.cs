@@ -1,5 +1,6 @@
 ﻿using CalculatorLike.Base;
 using CalculatorLike.Game.Gambling;
+using static CalculatorLike.Game.ShopItem;
 using Timer = System.Windows.Forms.Timer;
 
 namespace CalculatorLike.Game;
@@ -72,6 +73,7 @@ class RoguelikeCalculator
         this.calculator = calculator;
         gamblingMachine.OnMoneyEarned += Gamble_OnMoneyChanged;
         gamblingMachine.OnVID += Gamble_OnVID;
+        gamblingMachine.OnRerollActionsGained += Gamble_OnRerollActionsGained;
     }
 
     public void Gamble()
@@ -425,5 +427,11 @@ class RoguelikeCalculator
     private void Gamble_OnVID()
     {
         SetCoins(0);
+    }
+
+    private void Gamble_OnRerollActionsGained(int rerollCount)
+    {
+        SpecialActionUses[SpecialAction.Reroll] = SpecialActionUses[SpecialAction.Reroll] + rerollCount;
+        OnSpecialActionUseUpdated?.Invoke(SpecialAction.Reroll);
     }
 }
