@@ -8,8 +8,8 @@ class RoguelikeCalculator
 {
     private const int COINS_PER_ROUND = 16;
     private const int MAX_ROUND_COUNT = 20;
-    private const int DEFAULT_STARTING_NUMBER_USE_COUNT = 2;
-    private const int DEFAULT_STARTING_OPERATION_USE_COUNT = 2;
+    private const int DEFAULT_STARTING_NUMBER_USE_COUNT = 3;
+    private const int DEFAULT_STARTING_OPERATION_USE_COUNT = 3;
     private const int TIME_TO_SOLVE_IN_SECONDS = 60;
     private const int SECONDS_REMOVED_PER_ROUND = 4;
     private const int TIMER_SECONDS_PER_TICK = 5;
@@ -24,7 +24,7 @@ class RoguelikeCalculator
     private int secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
     private bool isShopping;
 
-    public int NumberToGet { get; private set; }
+    public long NumberToGet { get; private set; }
     public int Round { get; private set; }
     public int Coins { get; private set; }
     public int RerollCost { get; private set; }
@@ -36,7 +36,7 @@ class RoguelikeCalculator
 
     public event Action? OnNewRound;
     public event Action<int>? OnNumberUseUpdated;
-    public event Action<int>? OnNumberToGetUpdated;
+    public event Action<long>? OnNumberToGetUpdated;
     public event Action<CalculatorOperation>? OnOperationUseUpdated;
     public event Action<SpecialAction>? OnSpecialActionUseUpdated;
     public event Action<bool>? OnGameFinished;
@@ -354,9 +354,9 @@ class RoguelikeCalculator
        OnNumberToGetUpdated?.Invoke(NumberToGet);
     }
 
-    private int GenerateRandomNumberToGet()
+    private long GenerateRandomNumberToGet()
     {
-        int generatedNumber = NumberToGet;
+        var generatedNumber = NumberToGet;
         // TODO: could be moved up somewhere
         List<int> lastRounds = [16, 17, 18, 19];
 

@@ -1,7 +1,4 @@
-﻿using CalculatorLike.Base;
-using System.Linq;
-
-namespace CalculatorLike.Game;
+﻿namespace CalculatorLike.Game;
 
 class WeightedItem<T>
 {

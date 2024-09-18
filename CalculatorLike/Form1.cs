@@ -46,7 +46,7 @@ public partial class Form1 : Form
     }
 
     #region Calculator
-    private void OnNumberUpdated(int number)
+    private void OnNumberUpdated(long number)
     {
         tbNumbers.Text = number.ToString();
     }
@@ -173,7 +173,7 @@ public partial class Form1 : Form
         labelOlinsMessage.Visible = isImpatient;
     }
 
-    private void OnNumberToGetUpdated(int numberToGet)
+    private void OnNumberToGetUpdated(long numberToGet)
     {
         labelNumberToGet.Text = numberToGet.ToString();
     }

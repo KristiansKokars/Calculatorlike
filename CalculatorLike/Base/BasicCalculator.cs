@@ -2,16 +2,23 @@
 
 class BasicCalculator
 {
-    private int? previousInput;
+    private Int64? previousInput;
     private bool shouldSetNewNumber;
     private CalculatorOperation? currentOperation;
 
-    public int CurrentInput { get; private set; }
-    public event Action<int>? OnNumberUpdated;
+    public long CurrentInput { get; private set; }
+    public event Action<long>? OnNumberUpdated;
 
-    public void AppendNumber(int number)
+    public void AppendNumber(long number)
     {
-        SetCalculatorNumber(int.Parse($"{CurrentInput}{number}"));
+        try
+        {
+            SetCalculatorNumber(long.Parse($"{CurrentInput}{number}"));
+        }
+        catch (OverflowException)
+        {
+            // do nothing and do not change number
+        }
     }
 
     public void Calculate()
@@ -21,7 +28,7 @@ class BasicCalculator
             return;
         }
 
-        var previousNumber = (int)previousInput;
+        var previousNumber = (long)previousInput;
         var result = currentOperation switch
         {
             CalculatorOperation.Add => previousNumber + CurrentInput,
@@ -53,7 +60,7 @@ class BasicCalculator
         OnNumberUpdated?.Invoke(CurrentInput);
     }
 
-    public void SetCalculatorNumber(int number)
+    public void SetCalculatorNumber(long number)
     {
         CurrentInput = number;
         OnNumberUpdated?.Invoke(CurrentInput);
