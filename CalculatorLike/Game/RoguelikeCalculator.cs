@@ -1,12 +1,14 @@
 ﻿using CalculatorLike.Base;
 using CalculatorLike.Game.Gambling;
-using static CalculatorLike.Game.ShopItem;
+using CalculatorLike.Game.Shop;
 using Timer = System.Windows.Forms.Timer;
 
 namespace CalculatorLike.Game;
 
 class RoguelikeCalculator
 {
+    private static readonly List<int> lastRounds = [16, 17, 18, 19];
+
     private const int COINS_PER_ROUND = 18;
     private const int MAX_ROUND_COUNT = 20;
     private const int DEFAULT_STARTING_NUMBER_USE_COUNT = 3;
@@ -15,37 +17,78 @@ class RoguelikeCalculator
     private const int SECONDS_REMOVED_PER_ROUND = 4;
     private const int TIMER_SECONDS_PER_TICK = 5;
     private const int OLINS_WARNING_AT_SECONDS = 30;
-    private const int SHOP_ITEM_COUNT = 6;
 
-    private Random random = new();
-    private BasicCalculator calculator;
-    private GamblingMachine gamblingMachine = new();
-    private CalculatorOperation? currentOperation;
+    private readonly Random random = new();
+    private readonly BasicCalculator calculator;
+    private readonly GamblingMachine gamblingMachine = new();
+    private readonly Wallet wallet = new();
+    private readonly Shop.Shop shop;
+    private readonly Inventory inventory = new();
     private readonly Timer solutionTimer = new();
+
     private int secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
     private bool isShopping;
 
     public long NumberToGet { get; private set; }
     public int Round { get; private set; }
-    public int Coins { get; private set; }
-    public int RerollCost { get; private set; }
-    public int GamblingCost { get { return gamblingMachine.GamblingCost; } }
-    public Dictionary<int, int> NumberUses { get; private set; } = [];
-    public Dictionary<CalculatorOperation, int> OperationUses { get; private set; } = [];
-    public Dictionary<SpecialAction, int> SpecialActionUses { get; private set; } = [];
-    public Dictionary<int, ShopItem> AvailableShopItems { get; private set; } = [];
 
     public event Action? OnNewRound;
-    public event Action<int>? OnNumberUseUpdated;
     public event Action<long>? OnNumberToGetUpdated;
-    public event Action<CalculatorOperation>? OnOperationUseUpdated;
-    public event Action<SpecialAction>? OnSpecialActionUseUpdated;
     public event Action<bool>? OnGameFinished;
     public event Action<bool>? OnIsOlinsImpatient;
     public event Action<bool>? OnIsShoppingUpdated;
-    public event Action? OnAvailableShopItemsUpdated;
-    public event Action? OnCoinsUpdated;
-    public event Action<int>? OnRerollCostUpdated;
+
+    #region Wallet
+    public int Coins { get { return wallet.Coins; } }
+
+    public event Action? OnCoinsUpdated
+    {
+        add { wallet.OnCoinsUpdated += value; }
+        remove { wallet.OnCoinsUpdated -= value; }
+    }
+    #endregion
+
+    #region Shop
+    public Dictionary<int, ShopItem> AvailableShopItems { get { return shop.AvailableShopItems; } }
+    public int RerollCost { get { return shop.RerollCost; } }
+
+    public event Action<int>? OnRerollCostUpdated
+    {
+        add { shop.OnRerollCostUpdated += value; }
+        remove { shop.OnRerollCostUpdated -= value; }
+    }
+
+    public event Action? OnAvailableShopItemsUpdated
+    {
+        add { shop.OnAvailableShopItemsUpdated += value; }
+        remove { shop.OnAvailableShopItemsUpdated -= value; }
+    }
+    #endregion
+
+    #region Inventory
+    public Dictionary<int, int> NumberUses { get { return inventory.NumberUses; } }
+    public Dictionary<CalculatorOperation, int> OperationUses { get { return inventory.OperationUses; } }
+    public Dictionary<SpecialAction, int> SpecialActionUses { get { return inventory.SpecialActionUses; } }
+
+    public event Action<int>? OnNumberUseUpdated
+    {
+        add { inventory.OnNumberUseUpdated += value; }
+        remove { inventory.OnNumberUseUpdated -= value; }
+    }
+    public event Action<CalculatorOperation>? OnOperationUseUpdated
+    {
+        add { inventory.OnOperationUseUpdated += value; }
+        remove { inventory.OnOperationUseUpdated -= value; }
+    }
+    public event Action<SpecialAction>? OnSpecialActionUseUpdated
+    {
+        add { inventory.OnSpecialActionUseUpdated += value; }
+        remove { inventory.OnSpecialActionUseUpdated -= value; }
+    }
+    #endregion
+
+    #region Gambling
+    public int GamblingCost { get { return gamblingMachine.GamblingCost; } }
 
     public event Action<bool>? HasConsentedToGamblingTOSUpdated
     {
@@ -67,10 +110,12 @@ class RoguelikeCalculator
         add { gamblingMachine.OnEventMessage += value; }
         remove { gamblingMachine.OnEventMessage -= value; }
     }
+    #endregion
 
     public RoguelikeCalculator(BasicCalculator calculator)
     {
         this.calculator = calculator;
+        shop = new(wallet, inventory);
         gamblingMachine.OnMoneyEarned += Gamble_OnMoneyChanged;
         gamblingMachine.OnVID += Gamble_OnVID;
         gamblingMachine.OnRerollActionsGained += Gamble_OnRerollActionsGained;
@@ -79,9 +124,9 @@ class RoguelikeCalculator
     public void Gamble()
     {
         if (!gamblingMachine.HasConsentedToGamblingTOS) return;
-        if (Coins < gamblingMachine.GamblingCost) return;
+        if (!wallet.CanPurchase(gamblingMachine.GamblingCost)) return;
 
-        SetCoins(Coins - gamblingMachine.GamblingCost);
+        wallet.Purchase(gamblingMachine.GamblingCost);
 
         // we do not want Oliņš timer to go down while you are actively gambling and rush you, to encourage more gambling
         secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
@@ -95,7 +140,7 @@ class RoguelikeCalculator
         if (isShopping) return;
 
         calculator.AppendNumber(number);
-        OnNumberUsed(number);
+        inventory.OnNumberUsed(number);
     }
 
     public void SetOperation(CalculatorOperation operation)
@@ -104,7 +149,7 @@ class RoguelikeCalculator
         if (isShopping) return;
 
         calculator.SetOperation(operation);
-        OnOperationUsed(operation);
+        inventory.OnOperationUsed(operation);
     }
 
     public void PerformSpecialAction(SpecialAction specialAction)
@@ -121,7 +166,7 @@ class RoguelikeCalculator
                 calculator.SetCalculatorNumber((int)Math.Floor(Math.Sqrt(calculator.CurrentInput)));
                 break;
             case SpecialAction.CashToNumber:
-                calculator.SetCalculatorNumber(calculator.CurrentInput + Coins);
+                calculator.SetCalculatorNumber(calculator.CurrentInput + wallet.Coins);
                 break;
             case SpecialAction.Modulus:
                 calculator.SetOperation(CalculatorOperation.Modulus);
@@ -130,7 +175,7 @@ class RoguelikeCalculator
                 UpdateRandomNumberToGet();
                 break;
         }
-        OnSpecialActionUsed(specialAction);
+        inventory.OnSpecialActionUsed(specialAction);
     }
 
     public void ClearNumber()
@@ -166,7 +211,7 @@ class RoguelikeCalculator
     {
         UpdateRandomNumberToGet();
         Round = 1;
-        Coins = 0;
+        wallet.SetCoins(0);
 
         var randomStartingNumber = random.Next(1, 100);
         while (randomStartingNumber == NumberToGet)
@@ -178,22 +223,19 @@ class RoguelikeCalculator
         NumberUses.Clear();
         for (int i = 0; i < 10; i++)
         {
-            NumberUses.Add(i, DEFAULT_STARTING_NUMBER_USE_COUNT);
-            OnNumberUseUpdated?.Invoke(i);
+            inventory.AddNumberUse(i, DEFAULT_STARTING_NUMBER_USE_COUNT);
         }
 
         OperationUses.Clear();
         foreach (CalculatorOperation operation in Enum.GetValues(typeof(CalculatorOperation)))
         {
-            OperationUses.Add(operation, DEFAULT_STARTING_OPERATION_USE_COUNT);
-            OnOperationUseUpdated?.Invoke(operation);
+            inventory.AddOperationUse(operation, DEFAULT_STARTING_OPERATION_USE_COUNT);
         }
 
         SpecialActionUses.Clear();
         foreach (SpecialAction specialAction in Enum.GetValues(typeof(SpecialAction)))
         {
-            SpecialActionUses.Add(specialAction, 0);
-            OnSpecialActionUseUpdated?.Invoke(specialAction);
+            inventory.AddSpecialActionUse(specialAction, 0);
         }
 
         OnNewRound?.Invoke();
@@ -214,38 +256,12 @@ class RoguelikeCalculator
 
     public void BuyShopItem(int itemIndex)
     {
-        var itemToBuy = AvailableShopItems[itemIndex];
-        if (itemToBuy.Cost > Coins) return;
-
-        SetCoins(Coins - itemToBuy.Cost);
-
-        if (itemToBuy is ShopItem.NumberItem numberItem)
-        {
-            NumberUses[numberItem.Number] = NumberUses[numberItem.Number] + 1;
-            OnNumberUseUpdated?.Invoke(numberItem.Number);
-        }
-        if (itemToBuy is ShopItem.OperationItem operationItem)
-        {
-            OperationUses[operationItem.Operation] = OperationUses[operationItem.Operation] + 1;
-            OnOperationUseUpdated?.Invoke(operationItem.Operation);
-        }
-        if (itemToBuy is ShopItem.SpecialActionItem specialActionItem)
-        {
-            SpecialActionUses[specialActionItem.SpecialAction] = SpecialActionUses[specialActionItem.SpecialAction] + 1;
-            OnSpecialActionUseUpdated?.Invoke(specialActionItem.SpecialAction);
-        }
-
-        AvailableShopItems.Remove(itemIndex);
-        OnAvailableShopItemsUpdated?.Invoke();
+        shop.BuyShopItem(itemIndex);
     }
 
     public void RerollShopItems()
     {
-        if (RerollCost > Coins) return;
-
-        SetCoins(Coins - RerollCost);
-
-        GenerateNewShopItems(RerollCost);
+        shop.RerollShopItems();
     }
 
     public void AcceptGamblingTOS()
@@ -255,7 +271,7 @@ class RoguelikeCalculator
 
     private void FinishCurrentRound()
     {
-        Coins += COINS_PER_ROUND;
+        wallet.Add(COINS_PER_ROUND);
         Round += 1;
         NumberToGet = GenerateRandomNumberToGet();
         OnIsOlinsImpatient?.Invoke(false);
@@ -273,85 +289,13 @@ class RoguelikeCalculator
 
     private void GenerateNewShopItems(int currentRerollCostSum = 0)
     {
-        AvailableShopItems.Clear();
-        // TODO: make it generate more based on rounds too
-        int shopItemCount = random.Next(3, SHOP_ITEM_COUNT + 1);
-        if (currentRerollCostSum == 0)
-        {
-            RerollCost = random.Next(3, 12);
-        }
-        else
-        {
-            RerollCost = currentRerollCostSum + random.Next(2, 12);
-        }
-        OnRerollCostUpdated?.Invoke(RerollCost);
-
-        for (int i = 0; i < shopItemCount; i++)
-        {
-            // create a random shop item and put it in that position
-            // generate a random cost for that item based on the rounds
-            var randomWeight = random.Next(0, ShopItem.WeightSum);
-            var currentWeightSum = 0;
-
-            ShopItem? shopItem = null;
-            foreach (var item in ShopItem.ShopItems)
-            {
-                currentWeightSum += item.Weight;
-                if (randomWeight < currentWeightSum)
-                {
-                    shopItem = item.Value;
-                    break;
-                }
-            }
-
-            if (shopItem == null)
-            {
-                i--;
-                continue;
-            }
-
-            // TODO: make it generate more cost based on the round possibly
-            if (shopItem is ShopItem.NumberItem numberShopItem)
-            {
-                numberShopItem.Cost = random.Next(3, 10);
-            }
-            if (shopItem is ShopItem.OperationItem operationShopItem)
-            {
-                operationShopItem.Cost = random.Next(1, 8);
-            }
-            if (shopItem is ShopItem.SpecialActionItem specialActionItem)
-            {
-                specialActionItem.Cost = random.Next(1, 12);
-            }
-
-            AvailableShopItems.Add(i, shopItem);
-        }
-
-        OnAvailableShopItemsUpdated?.Invoke();
+        shop.GenerateNewShopItems(currentRerollCostSum);
     }
 
     private void GameWon()
     {
         solutionTimer.Stop();
         OnGameFinished?.Invoke(true);
-    }
-
-    private void OnNumberUsed(int number)
-    {
-        NumberUses[number] = NumberUses[number] - 1;
-        OnNumberUseUpdated?.Invoke(number);
-    }
-
-    private void OnOperationUsed(CalculatorOperation operation)
-    {
-        OperationUses[operation] = OperationUses[operation] - 1;
-        OnOperationUseUpdated?.Invoke(operation);
-    }
-
-    private void OnSpecialActionUsed(SpecialAction specialAction)
-    {
-        SpecialActionUses[specialAction] = SpecialActionUses[specialAction] - 1;
-        OnSpecialActionUseUpdated?.Invoke(specialAction);
     }
 
     private void UpdateRandomNumberToGet()
@@ -363,8 +307,6 @@ class RoguelikeCalculator
     private long GenerateRandomNumberToGet()
     {
         var generatedNumber = NumberToGet;
-        // TODO: could be moved up somewhere
-        List<int> lastRounds = [16, 17, 18, 19];
 
         while (generatedNumber == NumberToGet)
         {
@@ -395,12 +337,6 @@ class RoguelikeCalculator
         OnIsShoppingUpdated?.Invoke(isShopping);
     }
 
-    private void SetCoins(int coins)
-    {
-        Coins = coins;
-        OnCoinsUpdated?.Invoke();
-    }
-
     private void SolutionTimer_Tick(object? sender, EventArgs e)
     {
         Console.WriteLine($"{secondsLeftForSolution}");
@@ -421,17 +357,16 @@ class RoguelikeCalculator
 
     private void Gamble_OnMoneyChanged(int money)
     {
-        SetCoins(Coins + money);
+        wallet.Add(money);
     }
 
     private void Gamble_OnVID()
     {
-        SetCoins(0);
+        wallet.SetCoins(0);
     }
 
     private void Gamble_OnRerollActionsGained(int rerollCount)
     {
-        SpecialActionUses[SpecialAction.Reroll] = SpecialActionUses[SpecialAction.Reroll] + rerollCount;
-        OnSpecialActionUseUpdated?.Invoke(SpecialAction.Reroll);
+        inventory.AddSpecialActionUse(SpecialAction.Reroll, rerollCount);
     }
 }

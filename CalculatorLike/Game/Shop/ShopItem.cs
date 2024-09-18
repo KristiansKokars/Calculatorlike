@@ -1,6 +1,6 @@
 ﻿using CalculatorLike.Base;
 
-namespace CalculatorLike.Game;
+namespace CalculatorLike.Game.Shop;
 
 abstract class ShopItem
 {
@@ -11,7 +11,8 @@ abstract class ShopItem
         public override int Cost { get; set; }
         public int Number { get; set; }
 
-        public NumberItem(int number) {
+        public NumberItem(int number)
+        {
             Number = number;
         }
     }
@@ -54,7 +55,7 @@ abstract class ShopItem
         new(new SpecialActionItem(SpecialAction.CashToNumber), 3),
     ];
 
-    public static List<WeightedItem<ShopItem>> ShopItems = [..weightedNumberItems, ..weightedItems];
+    public static List<WeightedItem<ShopItem>> ShopItems = [.. weightedNumberItems, .. weightedItems];
 
     public static int WeightSum = ShopItems.Sum(item => item.Weight);
 }
