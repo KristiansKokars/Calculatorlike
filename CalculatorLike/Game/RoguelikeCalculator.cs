@@ -6,7 +6,7 @@ namespace CalculatorLike.Game;
 
 class RoguelikeCalculator
 {
-    private const int COINS_PER_ROUND = 16;
+    private const int COINS_PER_ROUND = 18;
     private const int MAX_ROUND_COUNT = 20;
     private const int DEFAULT_STARTING_NUMBER_USE_COUNT = 3;
     private const int DEFAULT_STARTING_OPERATION_USE_COUNT = 3;
