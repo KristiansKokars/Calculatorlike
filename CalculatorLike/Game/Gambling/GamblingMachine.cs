@@ -141,7 +141,7 @@ class GamblingMachine
     private static readonly List<WeightedItem<GamblingEvent>> EventChances =
     [
         new(GamblingEvent.RIP, 1),
-        new(GamblingEvent.SpecialSurprise, 5),
+        new(GamblingEvent.SpecialSurprise, 3),
         new(GamblingEvent.TaxEvasion, 3),
         new(GamblingEvent.Nothing, 30),
         new(GamblingEvent.Jackpot, 5),
@@ -149,7 +149,7 @@ class GamblingMachine
         new(GamblingEvent.KurtsAssists, 10),
         new(GamblingEvent.JekabsWentAllIn, 6),
         new(GamblingEvent.PicOfOlins, 5),
-        new(GamblingEvent.OlinsWantsSnacks, 20),
+        new(GamblingEvent.OlinsWantsSnacks, 22),
     ];
 
     private static readonly int WeightSum = EventChances.Sum(item => item.Weight);
