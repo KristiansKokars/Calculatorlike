@@ -10,5 +10,6 @@ enum SpecialAction
     Random1To100,
     AddOrRemoveClosestOr10,
     IncrementByOne,
-    Reverse
+    Reverse,
+    Clear
 }

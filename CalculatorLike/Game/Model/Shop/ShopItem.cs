@@ -56,7 +56,7 @@ abstract class ShopItem
         new(new SpecialActionItem(SpecialAction.Random1To100), 5),
         new(new SpecialActionItem(SpecialAction.AddOrRemoveClosestOr10), 3),
         new(new SpecialActionItem(SpecialAction.IncrementByOne), 5),
-        new(new SpecialActionItem(SpecialAction.Reverse), 4),
+        new(new SpecialActionItem(SpecialAction.Reverse), 4000),
     ];
 
     public static List<WeightedItem<ShopItem>> ShopItems = [.. weightedNumberItems, .. weightedItems];

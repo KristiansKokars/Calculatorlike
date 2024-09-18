@@ -191,18 +191,21 @@ class RoguelikeCalculator
                 calculator.SetCalculatorNumber(calculator.CurrentInput + 1);
                 break;
             case SpecialAction.Reverse:
-                var reversedNumber = long.Parse(calculator.CurrentInput.ToString().Reverse().ToString());
-                calculator.SetCalculatorNumber(reversedNumber);
+                try
+                {
+                    var reversedNumber = long.Parse(Reverse(calculator.CurrentInput.ToString()));
+                    calculator.SetCalculatorNumber(reversedNumber);
+                    break;
+                }
+                catch (OverflowException)
+                {
+                    return;
+                }
+            case SpecialAction.Clear:
+                calculator.ClearNumber();
                 break;
         }
         inventory.OnSpecialActionUsed(specialAction);
-    }
-
-    public void ClearNumber()
-    {
-        if (isShopping) return;
-
-        calculator.ClearNumber();
     }
 
     public void Calculate()
@@ -255,7 +258,14 @@ class RoguelikeCalculator
         SpecialActionUses.Clear();
         foreach (SpecialAction specialAction in Enum.GetValues(typeof(SpecialAction)))
         {
-            inventory.AddSpecialActionUse(specialAction, 0);
+            if (specialAction == SpecialAction.Clear)
+            {
+                inventory.AddSpecialActionUse(specialAction, DEFAULT_STARTING_OPERATION_USE_COUNT);
+            }
+            else
+            {
+                inventory.AddSpecialActionUse(specialAction, 0);
+            }
         }
 
         OnNewRound?.Invoke();
@@ -388,5 +398,12 @@ class RoguelikeCalculator
     private void Gamble_OnRerollActionsGained(int rerollCount)
     {
         inventory.AddSpecialActionUse(SpecialAction.Reroll, rerollCount);
+    }
+
+    private static string Reverse(string s)
+    {
+        char[] charArray = s.ToCharArray();
+        Array.Reverse(charArray);
+        return new string(charArray);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CalculatorLike.Base;
 using CalculatorLike.Base.Model;
 using CalculatorLike.Game;
+using CalculatorLike.Game.Model;
 
 namespace CalculatorLike;
 
@@ -38,11 +39,25 @@ class CalculatorViewModel
     {
         if (isInRoguelikeMode)
         {
-            RoguelikeCalculator.SetOperation(operation);
+            try
+            {
+                RoguelikeCalculator.SetOperation(operation);
+            }
+            catch (DivideByZeroException)
+            {
+                OnDivideByZeroInGame?.Invoke();
+            }
         } 
         else
         {
-            BasicCalculator.SetOperation(operation);
+            try
+            {
+                BasicCalculator.SetOperation(operation);
+            }
+            catch (DivideByZeroException)
+            {
+                OnDivideByZero?.Invoke();
+            }
         }
     }
 
@@ -84,7 +99,7 @@ class CalculatorViewModel
     {
         if (isInRoguelikeMode)
         {
-            RoguelikeCalculator.ClearNumber();
+            RoguelikeCalculator.PerformSpecialAction(SpecialAction.Clear);
         }
         else
         {

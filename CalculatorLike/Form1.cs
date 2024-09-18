@@ -1,6 +1,7 @@
 ﻿using CalculatorLike.Base.Model;
 using CalculatorLike.Game.Model;
 using CalculatorLike.Game.Model.Shop;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CalculatorLike;
 
@@ -41,7 +42,7 @@ public partial class Form1 : Form
 
         allLabelNumberUses = [labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9];
         allLabelOperationUses = [labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract];
-        allGameElements = [panelTermsAndConditions, labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract,];
+        allGameElements = [panelTermsAndConditions, labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract, labelUsesClear];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
     }
@@ -210,35 +211,47 @@ public partial class Form1 : Form
     private void OnNumberUseUpdated(int number)
     {
         var uses = viewModel.RoguelikeCalculator.NumberUses[number];
-        allLabelNumberUses[number].Text = uses.ToString();
 
-        // TODO: custom colors
-        if (uses > 0)
-        {
-            allLabelNumberUses[number].ForeColor = Color.Green;
-        }
-        else
-        {
-            allLabelNumberUses[number].ForeColor = Color.DarkRed;
-        }
+        allLabelNumberUses[number].Text = uses.ToString();
+        allLabelNumberUses[number].ForeColor = ColorForUseCount(uses);
     }
+
     private void OnOperationUseUpdated(CalculatorOperation operation)
     {
-        var uses = viewModel.RoguelikeCalculator.OperationUses[operation].ToString();
+        var uses = viewModel.RoguelikeCalculator.OperationUses[operation];
+        var usesText = uses.ToString();
+        var color = ColorForUseCount(uses);
+
         switch (operation)
         {
             case CalculatorOperation.Add:
-                labelUsesAdd.Text = uses;
+                labelUsesAdd.Text = usesText;
+                labelUsesAdd.ForeColor = color;
                 return;
             case CalculatorOperation.Subtract:
-                labelUsesSubtract.Text = uses;
+                labelUsesSubtract.Text = usesText;
+                labelUsesSubtract.ForeColor = color;
                 return;
             case CalculatorOperation.Multiply:
-                labelUsesMultiply.Text = uses;
+                labelUsesMultiply.Text = usesText;
+                labelUsesMultiply.ForeColor = color;
                 return;
             case CalculatorOperation.Divide:
-                labelUsesDivide.Text = uses;
+                labelUsesDivide.Text = usesText;
+                labelUsesDivide.ForeColor = color;
                 return;
+        }
+    }
+
+    private Color ColorForUseCount(int useCount)
+    {
+        if (useCount > 0)
+        {
+            return Color.Green;
+        }
+        else
+        {
+            return Color.DarkRed;
         }
     }
 
@@ -246,6 +259,8 @@ public partial class Form1 : Form
     {
         var uses = viewModel.RoguelikeCalculator.SpecialActionUses[specialAction];
         var usesText = uses.ToString();
+        var color = ColorForUseCount(uses);
+
         switch (specialAction)
         {
             case SpecialAction.Square:
@@ -255,6 +270,7 @@ public partial class Form1 : Form
                     btnSpecialSquare.Visible = true;
                 }
                 labelSpecialSquare.Text = usesText;
+                labelSpecialSquare.ForeColor = color;
                 return;
             case SpecialAction.SquareRoot:
                 if (uses >= 1)
@@ -263,6 +279,7 @@ public partial class Form1 : Form
                     btnSpecialSqrt.Visible = true;
                 }
                 labelSpecialSquareRoot.Text = usesText;
+                labelSpecialSquareRoot.ForeColor = color;
                 return;
             case SpecialAction.CashToNumber:
                 if (uses >= 1)
@@ -271,6 +288,7 @@ public partial class Form1 : Form
                     btnSpecialCashToNumber.Visible = true;
                 }
                 labelSpecialCashToMoney.Text = usesText;
+                labelSpecialCashToMoney.ForeColor = color;
                 return;
             case SpecialAction.Modulus:
                 if (uses >= 1)
@@ -279,6 +297,7 @@ public partial class Form1 : Form
                     btnSpecialModulus.Visible = true;
                 }
                 labelSpecialModulus.Text = usesText;
+                labelSpecialModulus.ForeColor = color;
                 return;
             case SpecialAction.Reroll:
                 if (uses >= 1)
@@ -287,6 +306,7 @@ public partial class Form1 : Form
                     btnSpecialReroll.Visible = true;
                 }
                 labelSpecialReroll.Text = usesText;
+                labelSpecialReroll.ForeColor = color;
                 return;
             case SpecialAction.Random1To100:
                 if (uses >= 1)
@@ -295,6 +315,7 @@ public partial class Form1 : Form
                     btnSpecialRandom1To100.Visible = true;
                 }
                 labelUsesRandom1To100.Text = usesText;
+                labelUsesRandom1To100.ForeColor = color;
                 break;
             case SpecialAction.AddOrRemoveClosestOr10:
                 if (uses >= 1)
@@ -303,6 +324,7 @@ public partial class Form1 : Form
                     btnSpecialAddOrRemoveClosestOr10.Visible = true;
                 }
                 labelUsesAddOrRemoveClosestOr10.Text = usesText;
+                labelUsesAddOrRemoveClosestOr10.ForeColor = color;
                 break;
             case SpecialAction.IncrementByOne:
                 if (uses >= 1)
@@ -311,6 +333,7 @@ public partial class Form1 : Form
                     btnIncrementByOne.Visible = true;
                 }
                 labelUsesIncrementByOne.Text = usesText;
+                labelUsesIncrementByOne.ForeColor = color;
                 break;
             case SpecialAction.Reverse:
                 if (uses >= 1)
@@ -319,6 +342,16 @@ public partial class Form1 : Form
                     btnReverse.Visible = true;
                 }
                 labelUsesReverse.Text = usesText;
+                labelUsesReverse.ForeColor = color;
+                break;
+            case SpecialAction.Clear:
+                if (uses >= 1)
+                {
+                    labelUsesClear.Visible = true;
+                    btnClear.Visible = true;
+                }
+                labelUsesClear.Text = usesText;
+                labelUsesClear.ForeColor = color;
                 break;
         }
     }

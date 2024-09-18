@@ -121,6 +121,7 @@
             btnIncrementByOne = new Button();
             labelUsesReverse = new Label();
             btnReverse = new Button();
+            labelUsesClear = new Label();
             groupGame.SuspendLayout();
             panelShop.SuspendLayout();
             panel1.SuspendLayout();
@@ -911,9 +912,9 @@
             // 
             pictureGameLost.Enabled = false;
             pictureGameLost.Image = (Image)resources.GetObject("pictureGameLost.Image");
-            pictureGameLost.Location = new Point(-128, -8);
+            pictureGameLost.Location = new Point(-92, -9);
             pictureGameLost.Name = "pictureGameLost";
-            pictureGameLost.Size = new Size(1317, 305);
+            pictureGameLost.Size = new Size(1317, 446);
             pictureGameLost.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureGameLost.TabIndex = 55;
             pictureGameLost.TabStop = false;
@@ -1141,9 +1142,9 @@
             // 
             pictureDivisionBy0.Enabled = false;
             pictureDivisionBy0.Image = (Image)resources.GetObject("pictureDivisionBy0.Image");
-            pictureDivisionBy0.Location = new Point(-128, -8);
+            pictureDivisionBy0.Location = new Point(-92, -9);
             pictureDivisionBy0.Name = "pictureDivisionBy0";
-            pictureDivisionBy0.Size = new Size(1317, 305);
+            pictureDivisionBy0.Size = new Size(1317, 504);
             pictureDivisionBy0.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureDivisionBy0.TabIndex = 68;
             pictureDivisionBy0.TabStop = false;
@@ -1153,9 +1154,9 @@
             // 
             pictureRIP.Enabled = false;
             pictureRIP.Image = (Image)resources.GetObject("pictureRIP.Image");
-            pictureRIP.Location = new Point(-128, -8);
+            pictureRIP.Location = new Point(-92, -58);
             pictureRIP.Name = "pictureRIP";
-            pictureRIP.Size = new Size(1317, 305);
+            pictureRIP.Size = new Size(1317, 495);
             pictureRIP.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureRIP.TabIndex = 69;
             pictureRIP.TabStop = false;
@@ -1269,11 +1270,27 @@
             btnReverse.Visible = false;
             btnReverse.Click += btnReverse_Click;
             // 
+            // labelUsesClear
+            // 
+            labelUsesClear.AutoSize = true;
+            labelUsesClear.Font = new Font("Fira Sans", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsesClear.ForeColor = Color.Green;
+            labelUsesClear.Location = new Point(41, 209);
+            labelUsesClear.Name = "labelUsesClear";
+            labelUsesClear.Size = new Size(12, 13);
+            labelUsesClear.TabIndex = 78;
+            labelUsesClear.Text = "2";
+            labelUsesClear.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(204, 279);
+            ClientSize = new Size(201, 285);
+            Controls.Add(pictureRIP);
+            Controls.Add(pictureGameLost);
+            Controls.Add(pictureDivisionBy0);
+            Controls.Add(labelUsesClear);
             Controls.Add(labelUsesReverse);
             Controls.Add(btnReverse);
             Controls.Add(labelUsesIncrementByOne);
@@ -1282,9 +1299,6 @@
             Controls.Add(btnSpecialAddOrRemoveClosestOr10);
             Controls.Add(labelUsesRandom1To100);
             Controls.Add(btnSpecialRandom1To100);
-            Controls.Add(pictureRIP);
-            Controls.Add(pictureGameLost);
-            Controls.Add(pictureDivisionBy0);
             Controls.Add(panelShopContainer);
             Controls.Add(labelSpecialReroll);
             Controls.Add(btnSpecialReroll);
@@ -1447,5 +1461,6 @@
         private Button btnIncrementByOne;
         private Label labelUsesReverse;
         private Button btnReverse;
+        private Label labelUsesClear;
     }
 }
