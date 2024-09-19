@@ -280,7 +280,7 @@ class RoguelikeCalculator
         SetIsShopping(false);
         OnNewRound?.Invoke();
         OnIsOlinsImpatient?.Invoke(false);
-        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - Round * 4;
+        secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2 - Round * SECONDS_REMOVED_PER_ROUND;
     }
 
     public void BuyShopItem(int itemIndex)
