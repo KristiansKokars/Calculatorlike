@@ -13,6 +13,7 @@ public partial class Form1 : Form
     private readonly List<Control> allGameElements;
     private readonly List<Control> allShopItemElements;
     private readonly List<Control> allShopItemCostElements;
+    private readonly List<Control> allSpecialActionElements;
 
     public Form1()
     {
@@ -45,6 +46,7 @@ public partial class Form1 : Form
         allGameElements = [panelTermsAndConditions, labelShopTitle, panelShop, buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6, labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost, buttonReroll, groupGame, labelYouNeed, labelRound, labelCoins, btnRoguelikeCalculate, labelNumberToGet, labelRoundCount, labelCoinCount, labelUses0, labelUses1, labelUses2, labelUses3, labelUses4, labelUses5, labelUses6, labelUses7, labelUses8, labelUses9, labelUsesAdd, labelUsesDivide, labelUsesMultiply, labelUsesSubtract, labelUsesClear];
         allShopItemElements = [buttonShopItem1, buttonShopItem2, buttonShopItem3, buttonShopItem4, buttonShopItem5, buttonShopItem6];
         allShopItemCostElements = [labelShopItem1Cost, labelShopItem2Cost, labelShopItem3Cost, labelShopItem4Cost, labelShopItem5Cost, labelShopItem6Cost];
+        allSpecialActionElements = [labelSpecialModulus, btnSpecialModulus, labelSpecialSquareRoot, btnSpecialSqrt, labelSpecialSquare, btnSpecialSquare, labelSpecialCashToMoney, btnSpecialCashToNumber, labelUsesRandom1To100, btnSpecialRandom1To100, labelUsesAddOrRemoveClosestOr10, btnSpecialAddOrRemoveClosestOr10, labelUsesIncrementByOne, btnIncrementByOne, labelUsesReverse, btnReverse, labelSpecialReroll, btnSpecialReroll,];
     }
 
     #region Calculator
@@ -183,6 +185,10 @@ public partial class Form1 : Form
     private void OnGameFinished(bool isWon)
     {
         foreach (var element in allGameElements)
+        {
+            element.Visible = false;
+        }
+        foreach (var element in allSpecialActionElements)
         {
             element.Visible = false;
         }
@@ -442,6 +448,11 @@ public partial class Form1 : Form
         {
             element.Visible = false;
         }
+        foreach (var element in allSpecialActionElements)
+        {
+            element.Visible = false;
+        }
+
         pictureDivisionBy0.Visible = true;
         BackColor = Color.Black;
     }
@@ -551,6 +562,11 @@ public partial class Form1 : Form
         {
             element.Visible = false;
         }
+        foreach (var element in allSpecialActionElements)
+        {
+            element.Visible = false;
+        }
+
         labelOlinsMessage.Visible = false;
         panelShopContainer.Visible = false;
         pictureRIP.Visible = true;
