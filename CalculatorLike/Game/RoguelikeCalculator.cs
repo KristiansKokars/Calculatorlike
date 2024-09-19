@@ -16,7 +16,7 @@ class RoguelikeCalculator
     private const int DEFAULT_STARTING_NUMBER_USE_COUNT = 3;
     private const int DEFAULT_STARTING_OPERATION_USE_COUNT = 3;
     private const int TIME_TO_SOLVE_IN_SECONDS = 60;
-    private const int SECONDS_REMOVED_PER_ROUND = 4;
+    private const int SECONDS_REMOVED_PER_ROUND = 3;
     private const int TIMER_SECONDS_PER_TICK = 5;
     private const int OLINS_WARNING_AT_SECONDS = 30;
 
