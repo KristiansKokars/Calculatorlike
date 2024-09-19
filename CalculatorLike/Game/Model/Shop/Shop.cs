@@ -1,4 +1,6 @@
-﻿namespace CalculatorLike.Game.Model.Shop;
+﻿using CalculatorLike.Game.Model.Gambling;
+
+namespace CalculatorLike.Game.Model.Shop;
 
 class Shop(Wallet wallet, Inventory inventory)
 {
@@ -15,9 +17,9 @@ class Shop(Wallet wallet, Inventory inventory)
     public void BuyShopItem(int itemIndex)
     {
         var itemToBuy = AvailableShopItems[itemIndex];
-        if (!wallet.CanPurchase(itemToBuy.Cost)) return;
 
-        wallet.Purchase(itemToBuy.Cost);
+        var wasPurchased = wallet.TryPurchase(itemToBuy.Cost);
+        if (!wasPurchased) return;
 
         if (itemToBuy is ShopItem.NumberItem numberItem)
         {
@@ -38,9 +40,8 @@ class Shop(Wallet wallet, Inventory inventory)
 
     public void RerollShopItems()
     {
-        if (!wallet.CanPurchase(RerollCost)) return;
-
-        wallet.Purchase(RerollCost);
+        var wasPurchased = wallet.TryPurchase(RerollCost);
+        if (!wasPurchased) return;
 
         GenerateNewShopItems(RerollCost);
     }

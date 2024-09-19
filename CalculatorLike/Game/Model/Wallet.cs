@@ -12,23 +12,24 @@ class Wallet
         OnCoinsUpdated?.Invoke();
     }
 
-    public bool CanPurchase(int amount)
+    public bool TryPurchase(int cost)
     {
-        return Coins >= amount;
-    }
+        if (!CanPurchase(cost)) return false;
 
-    // TODO: maybe make this a bool method
-    public void Purchase(int amount)
-    {
-        if (amount > Coins) return;
-
-        Coins -= amount;
+        Coins -= cost;
         OnCoinsUpdated?.Invoke();
+
+        return true;
     }
 
     public void Add(int amount)
     {
         Coins += amount;
         OnCoinsUpdated?.Invoke();
+    }
+
+    private bool CanPurchase(int amount)
+    {
+        return Coins >= amount;
     }
 }

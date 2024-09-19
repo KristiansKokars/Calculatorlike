@@ -125,9 +125,9 @@ class RoguelikeCalculator
     public void Gamble()
     {
         if (!gamblingMachine.HasConsentedToGamblingTOS) return;
-        if (!wallet.CanPurchase(gamblingMachine.GamblingCost)) return;
 
-        wallet.Purchase(gamblingMachine.GamblingCost);
+        var wasPurchased = wallet.TryPurchase(gamblingMachine.GamblingCost);
+        if (!wasPurchased) return;
 
         // we do not want Oliņš timer to go down while you are actively gambling and rush you, to encourage more gambling
         secondsLeftForSolution = TIME_TO_SOLVE_IN_SECONDS * 2;
